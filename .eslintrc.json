@@ -34,6 +34,7 @@
         ]
       }
     ],
+    "import/extensions": "off",
     "no-console": [
       "error",
       {
@@ -43,11 +44,19 @@
         ]
       }
     ],
+    "no-restricted-exports": [
+      "error",
+      {
+        "restrictedNamedExports": []
+      }
+    ],
     "no-unused-expressions": "error",
     "eqeqeq": [
       "error",
       "always"
-    ]
+    ],
+    "react/function-component-definition": "off",
+    "react/require-default-props": "off"
   },
   "settings": {
     "react": {
