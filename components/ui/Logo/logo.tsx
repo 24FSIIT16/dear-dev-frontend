@@ -7,13 +7,7 @@ interface Props {
 
 const Logo: React.FC<Props> = ({ className }) => (
   <div className={className}>
-    <Image
-      src="/assets/Logos/yappi_light.svg"
-      alt="yappi Logo"
-      width={100}
-      height={100}
-      priority
-    />
+    <Image src="/assets/Logos/yappi_light.svg" alt="yappi·Logo" width={100} height={100} priority />
   </div>
 );
 

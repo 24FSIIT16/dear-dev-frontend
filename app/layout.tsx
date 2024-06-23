@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import './globals.css';
-import outfit from '@/styles/fonts';
+import 'styles/globals.css';
+import outfit from 'styles/fonts';
 
 export const metadata: Metadata = {
   title: 'yappi',
