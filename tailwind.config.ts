@@ -8,10 +8,32 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      fontFamily: {
+        outfit: ['Outfit', 'sans-serif'],
+      },
+      colors: {
+        // general colors
+        white: '#ffffff',
+        black: '#000000',
+
+        // primary colors (logo)
+        primaryGreen: '#41B963',
+        primaryRed: '#E94B68',
+        primaryBlue: '#4E8AE3',
+
+        // background colors
+        primaryBG: {
+          dark: '#121212',
+          light: '#F0F0F0',
+        },
+        secondaryBG: {
+          dark: '#232323',
+          light: '#FFFFFF',
+        },
+        tertiaryBG: {
+          dark: '#333333',
+          light: '#F0F0F0',
+        },
       },
     },
   },
