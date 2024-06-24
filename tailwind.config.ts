@@ -25,9 +25,18 @@ const config: Config = {
         black: '#000000',
 
         // primary colors (logo)
-        primaryGreen: '#41B963',
-        primaryRed: '#E94B68',
-        primaryBlue: '#4E8AE3',
+        primaryGreen: {
+          main: 'rgba(65, 185, 99)',
+          light: 'rgba(65, 185, 99, 0.2)',
+        },
+        primaryRed: {
+          main: 'rgba(233, 75, 104)',
+          light: 'rgba(233, 75, 104, 0.2)',
+        },
+        primaryBlue: {
+          main: 'rgba(78, 138, 227)',
+          light: 'rgba(78, 138, 227, 0.2)',
+        },
 
         // background colors
         primaryBG: {

@@ -23,7 +23,7 @@ const Header: React.FC = () => {
       <Breadcrumb>
         <BreadcrumbList>
           {breadcrumbs.map((breadcrumb, index) => (
-            <>
+            <React.Fragment key={breadcrumb.href}>
               <BreadcrumbItem key={breadcrumb.href}>
                 <BreadcrumbLink asChild>
                   <Link className="text-xs font-light text-black" href={breadcrumb.href}>
@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-            </>
+            </React.Fragment>
           ))}
         </BreadcrumbList>
       </Breadcrumb>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import 'styles/globals.css';
 import outfit from 'styles/fonts';
-import Navigation from '@components/Navigation';
+import Navigation from '@components/Navigation/Navigation';
 import Header from '@components/Header/Header';
 
 export const metadata: Metadata = {
