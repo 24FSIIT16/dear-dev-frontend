@@ -54,6 +54,7 @@
         "restrictedNamedExports": []
       }
     ],
+    "no-nested-ternary": "off",
     "no-unused-expressions": "error",
     "eqeqeq": [
       "error",

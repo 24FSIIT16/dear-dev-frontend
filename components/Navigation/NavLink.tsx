@@ -3,6 +3,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@components/ui/Tooltip/Tooltip';
 import formatTooltipContent from '@components/Navigation/Navigation.utils';
 
@@ -14,9 +15,12 @@ interface NavLinkProps {
 const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   const pathname = usePathname();
   const isActive = pathname === href;
+  const { theme } = useTheme();
 
   const getLinkStyle = () =>
-    `flex h-10 w-10 items-center justify-center rounded-md hover:bg-tertiaryBG-light ${isActive ? 'bg-tertiaryBG-light' : ''}`;
+    `flex h-10 w-10 items-center justify-center rounded-md hover:bg-tertiaryBG-light hover:dark:bg-secondaryBG-dark ${
+      isActive ? (theme === 'dark' ? 'bg-secondaryBG-dark' : theme === 'light' ? 'bg-tertiaryBG-light' : '') : ''
+    }`;
 
   return (
     <TooltipProvider>
@@ -26,7 +30,7 @@ const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
             {children}
           </Link>
         </TooltipTrigger>
-        <TooltipContent side="right" className="relative z-50 font-outfit text-xs font-light">
+        <TooltipContent side="right" className="z-50 font-outfit text-xs font-light">
           {formatTooltipContent(href)}
         </TooltipContent>
       </Tooltip>
