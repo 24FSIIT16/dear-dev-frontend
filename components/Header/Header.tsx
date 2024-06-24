@@ -3,7 +3,6 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Avatar, AvatarImage } from '@components/ui/Avatar/Avatar';
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -12,6 +11,7 @@ import {
   BreadcrumbSeparator,
 } from '@components/ui/Breadcrumb/Breadcrumb';
 import getBreadcrumbs from './Header.utils';
+import Account from './Account';
 
 const Header: React.FC = () => {
   const pathname = usePathname();
@@ -36,11 +36,7 @@ const Header: React.FC = () => {
           ))}
         </BreadcrumbList>
       </Breadcrumb>
-      <Link href="/">
-        <Avatar className="h-8 w-8">
-          <AvatarImage src="/assets/Avatar/avatar_1.svg" />
-        </Avatar>
-      </Link>
+      <Account />
     </header>
   );
 };
