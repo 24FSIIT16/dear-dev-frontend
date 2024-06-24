@@ -15,7 +15,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${outfit.variable} font-outfit`}>
         <Navigation />
         <Header />
-        <main className="mt-28 flex justify-center">
+        <main className="mt-16 flex justify-center">
           <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
         </main>
       </body>

@@ -1,6 +1,6 @@
 import { Button } from '@components/ui/Buttons/Button';
 import * as React from 'react';
-import { User, Settings } from 'lucide-react';
+import { User, Settings, LogOut } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -8,6 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuItem,
+  DropdownMenuGroup,
 } from '@components/ui/DropdownMenu/Dropdown-menu';
 
 const Account: React.FC = () => (
@@ -20,23 +21,22 @@ const Account: React.FC = () => (
     <DropdownMenuContent align="end">
       <DropdownMenuLabel>Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
-        <div className="flex items-center">
-          <User className="mr-2 h-3 w-3" />
-          <p>Profile</p>
-        </div>
-      </DropdownMenuItem>
-      <DropdownMenuItem>
-        <div className="flex items-center">
-          <Settings className="mr-2 h-3 w-3" />
-          <p>Settings</p>
-        </div>
-      </DropdownMenuItem>
+      <DropdownMenuGroup>
+        <DropdownMenuItem>
+          <User className="mr-2 h-4 w-4" />
+          <span>Profile</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <div className="flex items-center">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </div>
+        </DropdownMenuItem>
+      </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem className="my-1 hover:bg-transparent hover:text-inherit focus:bg-transparent focus:text-inherit">
-        <Button variant="destructive" size="sm" className="w-full font-outfit text-xs font-light">
-          Logout
-        </Button>
+      <DropdownMenuItem>
+        <LogOut className="mr-2 h-4 w-4" />
+        <span>Log out</span>
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
