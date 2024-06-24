@@ -19,7 +19,7 @@ const Header: React.FC = () => {
   const breadcrumbs = getBreadcrumbs(pathname);
 
   return (
-    <header className="fixed left-20 top-0 z-20 flex h-16 w-[calc(100%-5rem)] items-center justify-between bg-white px-16">
+    <header className="sticky left-20 top-0 z-20 flex h-16 w-[calc(100%-5rem)] items-center justify-between bg-white px-16">
       <Breadcrumb>
         <BreadcrumbList>
           {breadcrumbs.map((breadcrumb, index) => (
