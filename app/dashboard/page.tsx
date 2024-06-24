@@ -1,10 +1,9 @@
-import Logo from '@components/ui/Logo/Logo';
 import * as React from 'react';
 
-export default function Home() {
+export default function Dashboard() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <Logo />
+    <main className="">
+      <div className="min-h-10 w-full bg-blue-400" />
     </main>
   );
 }
