@@ -26,6 +26,12 @@
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-call": "off",
+    "prefer-default-export": "off",
+    "@typescript-eslint/no-misused-promises": [2, { // https://github.com/orgs/react-hook-form/discussions/8622#discussioncomment-4060570
+      "checksVoidReturn": {
+        "attributes": false
+      }
+    }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-filename-extension": [

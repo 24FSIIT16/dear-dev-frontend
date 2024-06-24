@@ -3,6 +3,8 @@ import 'styles/globals.css';
 import outfit from 'styles/fonts';
 import Navigation from '@components/Navigation/Navigation';
 import Header from '@components/Header/Header';
+import * as React from 'react';
+import { Toaster } from '@components/ui/Toast/Toaster';
 
 export const metadata: Metadata = {
   title: 'yappi',
@@ -17,6 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Header />
         <main className="mt-16 flex justify-center">
           <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
+          <Toaster />
         </main>
       </body>
     </html>
