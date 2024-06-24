@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import 'styles/globals.css';
 import outfit from 'styles/fonts';
-import Navigation from '@components/navigation';
+import Navigation from '@components/Navigation';
+import Header from '@components/Header/Header';
 
 export const metadata: Metadata = {
   title: 'yappi',
@@ -13,7 +14,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className={`${outfit.variable} font-outfit`}>
         <Navigation />
-        <main className="ml-16 flex-1">{children}</main>
+        <Header />
+        <main className="mt-28 flex justify-center">
+          <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
+        </main>
       </body>
     </html>
   );
