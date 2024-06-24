@@ -1,5 +1,5 @@
-import { Button } from '@components/ui/Buttons/Button';
 import * as React from 'react';
+import { Button } from '@components/ui/Buttons/Button';
 import { User, Settings, LogOut } from 'lucide-react';
 import {
   DropdownMenu,
@@ -19,7 +19,7 @@ const Account: React.FC = () => (
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">
-      <DropdownMenuLabel>Account</DropdownMenuLabel>
+      <DropdownMenuLabel>My Account</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         <DropdownMenuItem>
