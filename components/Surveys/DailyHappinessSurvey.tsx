@@ -40,7 +40,7 @@ const DailyHappinessSurvey: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     toast({
       title: 'Success!',
-      description: `Survey Submitted with response: ${JSON.stringify(data.question2)}`,
+      description: `Survey Submitted with response: ${JSON.stringify(data.question2)}  ${data.question1} ${data.question3} ${data.question4}`,
     });
     reset();
   };
