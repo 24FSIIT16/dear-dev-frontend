@@ -10,6 +10,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from '@components/ui/Breadcrumb/Breadcrumb';
+import ThemeToggle from '@components/ui/ThemeToggle/ThemeToggle';
 import getBreadcrumbs from './Header.utils';
 import Account from './Account';
 
@@ -19,14 +20,14 @@ const Header: React.FC = () => {
   const breadcrumbs = getBreadcrumbs(pathname);
 
   return (
-    <header className="sticky left-20 top-0 z-20 flex h-16 w-[calc(100%-5rem)] items-center justify-between bg-white px-16">
+    <header className="sticky left-20 top-0 z-20 flex h-16 w-[calc(100%-5rem)] items-center justify-between bg-white px-16 dark:bg-primaryBG-dark">
       <Breadcrumb>
         <BreadcrumbList>
           {breadcrumbs.map((breadcrumb, index) => (
             <React.Fragment key={breadcrumb.href}>
               <BreadcrumbItem key={breadcrumb.href}>
                 <BreadcrumbLink asChild>
-                  <Link className="text-xs font-light text-black" href={breadcrumb.href}>
+                  <Link className="text-xs font-light text-black dark:text-white" href={breadcrumb.href}>
                     {breadcrumb.label}
                   </Link>
                 </BreadcrumbLink>
@@ -36,7 +37,10 @@ const Header: React.FC = () => {
           ))}
         </BreadcrumbList>
       </Breadcrumb>
-      <Account />
+      <div className="flex items-center space-x-4">
+        <ThemeToggle />
+        <Account />
+      </div>
     </header>
   );
 };
