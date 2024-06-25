@@ -4,7 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@comp
 const BasicCard: React.FC = () => (
   <Card x-chunk="dashboard-04-chunk-1">
     <CardHeader>
-      <CardTitle title={'Title'}></CardTitle>
+      <CardTitle title="Title" />
       <CardDescription>Subtitle</CardDescription>
     </CardHeader>
     <CardContent>Content</CardContent>

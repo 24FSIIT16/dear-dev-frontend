@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { Popover, PopoverTrigger, PopoverContent } from '@components/ui/Popover/Popover';
 import { Button } from '@components/ui/Buttons/Button';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
 import * as React from 'react';
 import { Control, Controller } from 'react-hook-form';
+
 interface TaskPopoverProps {
-  control: Control<any>; // Specify a more detailed type if known
+  control: Control<any>; // eslint-disable-line
   tasks: TaskConfig[];
 }
 
@@ -19,7 +19,7 @@ interface SmileySelection {
   value: string;
 }
 
-export function TaskPopover({ control, tasks }: TaskPopoverProps) {
+export default function TaskPopover({ control, tasks }: TaskPopoverProps) {
   const smilieSize = 7;
 
   return (
@@ -39,15 +39,17 @@ export function TaskPopover({ control, tasks }: TaskPopoverProps) {
                   <div className="grid grid-cols-3 gap-2">
                     {['5', '4', '2', '3', '6', '1'].map((smileyValue, index) => (
                       <SmiliesRadioButton
-                        key={index}
+                        key={smileyValue}
                         value={smileyValue}
                         selectedValue={
+                          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                           value?.find((val: SmileySelection) => val.taskId === task.taskId && val.value === smileyValue)
                             ? smileyValue
                             : undefined
                         }
                         handleChange={(newValue: string) => {
                           const updatedValues: SmileySelection[] = [
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                             ...value.filter((val: SmileySelection) => val.taskId !== task.taskId),
                             { taskId: task.taskId, value: newValue },
                           ];

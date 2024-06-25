@@ -1,6 +1,7 @@
 import React from 'react';
 import { Label } from '@components/ui/Label/Label';
 import { Input } from '@components/ui/Input/Input';
+
 interface SmiliesRadioButtonProps {
   value: string;
   selectedValue: string | undefined;

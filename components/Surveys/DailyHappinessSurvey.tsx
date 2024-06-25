@@ -8,7 +8,7 @@ import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
 import { Textarea } from '@components/ui/Text/Textarea';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
-import { TaskPopover } from '@components/Surveys/TaskPopover';
+import TaskPopover from '@components/Surveys/TaskPopover';
 
 type FormValues = {
   question1: string;
@@ -20,8 +20,8 @@ type FormValues = {
 const DailyHappinessSurvey: React.FC = () => {
   const {
     register,
-    watch: watch,
-    setValue: setValue,
+    watch,
+    setValue,
     handleSubmit,
     formState: { errors },
     reset,
@@ -38,7 +38,6 @@ const DailyHappinessSurvey: React.FC = () => {
   const selectedValue = watch('question1');
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
     toast({
       title: 'Success!',
       description: `Survey Submitted with response: ${JSON.stringify(data.question2)}`,
@@ -72,7 +71,7 @@ const DailyHappinessSurvey: React.FC = () => {
               <div className="grid grid-cols-3 gap-4 pb-12 pt-12">
                 {['5', '4', '2', '3', '6', '1'].map((value, index) => (
                   <SmiliesRadioButton
-                    key={index}
+                    key={value}
                     value={value}
                     selectedValue={selectedValue}
                     size={18}
