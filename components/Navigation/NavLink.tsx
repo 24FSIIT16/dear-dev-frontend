@@ -14,12 +14,13 @@ interface NavLinkProps {
 
 const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   const pathname = usePathname();
-  const isActive = pathname === href;
   const { theme } = useTheme();
+
+  const isActive = (path: string) => pathname === href || pathname.startsWith(`${path}/`);
 
   const getLinkStyle = () =>
     `flex h-10 w-10 items-center justify-center rounded-md hover:bg-tertiaryBG-light hover:dark:bg-secondaryBG-dark ${
-      isActive ? (theme === 'dark' ? 'bg-secondaryBG-dark' : theme === 'light' ? 'bg-tertiaryBG-light' : '') : ''
+      isActive(href) ? (theme === 'dark' ? 'bg-secondaryBG-dark' : theme === 'light' ? 'bg-tertiaryBG-light' : '') : ''
     }`;
 
   return (
