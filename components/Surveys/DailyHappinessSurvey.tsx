@@ -12,7 +12,7 @@ import { TaskPopover } from '@components/Surveys/TaskPopover';
 
 type FormValues = {
   question1: string;
-  question2: { taskId: string; value: string };
+  question2: Array<{ taskId: string; value: string }>;
   question3: string;
   question4: string;
 };
@@ -26,7 +26,14 @@ const DailyHappinessSurvey: React.FC = () => {
     formState: { errors },
     reset,
     control,
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    defaultValues: {
+      question1: '',
+      question2: [],
+      question3: '',
+      question4: '',
+    },
+  });
 
   const selectedValue = watch('question1');
 
@@ -68,6 +75,7 @@ const DailyHappinessSurvey: React.FC = () => {
                     key={index}
                     value={value}
                     selectedValue={selectedValue}
+                    size={18}
                     handleChange={handleChange}
                     altText={['Very Unhappy', 'Neutral', 'Happy', 'Very Happy', 'Very Happy', 'Very Unhappy'][index]}
                     imagePath={`/assets/Smilies/${['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}.png`}
@@ -84,7 +92,14 @@ const DailyHappinessSurvey: React.FC = () => {
           <div className="mb-4">
             <Label>How happy are you with the specific work items?</Label>
             <div className="mt-2">
-            <TaskPopover control={control} />
+              <TaskPopover
+                control={control}
+                tasks={[
+                  { taskId: 'DEAR-90', buttonLabel: 'DEAR-90 Create Basic...' },
+                  { taskId: 'MEET-12', buttonLabel: 'Meeting Client LIPO' },
+                  { taskId: 'DEAR-91', buttonLabel: 'DEAR-91 Update Advanced...' },
+                ]}
+              />
             </div>
             {errors.question2 && <span>This field is required</span>}
           </div>
