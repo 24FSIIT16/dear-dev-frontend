@@ -17,7 +17,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navigation />
           <Header />
-          <main className="mt-16 flex justify-center">
+          <main className="mt-10 flex justify-center">
             <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
           </main>
         </ThemeProvider>
