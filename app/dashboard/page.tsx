@@ -1,6 +1,6 @@
 import * as React from 'react';
 import BasicCard from '@components/Cards/Basic';
-import DailyHappinessSurvey from '@components/Cards/DailyHappinessSurvey';
+import DailyHappinessSurvey from '@components/Surveys/DailyHappinessSurvey';
 
 export default function Dashboard() {
   return (
