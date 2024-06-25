@@ -4,7 +4,7 @@ import { Input } from '@components/ui/Input/Input';
 
 type SmiliesRadioButtonProps = {
   value: string;
-  selectedValue: string;
+  selectedValue: string | undefined;
   handleChange: (value: string) => void;
   altText: string;
   imagePath: string;

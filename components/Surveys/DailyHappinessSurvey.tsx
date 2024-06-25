@@ -3,16 +3,16 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Label } from '@components/ui/Label/Label';
-import { Input } from '@components/ui/Input/Input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
 import { Textarea } from '@components/ui/Text/Textarea';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
+import { TaskPopover } from '@components/Surveys/TaskPopover';
 
 type FormValues = {
   question1: string;
-  question2: string;
+  question2: { taskId: string; value: string };
   question3: string;
   question4: string;
 };
@@ -25,18 +25,18 @@ const DailyHappinessSurvey: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<FormValues>();
 
   const selectedValue = watch('question1');
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    // console.log(data);
-    // incl- timestamp & user id
+    console.log(data);
     toast({
       title: 'Success!',
-      description: `Survey Submitted ${data.question1}`,
+      description: `Survey Submitted with response: ${JSON.stringify(data.question2)}`,
     });
-    reset(); // Reset form values after submission
+    reset();
   };
 
   const handleChange = (value: string) => {
@@ -83,7 +83,9 @@ const DailyHappinessSurvey: React.FC = () => {
 
           <div className="mb-4">
             <Label>How happy are you with the specific work items?</Label>
-            <Input id="lastName" {...register('question2', { required: false })} />
+            <div className="mt-2">
+            <TaskPopover control={control} />
+            </div>
             {errors.question2 && <span>This field is required</span>}
           </div>
 
