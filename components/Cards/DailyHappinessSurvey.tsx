@@ -29,7 +29,7 @@ const DailyHappinessSurvey: React.FC = () => {
   const selectedValue = watch('question1');
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-   // console.log(data);
+    // console.log(data);
     // incl- timestamp & user id
     toast({
       title: 'Success!',
@@ -48,7 +48,7 @@ const DailyHappinessSurvey: React.FC = () => {
   };
 
   return (
-    <Card x-chunk="dashboard-04-chunk-1">
+    <Card x-chunk="dashboard-04-chunk-1 ">
       <CardHeader>
         <CardTitle>Happiness Survey {getTodayDate()}</CardTitle>
         <CardDescription>
