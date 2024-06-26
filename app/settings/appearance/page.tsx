@@ -21,7 +21,7 @@ const Appearance: React.FC = () => {
     <div className="space-y-4">
       <div className="space-y-1">
         <h2>Appearance</h2>
-        <p className="text-sm font-thin">Customize the appearance of the app. Switch between day and night themes.</p>
+        <p className="text-sm font-thin">Customize the appearance of the app. Switch between light and dark themes.</p>
       </div>
       <Separator className="mt-2" />
       <div className="space-y-1">
