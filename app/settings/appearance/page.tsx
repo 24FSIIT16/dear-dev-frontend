@@ -18,12 +18,12 @@ const Appearance: React.FC = () => {
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <h2 className="text-lg font-medium">Appearance</h2>
+        <h2>Appearance</h2>
         <p className="text-sm font-thin">Customize the appearance of the app. Switch between day and night themes.</p>
       </div>
       <Separator className="mt-2" />
       <div className="space-y-1">
-        <h3 className="text-sm font-medium">Theme</h3>
+        <h3>Theme</h3>
         <p className="text-xs font-thin">Select the theme for the application.</p>
         <p className="text-xs font-thin">
           Current theme: <span className="text-xs font-medium">{formattedTheme}</span>{' '}

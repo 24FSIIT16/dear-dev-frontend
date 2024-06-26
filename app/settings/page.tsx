@@ -4,7 +4,7 @@ import Separator from '@components/ui/Separator/Separator';
 const SettingsPage: React.FC = () => (
   <div className="space-y-4">
     <div className="space-y-1">
-      <h2 className="text-lg font-medium">Account</h2>
+      <h2>Account</h2>
       <p className="text-sm font-thin">Update your account settings.</p>
     </div>
     <Separator className="mt-2" />

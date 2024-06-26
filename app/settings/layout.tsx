@@ -16,7 +16,7 @@ const settingsSidebarNavItems = [
 const SettingsLayout: React.FC<React.ReactNode> = ({ children }) => (
   <div className="space-y-8 px-16">
     <div className="space-y-0.5">
-      <h1 className="text-2xl font-bold">Settings</h1>
+      <h1>Settings</h1>
       <p className="text-md font-thin">Manage your settings.</p>
     </div>
     <Separator className="dark:border-secondaryBG-dark" />
