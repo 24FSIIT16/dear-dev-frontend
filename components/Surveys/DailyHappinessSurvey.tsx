@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Label } from '@components/ui/Label/Label';
+import Label from '@components/ui/Label/Label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';

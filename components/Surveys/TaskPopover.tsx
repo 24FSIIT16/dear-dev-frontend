@@ -1,7 +1,7 @@
+import * as React from 'react';
 import { Popover, PopoverTrigger, PopoverContent } from '@components/ui/Popover/Popover';
 import { Button } from '@components/ui/Buttons/Button';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
-import * as React from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 interface TaskPopoverProps {
@@ -19,7 +19,7 @@ interface SmileySelection {
   value: string;
 }
 
-export default function TaskPopover({ control, tasks }: TaskPopoverProps) {
+const TaskPopover: React.FC<TaskPopoverProps> = ({ control, tasks }) => {
   const smilieSize = 7;
 
   return (
@@ -71,4 +71,6 @@ export default function TaskPopover({ control, tasks }: TaskPopoverProps) {
       ))}
     </>
   );
-}
+};
+
+export default TaskPopover;

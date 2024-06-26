@@ -5,7 +5,7 @@ import Navigation from '@components/Navigation/Navigation';
 import Header from '@components/Header/Header';
 import ThemeProvider from '@providers/ThemeProvider';
 import * as React from 'react';
-import { Toaster } from '@components/ui/Toast/Toaster';
+import Toaster from '@components/ui/Toast/Toaster';
 
 export const metadata: Metadata = {
   title: 'yappi',
