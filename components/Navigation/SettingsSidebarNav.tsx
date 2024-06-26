@@ -2,9 +2,8 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { Button } from '@components/ui/Buttons/Button';
+import { usePathname } from 'next/navigation';
 
 interface SidebarNavProps {
   items: {
@@ -15,28 +14,17 @@ interface SidebarNavProps {
 
 const SettingsSidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
   const pathname = usePathname();
-  const { theme } = useTheme();
-
-  const getButtonStyle = (href: string) =>
-    `hover:bg-tertiaryBG-light hover:dark:bg-secondaryBG-dark ${
-      pathname === href
-        ? theme === 'dark'
-          ? 'bg-secondaryBG-dark'
-          : theme === 'light'
-            ? 'bg-tertiaryBG-light'
-            : ''
-        : ''
-    }`;
 
   return (
     <nav className="flex flex-col gap-2">
-      {items.map((item) => (
-        <Link key={item.href} href={item.href}>
-          <Button variant="ghost" className={getButtonStyle(item.href)}>
-            {item.title}
-          </Button>
-        </Link>
-      ))}
+      {items.map((item) => {
+        const isActive = pathname === item.href;
+        return (
+          <Link key={item.href} href={item.href}>
+            <Button variant={isActive ? 'selected' : 'ghost'}>{item.title}</Button>
+          </Link>
+        );
+      })}
     </nav>
   );
 };

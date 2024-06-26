@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@components/ui/Tooltip/Tooltip';
 import formatTooltipContent from '@components/Navigation/Navigation.utils';
+import { usePathname } from 'next/navigation';
+import { Button } from '@components/ui/Buttons/Button';
 
 interface NavLinkProps {
   href: string;
@@ -14,21 +14,17 @@ interface NavLinkProps {
 
 const NavLink: React.FC<NavLinkProps> = ({ href, children }) => {
   const pathname = usePathname();
-  const { theme } = useTheme();
 
   const isActive = (path: string) => pathname === href || pathname.startsWith(`${path}/`);
-
-  const getLinkStyle = () =>
-    `flex h-10 w-10 items-center justify-center rounded-md hover:bg-tertiaryBG-light hover:dark:bg-secondaryBG-dark ${
-      isActive(href) ? (theme === 'dark' ? 'bg-secondaryBG-dark' : theme === 'light' ? 'bg-tertiaryBG-light' : '') : ''
-    }`;
 
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Link href={href} className={getLinkStyle()}>
-            {children}
+          <Link href={href} className="">
+            <Button variant={isActive(href) ? 'selected' : 'icon'} size="navigation">
+              {children}
+            </Button>
           </Link>
         </TooltipTrigger>
         <TooltipContent side="right" className="z-50 font-outfit text-xs font-light">
