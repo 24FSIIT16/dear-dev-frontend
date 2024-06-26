@@ -1,19 +1,21 @@
 'use client';
 
 import * as React from 'react';
-import { useTheme } from 'next-themes';
 import Separator from '@components/ui/Separator/Separator';
+import { useTheme } from 'next-themes';
 
 const Appearance: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [selectedTheme, setSelectedTheme] = React.useState<string>(theme);
+  const [selectedTheme, setSelectedTheme] = React.useState<>();
+
+  React.useEffect(() => {
+    setSelectedTheme(theme);
+  }, [theme]);
 
   const handleSelect = (mode: string) => {
     setSelectedTheme(mode);
     setTheme(mode);
   };
-
-  const formattedTheme = selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1);
 
   return (
     <div className="space-y-4">
@@ -25,9 +27,6 @@ const Appearance: React.FC = () => {
       <div className="space-y-1">
         <h3>Theme</h3>
         <p className="text-xs font-thin">Select the theme for the application.</p>
-        <p className="text-xs font-thin">
-          Current theme: <span className="text-xs font-medium">{formattedTheme}</span>{' '}
-        </p>
       </div>
       <div className="flex flex-row gap-4">
         <button type="button" className="cursor-pointer" onClick={() => handleSelect('light')}>
