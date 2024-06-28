@@ -3,8 +3,7 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Label from '@components/ui/Label/Label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
-import { Button } from '@components/ui/Buttons/Button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
 import Separator from '@components/ui/Separator/Separator';
 import TaskPopover from '@components/Surveys/TaskPopover';
@@ -15,9 +14,10 @@ type FormValues = {
 
 const WorkItemHappiness: React.FC = () => {
   const {
-    control,
     handleSubmit,
     formState: { errors },
+    setValue,
+    getValues,
     reset,
   } = useForm<FormValues>({
     defaultValues: {
@@ -28,15 +28,22 @@ const WorkItemHappiness: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     toast({
       title: 'Success!',
-      description: `Work Item Happiness  Submitted: ${JSON.stringify(data.question2)}`,
+      description: `Work Item Happiness Submitted: ${JSON.stringify(data.question2)}`,
     });
     reset();
   };
 
+  const handleSmilieChange = (taskId: string, value: string) => {
+    const currentValues = getValues('question2') || [];
+    const newValues = [...currentValues.filter((item) => item.taskId !== taskId), { taskId, value }];
+    setValue('question2', newValues);
+    handleSubmit(onSubmit)().catch((error) => console.error('Error submitting form:', error));
+  };
+
   return (
-    <Card x-chunk="dashboard-04-chunk-2">
+    <Card>
       <CardHeader>
-        <CardTitle>Work Item Happiness </CardTitle>
+        <CardTitle>Work Item Happiness</CardTitle>
         <CardDescription>
           Submit your happiness for specific work items to track your happiness with your tasks.
         </CardDescription>
@@ -48,7 +55,7 @@ const WorkItemHappiness: React.FC = () => {
             <Label>How happy are you with the specific work items?</Label>
             <div className="mt-2">
               <TaskPopover
-                control={control}
+                onSmilieChange={handleSmilieChange}
                 tasks={[
                   { taskId: 'DEAR-90', buttonLabel: 'DEAR-90 Create Basic...' },
                   { taskId: 'MEET-12', buttonLabel: 'Meeting Client LIPO' },
@@ -61,9 +68,6 @@ const WorkItemHappiness: React.FC = () => {
 
           <Separator />
         </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Submit</Button>
-        </CardFooter>
       </form>
     </Card>
   );

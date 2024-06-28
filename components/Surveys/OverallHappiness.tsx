@@ -3,11 +3,9 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Label from '@components/ui/Label/Label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
-import { Button } from '@components/ui/Buttons/Button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
-import Separator from '@components/ui/Separator/Separator';
 
 type FormValues = {
   question1: string;
@@ -36,8 +34,13 @@ const OverallHappiness: React.FC = () => {
     reset();
   };
 
-  const handleChange = (value: string) => {
-    setValue('question1', value);
+  const handleChange = async (value: string) => {
+    try {
+      setValue('question1', value);
+      await handleSubmit(onSubmit)();
+    } catch (error) {
+      console.error('Error handling change:', error);
+    }
   };
 
   const getTodayDate = () => {
@@ -46,9 +49,9 @@ const OverallHappiness: React.FC = () => {
   };
 
   return (
-    <Card x-chunk="dashboard-04-chunk-1 ">
+    <Card>
       <CardHeader>
-        <CardTitle>Overall Happiness Survey {getTodayDate()}</CardTitle>
+        <CardTitle>How happy are you with your working day?</CardTitle>
         <CardDescription>
           Submit your overall happiness survey to track your happiness with your work day.
         </CardDescription>
@@ -57,7 +60,7 @@ const OverallHappiness: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <div className="mb-4">
-            <Label>How happy are you with your overall working day?</Label>
+            <Label> {getTodayDate()}</Label>
             <div className="flex justify-center">
               <div className="grid grid-cols-3 gap-4 pb-12 pt-12">
                 {['5', '4', '2', '3', '6', '1'].map((value, index) => (
@@ -75,12 +78,7 @@ const OverallHappiness: React.FC = () => {
             </div>
             {errors.question1 && <span className="text-red-500">This field is required</span>}
           </div>
-
-          <Separator />
         </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button>Submit</Button>
-        </CardFooter>
       </form>
     </Card>
   );
