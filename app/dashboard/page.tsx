@@ -1,6 +1,8 @@
 import * as React from 'react';
 import BasicCard from '@components/Cards/Basic';
-import DailyHappinessSurvey from '@components/Surveys/DailyHappinessSurvey';
+import OverallHappiness from '@components/Surveys/OverallHappiness';
+import WorkItemHappiness from '@components/Surveys/WorkItemHappiness';
+import Feedback from '@components/Surveys/Feedback';
 
 export default function Dashboard() {
   return (
@@ -8,7 +10,11 @@ export default function Dashboard() {
       <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
         <div className="items-right flex gap-3">
           <BasicCard />
-          <DailyHappinessSurvey />
+          <OverallHappiness />
+          <div>
+            <WorkItemHappiness />
+            <Feedback />
+          </div>
         </div>
         <BasicCard />
       </div>

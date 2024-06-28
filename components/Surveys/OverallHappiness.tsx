@@ -6,33 +6,23 @@ import Label from '@components/ui/Label/Label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
-import { Textarea } from '@components/ui/Text/Textarea';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
-import TaskPopover from '@components/Surveys/TaskPopover';
 import Separator from '@components/ui/Separator/Separator';
 
 type FormValues = {
   question1: string;
-  question2: Array<{ taskId: string; value: string }>;
-  question3: string;
-  question4: string;
 };
 
-const DailyHappinessSurvey: React.FC = () => {
+const OverallHappiness: React.FC = () => {
   const {
-    register,
     watch,
     setValue,
     handleSubmit,
     formState: { errors },
     reset,
-    control,
   } = useForm<FormValues>({
     defaultValues: {
       question1: '',
-      question2: [],
-      question3: '',
-      question4: '',
     },
   });
 
@@ -41,7 +31,7 @@ const DailyHappinessSurvey: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     toast({
       title: 'Success!',
-      description: `Survey Submitted with response: ${JSON.stringify(data.question2)}  ${data.question1} ${data.question3} ${data.question4}`,
+      description: `Overall Happiness Survey Submitted: ${data.question1}`,
     });
     reset();
   };
@@ -58,9 +48,9 @@ const DailyHappinessSurvey: React.FC = () => {
   return (
     <Card x-chunk="dashboard-04-chunk-1 ">
       <CardHeader>
-        <CardTitle>Happiness Survey {getTodayDate()}</CardTitle>
+        <CardTitle>Overall Happiness Survey {getTodayDate()}</CardTitle>
         <CardDescription>
-          Submit your daily happiness survey to track your happiness with your work day.
+          Submit your overall happiness survey to track your happiness with your work day.
         </CardDescription>
       </CardHeader>
 
@@ -83,39 +73,10 @@ const DailyHappinessSurvey: React.FC = () => {
                 ))}
               </div>
             </div>
-
             {errors.question1 && <span className="text-red-500">This field is required</span>}
           </div>
 
           <Separator />
-
-          <div className="mb-4">
-            <Label>How happy are you with the specific work items?</Label>
-            <div className="mt-2">
-              <TaskPopover
-                control={control}
-                tasks={[
-                  { taskId: 'DEAR-90', buttonLabel: 'DEAR-90 Create Basic...' },
-                  { taskId: 'MEET-12', buttonLabel: 'Meeting Client LIPO' },
-                  { taskId: 'DEAR-91', buttonLabel: 'DEAR-91 Update Advanced...' },
-                ]}
-              />
-            </div>
-            {errors.question2 && <span>This field is required</span>}
-          </div>
-
-          <Separator />
-
-          <div className="mb-4">
-            <Label>What was especially positive about it?</Label>
-            <Textarea id="lastName" {...register('question3', { required: false })} />
-            {errors.question3 && <span>This field is required</span>}
-          </div>
-          <div className="mb-4">
-            <Label>What was especially negative about it?</Label>
-            <Textarea id="lastName" {...register('question4', { required: false })} />
-            {errors.question4 && <span>This field is required</span>}
-          </div>
         </CardContent>
         <CardFooter className="border-t px-6 py-4">
           <Button>Submit</Button>
@@ -125,4 +86,4 @@ const DailyHappinessSurvey: React.FC = () => {
   );
 };
 
-export default DailyHappinessSurvey;
+export default OverallHappiness;
