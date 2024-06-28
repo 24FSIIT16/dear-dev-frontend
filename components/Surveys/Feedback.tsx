@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
 import { Textarea } from '@components/ui/Text/Textarea';
-import Separator from '@components/ui/Separator/Separator';
+import getTodayDate from '../../services/dateService';
 
 type FormValues = {
   question3: string;
@@ -35,15 +35,10 @@ const FeedbackSurvey: React.FC = () => {
     reset();
   };
 
-  const getTodayDate = () => {
-    const today = new Date();
-    return today.toLocaleDateString();
-  };
-
   return (
     <Card x-chunk="dashboard-04-chunk-3">
       <CardHeader>
-        <CardTitle>Feedback Survey {getTodayDate()}</CardTitle>
+        <CardTitle>Give us some context about your day!</CardTitle>
         <CardDescription>
           Submit your feedback to provide positive and negative aspects of your work day.
         </CardDescription>
@@ -51,6 +46,8 @@ const FeedbackSurvey: React.FC = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
+          <Label>{getTodayDate()}</Label>
+
           <div className="mb-4">
             <Label>What was especially positive about it?</Label>
             <Textarea id="positiveFeedback" {...register('question3', { required: false })} />
@@ -61,11 +58,9 @@ const FeedbackSurvey: React.FC = () => {
             <Textarea id="negativeFeedback" {...register('question4', { required: false })} />
             {errors.question4 && <span className="text-red-500">This field is required</span>}
           </div>
-
-          <Separator />
         </CardContent>
         <CardFooter className="border-t px-6 py-4">
-          <Button>Submit</Button>
+          <Button className="w-full">Submit </Button>
         </CardFooter>
       </form>
     </Card>

@@ -5,8 +5,8 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Label from '@components/ui/Label/Label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
-import Separator from '@components/ui/Separator/Separator';
 import TaskPopover from '@components/Surveys/TaskPopover';
+import getTodayDate from '../../services/dateService';
 
 type FormValues = {
   question2: Array<{ taskId: string; value: string }>;
@@ -43,7 +43,7 @@ const WorkItemHappiness: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Work Item Happiness</CardTitle>
+        <CardTitle>How happy are you with the specific work items?</CardTitle>
         <CardDescription>
           Submit your happiness for specific work items to track your happiness with your tasks.
         </CardDescription>
@@ -52,7 +52,7 @@ const WorkItemHappiness: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <div className="mb-4">
-            <Label>How happy are you with the specific work items?</Label>
+            <Label> {getTodayDate()}</Label>
             <div className="mt-2">
               <TaskPopover
                 onSmilieChange={handleSmilieChange}
@@ -65,8 +65,6 @@ const WorkItemHappiness: React.FC = () => {
             </div>
             {errors.question2 && <span className="text-red-500">This field is required</span>}
           </div>
-
-          <Separator />
         </CardContent>
       </form>
     </Card>

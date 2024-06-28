@@ -10,35 +10,54 @@ type TaskPopoverProps = {
   tasks: Array<{ taskId: string; buttonLabel: string }>;
 };
 
-const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, tasks }) => (
-  <>
-    {tasks.map((task) => (
-      <div key={task.taskId} className="mb-4">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button>{task.buttonLabel}</Button>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="flex justify-center">
-              <div className="grid grid-cols-3 gap-4 pb-12 pt-12">
-                {['5', '4', '2', '3', '6', '1'].map((value, index) => (
-                  <SmiliesRadioButton
-                    key={value}
-                    value={value}
-                    selectedValue=""
-                    size={50}
-                    handleChange={() => onSmilieChange(task.taskId, value)}
-                    altText={['Very Unhappy', 'Neutral', 'Happy', 'Very Happy', 'Very Happy', 'Very Unhappy'][index]}
-                    imagePath={`/assets/Smilies/${['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}.png`}
-                  />
-                ))}
+const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, tasks }) => {
+  const [openTaskId, setOpenTaskId] = React.useState<string | null>(null);
+
+  const handleOpen = (taskId: string) => {
+    setOpenTaskId(taskId);
+  };
+
+  const handleClose = () => {
+    setOpenTaskId(null);
+  };
+
+  const handleChange = (taskId: string, value: string) => {
+    onSmilieChange(taskId, value);
+    handleClose();
+  };
+
+  return (
+    <>
+      {tasks.map((task) => (
+        <div key={task.taskId} className="mb-4">
+          <Popover
+            open={openTaskId === task.taskId}
+            onOpenChange={(open) => (open ? handleOpen(task.taskId) : handleClose())}
+          >
+            <PopoverTrigger asChild>
+              <Button>{task.buttonLabel}</Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              <div className="flex justify-center">
+                <div className="grid grid-cols-6 gap-4">
+                  {['5', '4', '2', '3', '6', '1'].map((value, index) => (
+                    <SmiliesRadioButton
+                      key={value}
+                      value={value}
+                      size={50}
+                      handleChange={() => handleChange(task.taskId, value)}
+                      altText={['Very Unhappy', 'Neutral', 'Happy', 'Very Happy', 'Very Happy', 'Very Unhappy'][index]}
+                      imagePath={`/assets/Smilies/${['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}.png`}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-          </PopoverContent>
-        </Popover>
-      </div>
-    ))}
-  </>
-);
+            </PopoverContent>
+          </Popover>
+        </div>
+      ))}
+    </>
+  );
+};
 
 export default TaskPopover;
