@@ -19,8 +19,24 @@ interface SmileySelection {
   value: string;
 }
 
+const getSelectedSmileyValue = (value: SmileySelection[], taskId: string, smileyValue: string) =>
+  value?.find((val: SmileySelection) => val.taskId === taskId && val.value === smileyValue) ? smileyValue : undefined;
+
+const handleChange = (
+  newValue: string,
+  value: SmileySelection[],
+  taskId: string,
+  onChange: (updatedValues: SmileySelection[]) => void
+) => {
+  const updatedValues: SmileySelection[] = [
+    ...value.filter((val: SmileySelection) => val.taskId !== taskId),
+    { taskId, value: newValue },
+  ];
+  onChange(updatedValues);
+};
+
 const TaskPopover: React.FC<TaskPopoverProps> = ({ control, tasks }) => {
-  const smilieSize = 7;
+  const smilieSize = 30;
 
   return (
     <>
@@ -41,23 +57,11 @@ const TaskPopover: React.FC<TaskPopoverProps> = ({ control, tasks }) => {
                       <SmiliesRadioButton
                         key={smileyValue}
                         value={smileyValue}
-                        selectedValue={
-                          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                          value?.find((val: SmileySelection) => val.taskId === task.taskId && val.value === smileyValue)
-                            ? smileyValue
-                            : undefined
+                        selectedValue={getSelectedSmileyValue(value as SmileySelection[], task.taskId, smileyValue)}
+                        handleChange={(newValue: string) =>
+                          handleChange(newValue, value as SmileySelection[], task.taskId, onChange)
                         }
-                        handleChange={(newValue: string) => {
-                          const updatedValues: SmileySelection[] = [
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-                            ...value.filter((val: SmileySelection) => val.taskId !== task.taskId),
-                            { taskId: task.taskId, value: newValue },
-                          ];
-                          onChange(updatedValues);
-                        }}
-                        altText={
-                          ['Very Unhappy', 'Neutral', 'Happy', 'Very Happy', 'Very Happy', 'Very Unhappy'][index]
-                        }
+                        altText={['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}
                         imagePath={`/assets/Smilies/${['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}.png`}
                         size={smilieSize}
                       />

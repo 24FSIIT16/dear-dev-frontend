@@ -1,6 +1,7 @@
 import React from 'react';
 import Label from '@components/ui/Label/Label';
 import Input from '@components/ui/Input/Input';
+import Image from 'next/image';
 
 interface SmiliesRadioButtonProps {
   value: string;
@@ -18,18 +19,17 @@ const SmiliesRadioButton: React.FC<SmiliesRadioButtonProps> = ({
   altText,
   imagePath,
   size,
-}) => {
-  const imageSize = `h-${size} w-${size}`; // Use Tailwind's dynamic class names
-  return (
-    <Label className="cursor-pointer">
-      <Input type="radio" value={value} onChange={() => handleChange(value)} className="hidden" />
-      <img
-        src={imagePath}
-        alt={altText}
-        className={`${imageSize} ${selectedValue === value ? '' : 'grayscale'} hover:grayscale-0`}
-      />
-    </Label>
-  );
-};
+}) => (
+  <Label className="cursor-pointer">
+    <Input type="radio" value={value} onChange={() => handleChange(value)} className="hidden" />
+    <Image
+      src={imagePath}
+      alt={altText}
+      className={` ${selectedValue === value ? '' : 'grayscale'} hover:grayscale-0`}
+      width={size}
+      height={size}
+    />
+  </Label>
+);
 
 export default SmiliesRadioButton;

@@ -74,7 +74,7 @@ const DailyHappinessSurvey: React.FC = () => {
                     key={value}
                     value={value}
                     selectedValue={selectedValue}
-                    size={18}
+                    size={130}
                     handleChange={handleChange}
                     altText={['Very Unhappy', 'Neutral', 'Happy', 'Very Happy', 'Very Happy', 'Very Unhappy'][index]}
                     imagePath={`/assets/Smilies/${['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}.png`}
