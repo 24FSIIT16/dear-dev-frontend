@@ -9,6 +9,7 @@ import { toast } from '@components/ui/Toast/use-toast';
 import { Textarea } from '@components/ui/Text/Textarea';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
 import TaskPopover from '@components/Surveys/TaskPopover';
+import Separator from '@components/ui/Separator/Separator';
 
 type FormValues = {
   question1: string;
@@ -86,7 +87,7 @@ const DailyHappinessSurvey: React.FC = () => {
             {errors.question1 && <span className="text-red-500">This field is required</span>}
           </div>
 
-          <hr className="my-6 border-t-2 border-gray-200" />
+          <Separator />
 
           <div className="mb-4">
             <Label>How happy are you with the specific work items?</Label>
@@ -103,7 +104,7 @@ const DailyHappinessSurvey: React.FC = () => {
             {errors.question2 && <span>This field is required</span>}
           </div>
 
-          <hr className="my-6 border-t-2 border-gray-200" />
+          <Separator />
 
           <div className="mb-4">
             <Label>What was especially positive about it?</Label>

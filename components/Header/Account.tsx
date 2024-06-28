@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from 'next/link';
 import { Button } from '@components/ui/Buttons/Button';
 import { User, Settings, LogOut } from 'lucide-react';
 import {
@@ -26,11 +27,13 @@ const Account: React.FC = () => (
           <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <div className="flex items-center">
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </div>
+        <DropdownMenuItem asChild>
+          <Link href="/settings">
+            <div className="flex items-center">
+              <Settings className="mr-2 h-4 w-4" />
+              <span>Settings</span>
+            </div>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />

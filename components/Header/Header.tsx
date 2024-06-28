@@ -10,7 +10,6 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from '@components/ui/Breadcrumb/Breadcrumb';
-import ThemeToggle from '@components/ui/ThemeToggle/ThemeToggle';
 import getBreadcrumbs from './Header.utils';
 import Account from './Account';
 
@@ -37,10 +36,7 @@ const Header: React.FC = () => {
           ))}
         </BreadcrumbList>
       </Breadcrumb>
-      <div className="flex items-center space-x-4">
-        <ThemeToggle />
-        <Account />
-      </div>
+      <Account />
     </header>
   );
 };
