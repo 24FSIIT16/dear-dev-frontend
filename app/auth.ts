@@ -1,8 +1,7 @@
 import NextAuth from 'next-auth';
-import GitHub from 'next-auth/providers/github';
-import Google from 'next-auth/providers/google';
 import PostgresAdapter from '@auth/pg-adapter';
 import { Pool } from 'pg';
+import authConfig from 'auth.config';
 
 const pool = new Pool({
   host: process.env.DATABASE_HOST,
@@ -17,5 +16,6 @@ const pool = new Pool({
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PostgresAdapter(pool),
-  providers: [GitHub, Google],
+  session: { strategy: 'jwt' },
+  ...authConfig,
 });
