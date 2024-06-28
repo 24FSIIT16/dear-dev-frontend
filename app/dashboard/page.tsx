@@ -1,11 +1,17 @@
 import * as React from 'react';
-import Logo from '@components/ui/Logo/Logo';
+import BasicCard from '@components/Cards/Basic';
+import DailyHappinessSurvey from '@components/Surveys/DailyHappinessSurvey';
 
 export default function Dashboard() {
   return (
-    <div className="flex min-h-[calc(100vh-9rem)] flex-col items-center justify-center space-y-2">
-      <Logo className="h-20 w-20 text-black dark:text-white" />
-      <span className="text-xl font-light">yappi</span>
-    </div>
+    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+      <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
+        <div className="items-right flex gap-3">
+          <BasicCard />
+          <DailyHappinessSurvey />
+        </div>
+        <BasicCard />
+      </div>
+    </main>
   );
 }
