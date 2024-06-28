@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { signIn, signOut } from '@/auth';
+import { signIn } from '@/auth';
 import { Button } from '@components/ui/Buttons/Button';
 import SessionInfo from './SessionInfo';
 
@@ -13,16 +13,6 @@ const Home: React.FC = () => (
       }}
     >
       <Button>Sign in with GitHub</Button>
-    </form>
-
-    <form
-      action={async () => {
-        'use server';
-
-        await signOut();
-      }}
-    >
-      <Button>SignOut</Button>
     </form>
 
     <form
