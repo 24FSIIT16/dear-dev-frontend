@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuGroup,
 } from '@components/ui/DropdownMenu/Dropdown-menu';
+import { signOut } from 'next-auth/react';
 
 const Account: React.FC = () => (
   <DropdownMenu>
@@ -37,7 +38,7 @@ const Account: React.FC = () => (
         </DropdownMenuItem>
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>
+      <DropdownMenuItem onClick={() => signOut()}>
         <LogOut className="mr-2 h-4 w-4" />
         <span>Log out</span>
       </DropdownMenuItem>
