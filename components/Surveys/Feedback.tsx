@@ -36,7 +36,7 @@ const FeedbackSurvey: React.FC = () => {
   };
 
   return (
-    <Card x-chunk="dashboard-04-chunk-3">
+    <Card>
       <CardHeader>
         <CardTitle>Give us some context about your day!</CardTitle>
         <CardDescription>
