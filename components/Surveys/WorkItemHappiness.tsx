@@ -6,7 +6,7 @@ import Label from '@components/ui/Label/Label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
 import TaskPopover from '@components/Surveys/TaskPopover';
-import getTodayDate from '../../services/dateService';
+import getTodayDate from '@/lib/dateUtils';
 
 type FormValues = {
   question2: Array<{ taskId: string; value: string }>;

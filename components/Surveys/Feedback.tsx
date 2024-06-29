@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
 import { Textarea } from '@components/ui/Text/Textarea';
-import getTodayDate from '../../services/dateService';
+import getTodayDate from '@/lib/dateUtils';
 
 type FormValues = {
   question3: string;

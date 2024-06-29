@@ -6,7 +6,7 @@ import Label from '@components/ui/Label/Label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
 import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
-import getTodayDate from '../../services/dateService';
+import getTodayDate from '@/lib/dateUtils';
 
 type FormValues = {
   question1: string;
@@ -29,6 +29,8 @@ const OverallHappiness: React.FC = () => {
 
   const gifUrls = [
     'https://media.giphy.com/media/11oNXSmmBzNLA4/giphy.gif?cid=ecf05e474o12q9h24ceio3i36zhcxlar1q4xki0tqlh7g2pz&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+    'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2JqM201NHcyYm52d3d2eXl1ZHdpYzVzdXgyOHFkeWF5bWpwenVwZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yoJC2GnSClbPOkV0eA/giphy.gif',
+    'https://media.giphy.com/media/10FwycrnAkpshW/giphy.gif?cid=790b761194bph79kow9cj0q110zhbrux3q811kx6uqb9h5lz&ep=v1_gifs_search&rid=giphy.gif&ct=g',
   ];
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
