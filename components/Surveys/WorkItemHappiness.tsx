@@ -7,6 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@comp
 import { toast } from '@components/ui/Toast/use-toast';
 import TaskPopover from '@components/Surveys/TaskPopover';
 import getTodayDate from '@/lib/dateUtils';
+import { useEffect, useState } from 'react';
+import WorkItemClient from '@/api/workItemClient';
 
 type FormValues = {
   question2: Array<{ taskId: string; value: string }>;
@@ -37,8 +39,31 @@ const WorkItemHappiness: React.FC = () => {
     const currentValues = getValues('question2') || [];
     const newValues = [...currentValues.filter((item) => item.taskId !== taskId), { taskId, value }];
     setValue('question2', newValues);
-    handleSubmit(onSubmit)().catch((error) => console.error('Error submitting form:', error));
+    handleSubmit(onSubmit)().catch((error) =>
+      toast({
+        title: 'Error!',
+        description: `Error submitting, error: ${error}, ${getTodayDate()}`,
+      })
+    );
   };
+
+  const [workItems, setWorkItems] = useState<string[]>([]);
+  useEffect(() => {
+    WorkItemClient.getWorkItems()
+      .then((response) => {
+        setWorkItems(response?.data?.message);
+        toast({
+          title: 'Success!',
+          description: `Work Items Fetched: ${JSON.stringify(response?.data?.message)}`,
+        });
+      })
+      .catch((error) => {
+        toast({
+          title: 'Error!',
+          description: `Error getting workItems, error: ${error}, ${getTodayDate()}`,
+        });
+      });
+  }, []);
 
   return (
     <Card>
@@ -53,6 +78,7 @@ const WorkItemHappiness: React.FC = () => {
         <CardContent>
           <div className="mb-4">
             <Label> {getTodayDate()}</Label>
+            <Label> {workItems.find((item) => item)}</Label>
             <div className="mt-2">
               <TaskPopover
                 onSmilieChange={handleSmilieChange}
