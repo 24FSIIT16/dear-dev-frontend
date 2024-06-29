@@ -29,6 +29,7 @@ const config: Config = {
         primaryGreen: {
           main: 'rgba(65, 185, 99)',
           light: 'rgba(65, 185, 99, 0.2)',
+          bg: '#D9F1E0',
         },
         primaryRed: {
           main: 'rgba(233, 75, 104)',

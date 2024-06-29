@@ -73,8 +73,10 @@ const Account: React.FC = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleLogout}>Log out</AlertDialogAction>
+          <AlertDialogCancel className="h-8">Cancel</AlertDialogCancel>
+          <AlertDialogAction className="h-8" onClick={handleLogout}>
+            Log out
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
