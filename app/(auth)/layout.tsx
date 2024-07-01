@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { Metadata } from 'next';
 import 'styles/globals.css';
 import outfit from 'styles/fonts';
 import ThemeProvider from '@providers/ThemeProvider';

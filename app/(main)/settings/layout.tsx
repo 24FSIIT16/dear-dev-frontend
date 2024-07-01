@@ -13,7 +13,7 @@ const settingsSidebarNavItems = [
   },
 ];
 
-const SettingsLayout: React.FC<React.ReactNode> = ({ children }) => (
+export default function SettingsLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   <div className="space-y-8 px-16">
     <div className="space-y-0.5">
       <h1>Settings</h1>
@@ -26,7 +26,5 @@ const SettingsLayout: React.FC<React.ReactNode> = ({ children }) => (
       </aside>
       <div className="mt-2 flex-1">{children}</div>
     </div>
-  </div>
-);
-
-export default SettingsLayout;
+  </div>;
+}
