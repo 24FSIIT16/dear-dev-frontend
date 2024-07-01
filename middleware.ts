@@ -4,12 +4,32 @@ import { NextResponse, NextRequest } from 'next/server';
 
 const { auth } = NextAuth(authConfig);
 
+interface AuthRequest extends NextRequest {
+  auth?: {
+    user: {
+      name: string;
+      email: string;
+      image: string;
+    };
+    expires: string;
+  };
+}
+
+const verifySession = (request: AuthRequest): boolean => {
+  if (request.auth) {
+    return true;
+  }
+  return false;
+};
+
 export default auth((request: NextRequest) => {
+  const sessionValid = verifySession(request);
+
   if (request.nextUrl.pathname === '/login') {
     return NextResponse.next();
   }
 
-  if (!request.auth && request.nextUrl.pathname !== '/login') {
+  if (!sessionValid && request.nextUrl.pathname !== '/login') {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 

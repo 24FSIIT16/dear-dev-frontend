@@ -2,6 +2,10 @@ import SettingsSidebarNav from '@components/Navigation/SettingsSidebarNav';
 import Separator from '@components/ui/Separator/Separator';
 import * as React from 'react';
 
+interface SettingsLayoutProps {
+  children: React.ReactNode;
+}
+
 const settingsSidebarNavItems = [
   {
     title: 'Account',
@@ -13,7 +17,7 @@ const settingsSidebarNavItems = [
   },
 ];
 
-const SettingsLayout: React.FC<React.ReactNode> = ({ children }) => (
+const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => (
   <div className="space-y-8 px-16">
     <div className="space-y-0.5">
       <h1>Settings</h1>

@@ -6,7 +6,7 @@ import { useTheme } from 'next-themes';
 
 const Appearance: React.FC = () => {
   const { theme, setTheme } = useTheme();
-  const [selectedTheme, setSelectedTheme] = React.useState<>();
+  const [selectedTheme, setSelectedTheme] = React.useState<string | undefined>();
 
   React.useEffect(() => {
     setSelectedTheme(theme);
