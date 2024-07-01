@@ -10,16 +10,16 @@ interface UserAuthFormProps {
 }
 
 const UserAuthForm: React.FC<UserAuthFormProps> = ({ className }) => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [loadingProvider, setLoadingProvider] = React.useState<string | null>(null);
 
   const handleLogin = async (provider: string) => {
-    setIsLoading(true);
+    setLoadingProvider(provider);
     try {
       await signIn(provider, { callbackUrl: '/' });
     } catch (error) {
       console.error('Error signing in: ', error);
     }
-    setIsLoading(false);
+    setLoadingProvider(null);
   };
 
   return (
@@ -31,10 +31,10 @@ const UserAuthForm: React.FC<UserAuthFormProps> = ({ className }) => {
           className="h-8"
           variant="outline"
           type="button"
-          disabled={isLoading}
+          disabled={loadingProvider === 'github'}
           onClick={() => handleLogin('github')}
         >
-          {isLoading ? (
+          {loadingProvider === 'github' ? (
             <Icons.SPINNER className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <Icons.GITHUB className="mr-2 h-4 w-4" />
@@ -50,10 +50,10 @@ const UserAuthForm: React.FC<UserAuthFormProps> = ({ className }) => {
           className="h-8"
           variant="outline"
           type="button"
-          disabled={isLoading}
+          disabled={loadingProvider === 'google'}
           onClick={() => handleLogin('google')}
         >
-          {isLoading ? (
+          {loadingProvider === 'google' ? (
             <Icons.SPINNER className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <Icons.GOOGLE className="mr-2 h-4 w-4" />
