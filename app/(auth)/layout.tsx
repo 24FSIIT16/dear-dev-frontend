@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${outfit.variable} font-outfit`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <main>
             <div>{children}</div>
           </main>
