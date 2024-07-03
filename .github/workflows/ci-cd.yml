@@ -2,7 +2,7 @@ name: CI / CD yappi
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "DEAR-1*" ]
   pull_request:
     branches: [ "main" ]
 
