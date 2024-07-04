@@ -45,4 +45,4 @@ jobs:
           REPO_NAME=ghcr.io/${{ github.repository_owner }}/dear-dev-frontend
           LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
           docker build -t $LOWER_REPO_NAME:latest .
-          docker push
+          docker push $LOWER_REPO_NAME:latest
