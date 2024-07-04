@@ -18,4 +18,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PostgresAdapter(pool),
   session: { strategy: 'jwt' },
   ...authConfig,
+  secret: process.env.SECRET,
 });
