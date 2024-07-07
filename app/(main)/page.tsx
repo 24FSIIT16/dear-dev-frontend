@@ -8,9 +8,10 @@ import User from '@/types/UserType';
 
 const Home: React.FC = () => {
   const { userId } = useAuth();
-  const { data: user, isLoading } = useApi<User>(`/v1/user/${userId}`, 'GET');
+  const { data: user, isLoading, error } = useApi<User>(`/v1/user/${userId}`, 'GET');
 
   if (isLoading) return <Loading />;
+  if (error) return <div>Error loading data</div>;
 
   return (
     <div>
