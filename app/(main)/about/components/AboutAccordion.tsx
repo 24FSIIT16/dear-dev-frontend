@@ -2,7 +2,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@c
 import * as React from 'react';
 
 const AboutAccordion: React.FC = () => (
-  <Accordion type="multiple" collapsible className="text-md w-60 font-thin">
+  <Accordion type="multiple" className="text-md w-60 font-thin">
     <AccordionItem value="item-1">
       <AccordionTrigger>Where is yappi coming from?</AccordionTrigger>
       <AccordionContent>Blablabla...</AccordionContent>
