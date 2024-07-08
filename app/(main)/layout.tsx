@@ -24,9 +24,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <Navigation />
               <Header />
               <main className="mt-10 flex justify-center">
+                <Toaster />
                 <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
               </main>
-              <Toaster />
             </ThemeProvider>
           </AuthProvider>
         </NextAuthProvider>

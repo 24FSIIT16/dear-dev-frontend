@@ -14,7 +14,7 @@ interface TeamHoverCardProps {
 const TeamHoverCard: React.FC<TeamHoverCardProps> = ({ trigger, img, mail, description }) => (
   <HoverCard>
     <HoverCardTrigger>
-      <Button variant="link" className="text-md -ml-4 font-semibold">
+      <Button variant="link" className="text-md -ml-4 font-normal">
         {trigger}
       </Button>
     </HoverCardTrigger>
