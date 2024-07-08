@@ -45,7 +45,7 @@ const Error: React.FC<ErrorProps> = ({ className, errorMessage, action, showCont
             <Separator className="my-3" />
             <p className="mt-2 text-sm font-thin">
               If the problem persists, please{' '}
-              <Link href="/about" className="hover:text-primary underline underline-offset-4">
+              <Link href="/contact" className="hover:text-primary underline underline-offset-4">
                 contact us
               </Link>
               .

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@components/ui/Buttons/Button';
-import { User, Settings, LogOut } from 'lucide-react';
+import { User, Settings, LogOut, LifeBuoyIcon } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -37,16 +37,28 @@ const Account: React.FC = () => {
             <User className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuContent align="end" className="min-w-48">
+          <DropdownMenuLabel className="text-sm">My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
-            </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/settings">
+                <div className="flex items-center">
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/contact">
+                <div className="flex items-center">
+                  <LifeBuoyIcon className="mr-2 h-4 w-4" />
+                  <span>Support</span>
+                </div>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/settings/appearance">
                 <div className="flex items-center">
                   <Settings className="mr-2 h-4 w-4" />
                   <span>Settings</span>
