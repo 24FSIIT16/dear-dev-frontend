@@ -34,6 +34,7 @@ const config: Config = {
         primaryRed: {
           main: 'rgba(233, 75, 104)',
           light: 'rgba(233, 75, 104, 0.2)',
+          bg: '#FBDBE1',
         },
         primaryBlue: {
           main: 'rgba(78, 138, 227)',
