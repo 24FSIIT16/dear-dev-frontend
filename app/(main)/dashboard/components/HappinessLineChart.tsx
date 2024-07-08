@@ -34,7 +34,7 @@ const HappinessLineChart: React.FC = () => (
     <CardHeader>
       <CardTitle className="space-y-1">
         <p className="text-xl font-semibold">Happiness - Personal vs. Team</p>
-        <p className="-mt-4 text-sm font-thin">Monday, 01.07.24 - Firday, 05.07.24</p>
+        <p className="-mt-4 text-sm font-thin">Monday, 01.07.24 - Sunday, 07.07.24</p>
       </CardTitle>
     </CardHeader>
     <CardContent>
