@@ -1,14 +1,23 @@
 import * as React from 'react';
 import HappinessLineChart from './components/HappinessLineChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
+import DaysTrackedRadialChart from './components/DaysTrackedRadialChart';
+import WorkkindRadarChart from './components/WorkkindRadarChart';
 
 const DashboardPage: React.FC = () => (
-  <div className="grid grid-cols-2 gap-10">
-    <div>
-      <WorkkindBarChart />
+  <div className="space-y-4">
+    <div className="grid grid-cols-3 gap-10">
+      <WorkkindRadarChart />
+      <DaysTrackedRadialChart />
+      <WorkkindRadarChart />
     </div>
-    <div>
-      <HappinessLineChart />
+    <div className="grid grid-cols-2 gap-10">
+      <div>
+        <HappinessLineChart />
+      </div>
+      <div>
+        <WorkkindBarChart />
+      </div>
     </div>
   </div>
 );

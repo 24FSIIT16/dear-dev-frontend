@@ -43,7 +43,7 @@ const WorkkindBarChart: React.FC = () => (
     <CardFooter>
       <div className="flex w-full items-start gap-2 text-sm">
         <div className="grid gap-2">
-          <div className="flex items-center gap-2 font-semibold">
+          <div className="flex items-center gap-2">
             <p className="font-semibold">Coding is your favorite workkind</p>
           </div>
           <div className="flex items-center text-xs font-light">Showing Happiness-Score over the last week</div>
