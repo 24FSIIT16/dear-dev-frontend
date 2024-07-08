@@ -8,7 +8,7 @@ const AboutPage: React.FC = () => (
     <AboutAccordion />
     <div className="mt-8 space-y-1">
       <h2>Team</h2>
-      <p className="text-sm font-thin">Team behind yappi.</p>
+      <p className="text-md font-thin">Team behind yappi.</p>
     </div>
     <div className="mt-4 flex w-64 flex-row justify-between">
       <TeamHoverCard
@@ -28,7 +28,7 @@ const AboutPage: React.FC = () => (
       <Separator />
       <div className="space-y-1">
         <h2>Contact</h2>
-        <p className="text-sm font-thin">Do you have any questions? - Get in touch.</p>
+        <p className="text-md font-thin">Do you have any questions? - Get in touch.</p>
       </div>
     </div>
   </div>
