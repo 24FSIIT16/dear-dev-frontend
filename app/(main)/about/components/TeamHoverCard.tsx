@@ -20,7 +20,7 @@ const TeamHoverCard: React.FC<TeamHoverCardProps> = ({ trigger, img, mail, descr
     </HoverCardTrigger>
     <HoverCardContent className="font-xs w-auto p-4 font-thin">
       <div className="flex justify-between space-x-4">
-        <Avatar>
+        <Avatar className="h-14 w-14">
           <AvatarImage src={img} />
           <AvatarFallback>VC</AvatarFallback>
         </Avatar>

@@ -8,18 +8,24 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Textarea } from '@components/ui/Text/Textarea';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
+import { useAuth } from '@providers/AuthProvider';
+import Input from '@components/ui/Input/Input';
 
 const FormSchema = z.object({
   message: z.string().nonempty('Message is required'),
+  email: z.string().nonempty('Email is required').email('Pls enter a valid email'),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
 
 const ContactForm: React.FC = () => {
+  const { user } = useAuth();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       message: '',
+      email: user?.email ?? '',
     },
     mode: 'onSubmit',
   });
@@ -27,7 +33,7 @@ const ContactForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = () => {
     toast({
       title: 'Success',
-      description: 'Your message has been sent.',
+      description: 'Your message | issue has been sent.',
     });
     form.reset();
   };
@@ -37,12 +43,25 @@ const ContactForm: React.FC = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-4">
         <FormField
           control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input className="resize-none text-sm font-light" placeholder="Email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>Message | Issue</FormLabel>
               <FormControl>
-                <Textarea className="resize-none text-sm font-light" placeholder="Share with us..." {...field} />
+                <Textarea className="resize-none text-sm font-light" placeholder="Describe your.." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
