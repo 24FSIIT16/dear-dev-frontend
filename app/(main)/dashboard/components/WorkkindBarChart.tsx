@@ -3,7 +3,7 @@
 'use client';
 
 import * as React from 'react';
-import { Bar, BarChart, XAxis } from 'recharts';
+import { Bar, BarChart, XAxis, LabelList } from 'recharts';
 import { Card, CardContent, CardTitle, CardHeader, CardFooter } from '@components/ui/Card/Card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/Chart/Chart';
 
@@ -36,7 +36,9 @@ const WorkkindBarChart: React.FC = () => (
         <BarChart accessibilityLayer data={chartData}>
           <XAxis dataKey="workkind" tickLine={false} tickMargin={10} axisLine={false} />
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-          <Bar dataKey="happiness" fill="var(--color-happiness)" radius={5} />
+          <Bar dataKey="happiness" fill="var(--color-happiness)" radius={5}>
+            <LabelList position="inside" offset={12} className="fill-foreground" fontSize={12} />
+          </Bar>
         </BarChart>
       </ChartContainer>
     </CardContent>
@@ -46,7 +48,7 @@ const WorkkindBarChart: React.FC = () => (
           <div className="flex items-center gap-2">
             <p className="font-semibold">Coding is your favorite workkind</p>
           </div>
-          <div className="flex items-center text-xs font-light">Showing Happiness-Score over the last week</div>
+          <div className="flex items-center text-xs font-light">Showing Happiness-Score per workkind</div>
         </div>
       </div>
     </CardFooter>

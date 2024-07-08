@@ -61,7 +61,7 @@ function DaysTrackedRadialChart() {
             <div className="flex items-center gap-2">
               <p className="font-semibold">Days with tracked Happiness</p>
             </div>
-            <div className="flex items-center text-xs font-light">Showing number of days this year</div>
+            <div className="flex items-center text-xs font-light">Showing number of tracking days this year</div>
           </div>
         </div>
       </CardFooter>
