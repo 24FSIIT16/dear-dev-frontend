@@ -2,14 +2,14 @@ name: CI / CD yappi
 
 on:
   push:
-    branches: ['main']
+    branches: [ "*" ]
   pull_request:
-    branches: ['main']
+    branches: [ "main" ]
 
   workflow_dispatch:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,5 +30,35 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
+  build_and_push:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Build app
         run: npm run build
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to GitHub Container Registry
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+
+      - name: Build and push Docker image
+        run: |
+          REPO_NAME=ghcr.io/${{ github.repository_owner }}/dear-dev-frontend
+          LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
+          docker build -t $LOWER_REPO_NAME:latest .
+          docker push $LOWER_REPO_NAME:latest
