@@ -4,7 +4,15 @@ import * as React from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form/Form';
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@components/ui/Form/Form';
 import { Textarea } from '@components/ui/Text/Textarea';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from '@components/ui/Toast/use-toast';
@@ -13,7 +21,7 @@ import Input from '@components/ui/Input/Input';
 
 const FormSchema = z.object({
   message: z.string().nonempty('Message is required'),
-  email: z.string().nonempty('Email is required').email('Pls enter a valid email'),
+  email: z.string().nonempty('Email is required').email('Please enter a valid email'),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
@@ -40,7 +48,7 @@ const ContactForm: React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-8">
         <FormField
           control={form.control}
           name="email"
@@ -50,6 +58,9 @@ const ContactForm: React.FC = () => {
               <FormControl>
                 <Input className="resize-none text-sm font-light" placeholder="Email" {...field} />
               </FormControl>
+              <FormDescription className="text-xs">
+                This is the email we will respond to. Please provide us with an email address to which we should replay.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
