@@ -30,15 +30,15 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Build app
-        run: npm run build
-
   build_and_push:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/DEAR-106') # remove 106 later
     needs: test
 
     steps:
+      - name: Build app
+        run: npm run build
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
