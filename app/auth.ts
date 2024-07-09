@@ -1,7 +1,13 @@
-import NextAuth from 'next-auth';
+/* eslint-disable no-param-reassign */
+import NextAuth, { Session } from 'next-auth';
 import PostgresAdapter from '@auth/pg-adapter';
 import { Pool } from 'pg';
 import authConfig from 'auth.config';
+import jwt from 'jsonwebtoken';
+
+interface ExtendedSession extends Session {
+  accessToken?: string;
+}
 
 const pool = new Pool({
   host: process.env.DATABASE_HOST,
@@ -17,6 +23,23 @@ const pool = new Pool({
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PostgresAdapter(pool),
   session: { strategy: 'jwt' },
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      const extendedSession = session as ExtendedSession;
+      if (!extendedSession.user) {
+        extendedSession.user = { id: '', name: '', email: '' };
+      }
+      extendedSession.user.id = token.id as string;
+      extendedSession.accessToken = jwt.sign(token, process.env.JWT_SECRET as string, { algorithm: 'HS256' });
+      return extendedSession;
+    },
+  },
   ...authConfig,
   secret: process.env.SECRET,
 });

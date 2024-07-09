@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@comp
 import { toast } from '@components/ui/Toast/use-toast';
 import TaskPopover from '@components/Surveys/TaskPopover';
 import getTodayDate from '@/lib/dateUtils';
+import { Button } from '@components/ui/Buttons/Button';
 
 type FormValues = {
   question2: Array<{ taskId: string; value: string }>;
@@ -28,7 +29,7 @@ const WorkItemHappiness: React.FC = () => {
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     toast({
       title: 'Success!',
-      description: `Work Item Happiness Submitted: ${JSON.stringify(data.question2)}`,
+      description: `Work Kind Happiness Submitted: ${JSON.stringify(data.question2)}`,
     });
     reset();
   };
@@ -43,9 +44,9 @@ const WorkItemHappiness: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>How happy are you with the specific work items?</CardTitle>
+        <CardTitle>How happy are you with the specific work kinds?</CardTitle>
         <CardDescription>
-          Submit your happiness for specific work items to track your happiness with your tasks.
+          Submit your happiness for specific work kinds to track your happiness with different kind of tasks.
         </CardDescription>
       </CardHeader>
 
@@ -57,11 +58,15 @@ const WorkItemHappiness: React.FC = () => {
               <TaskPopover
                 onSmilieChange={handleSmilieChange}
                 tasks={[
-                  { taskId: 'DEAR-90', buttonLabel: 'DEAR-90 Create Basic...' },
-                  { taskId: 'MEET-12', buttonLabel: 'Meeting Client LIPO' },
-                  { taskId: 'DEAR-91', buttonLabel: 'DEAR-91 Update Advanced...' },
+                  { taskId: 'WK-1', buttonLabel: 'Coding' },
+                  { taskId: 'WK-2', buttonLabel: 'Sprint Review' },
+                  { taskId: 'WK-3', buttonLabel: 'Sprint Planning' },
+                  { taskId: 'WK-4', buttonLabel: 'Call with Customer' },
                 ]}
               />
+              <Button className="h-8" type="button">
+                New Workkind
+              </Button>
             </div>
             {errors.question2 && <span className="text-red-500">This field is required</span>}
           </div>

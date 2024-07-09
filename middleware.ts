@@ -24,11 +24,6 @@ const verifySession = (request: AuthRequest): boolean => {
 
 export default auth((request: NextRequest) => {
   const sessionValid = verifySession(request);
-  // const trustedHosts = ['localhost'];
-  //
-  // if (!trustedHosts.includes(request.nextUrl.hostname)) {
-  //   return new Response('Host must be trusted', { status: 403 });
-  // }
 
   if (request.nextUrl.pathname === '/login') {
     return NextResponse.next();

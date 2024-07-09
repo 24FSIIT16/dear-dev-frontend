@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { Home, Settings, BarChartHorizontalBig } from 'lucide-react';
+import { Home, Settings, BarChartHorizontalBig, Info, CircleHelp } from 'lucide-react';
 import NavLink from '@components/Navigation/NavLink';
 import Logo from '@components/ui/Logo/Logo';
 
@@ -20,6 +20,12 @@ const Navigation: React.FC = () => (
       </NavLink>
     </nav>
     <nav className="flex flex-col items-center gap-6 px-2">
+      <NavLink href="/contact">
+        <CircleHelp className="h-5 w-5 text-black dark:text-white" />
+      </NavLink>
+      <NavLink href="/about">
+        <Info className="h-5 w-5 text-black dark:text-white" />
+      </NavLink>
       <NavLink href="/settings">
         <Settings className="h-5 w-5 text-black dark:text-white" />
       </NavLink>

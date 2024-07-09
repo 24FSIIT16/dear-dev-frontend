@@ -35,7 +35,7 @@ const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, tasks }) => {
             onOpenChange={(open) => (open ? handleOpen(task.taskId) : handleClose())}
           >
             <PopoverTrigger asChild>
-              <Button>{task.buttonLabel}</Button>
+              <Button variant="outline">{task.buttonLabel}</Button>
             </PopoverTrigger>
             <PopoverContent>
               <div className="flex justify-center">

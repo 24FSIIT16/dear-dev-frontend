@@ -6,6 +6,8 @@ import Navigation from '@components/Navigation/Navigation';
 import Header from '@components/Header/Header';
 import ThemeProvider from '@providers/ThemeProvider';
 import Toaster from '@components/ui/Toast/Toaster';
+import NextAuthProvider from '@providers/NextAuthProvider';
+import { AuthProvider } from '@providers/AuthProvider';
 
 export const metadata: Metadata = {
   title: 'yappi',
@@ -16,14 +18,18 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${outfit.variable} font-outfit`}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <Navigation />
-          <Header />
-          <main className="mt-10 flex justify-center">
-            <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
-          </main>
-          <Toaster />
-        </ThemeProvider>
+        <NextAuthProvider>
+          <AuthProvider>
+            <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+              <Navigation />
+              <Header />
+              <main className="mt-10 flex justify-center">
+                <Toaster />
+                <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
+              </main>
+            </ThemeProvider>
+          </AuthProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
