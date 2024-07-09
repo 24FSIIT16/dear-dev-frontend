@@ -32,7 +32,7 @@ jobs:
 
   build_and_push:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/DEAR-106') # remove 106 later
+    if: github.ref == 'refs/heads/main'
     needs: test
 
     steps:
