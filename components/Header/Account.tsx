@@ -23,8 +23,11 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@components/ui/AltertDialog/AlertDialog';
+import { useAuth } from '@providers/AuthProvider';
 
 const Account: React.FC = () => {
+  const { user } = useAuth();
+
   const handleLogout = async () => {
     await signOut();
   };
@@ -38,7 +41,9 @@ const Account: React.FC = () => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="min-w-48">
-          <DropdownMenuLabel className="text-sm">My Account</DropdownMenuLabel>
+          <DropdownMenuLabel className="text-sm">
+            <p>{user ? `${user?.name}` : 'My Account'}</p>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>

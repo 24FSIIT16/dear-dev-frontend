@@ -7,9 +7,7 @@ interface LoadingProps {
 }
 
 const Loading: React.FC<LoadingProps> = ({ className }) => (
-  <div
-    className={cn('flex min-h-[calc(100vh-7rem)] items-center justify-center text-black dark:text-white', className)}
-  >
+  <div className={cn('flex items-center justify-center pt-80 text-black dark:text-white', className)}>
     <Icons.SPINNER className="h-8 w-8 animate-spin" />
   </div>
 );

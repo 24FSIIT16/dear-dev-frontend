@@ -23,8 +23,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
               <Navigation />
               <Header />
+              <Toaster />
               <main className="mt-10 flex justify-center">
-                <Toaster />
                 <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
               </main>
             </ThemeProvider>

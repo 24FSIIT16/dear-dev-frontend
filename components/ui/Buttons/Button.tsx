@@ -20,6 +20,7 @@ const buttonVariants = cva(
         link: 'text-slate-900 underline-offset-4 hover:underline dark:text-slate-50',
         selected: 'bg-tertiaryBG-light dark:bg-secondaryBG-dark',
         icon: 'dark:hover:bg-secondaryBG-dark hover:bg-tertiaryBG-light',
+        mood: 'rounded-2xl',
       },
       size: {
         default: 'h-10 px-4 py-2',
@@ -27,6 +28,7 @@ const buttonVariants = cva(
         lg: 'h-11 rounded-md px-8',
         icon: 'h-8 w-8',
         navigation: 'h-10 w-10',
+        mood: 'h-20 w-20',
       },
     },
     defaultVariants: {
