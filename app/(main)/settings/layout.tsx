@@ -8,7 +8,7 @@ interface SettingsLayoutProps {
 
 const settingsSidebarNavItems = [
   {
-    title: 'Account',
+    title: 'Profile',
     href: '/settings',
   },
   {
