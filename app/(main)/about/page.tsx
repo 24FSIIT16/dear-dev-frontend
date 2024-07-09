@@ -15,13 +15,11 @@ const AboutPage: React.FC = () => (
         <TeamHoverCard
           trigger="@petra"
           img="/assets/Avatar/Team/petra.svg"
-          mail="petra.kohler@students.fhnw.ch"
           description="I think about stuff, I desing it, and then I build it."
         />
         <TeamHoverCard
           trigger="@nick"
           img="/assets/Avatar/Team/nick.svg"
-          mail="nick.baur@students.fhnw.ch"
           description="I'm a dog person, I like to code and design stuff."
         />
       </div>
