@@ -12,6 +12,7 @@ import { AuthProvider } from '@providers/AuthProvider';
 export const metadata: Metadata = {
   title: 'yappi',
   description: 'Your personal productivity assistant',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

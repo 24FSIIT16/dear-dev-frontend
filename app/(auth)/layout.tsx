@@ -7,6 +7,7 @@ import ThemeProvider from '@providers/ThemeProvider';
 export const metadata: Metadata = {
   title: 'yappi',
   description: 'Your personal productivity assistant',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
