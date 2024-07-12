@@ -20,6 +20,7 @@ import { toast } from '@components/ui/Toast/use-toast';
 import { UserWithProvider } from '@/types/UserType';
 import Loading from '@components/Loading/Loading';
 import useSWRClient from '@hooks/useSWRClient';
+import useUserClient from '@hooks/useUserClient';
 
 const FormSchema = z.object({
   username: z.string().nonempty('Username is required'),
@@ -33,11 +34,13 @@ type FormValue = z.infer<typeof FormSchema>;
 const ProfileForm: React.FC = () => {
   const { userId } = useAuth();
   const { data: user, isLoading } = useSWRClient<UserWithProvider>(`/v1/user-with-provider/${userId}`);
+  const { update } = useUserClient();
 
   const form = useForm<FormValue>({
     resolver: zodResolver(FormSchema),
     defaultValues: React.useMemo(
       () => ({
+        username: user?.username ?? '',
         provider: user?.provider ?? '',
         name: user?.name ?? '',
         email: user?.email ?? '',
@@ -50,6 +53,7 @@ const ProfileForm: React.FC = () => {
   React.useEffect(() => {
     if (user) {
       form.reset({
+        username: user.username,
         provider: user.provider,
         name: user.name,
         email: user.email,
@@ -57,12 +61,19 @@ const ProfileForm: React.FC = () => {
     }
   }, [user, form]);
 
-  const onSubmit: SubmitHandler<FormValue> = () => {
-    toast({
-      title: 'Success',
-      description: 'Your profile has been updated.',
-    });
-    form.reset();
+  const onSubmit: SubmitHandler<FormValue> = async (data) => {
+    try {
+      await update({ id: userId, username: data.username });
+      toast({
+        title: 'Success',
+        description: 'Your profile has been updated.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'There was an error updating your profile.',
+      });
+    }
   };
 
   if (isLoading) return <Loading />;
