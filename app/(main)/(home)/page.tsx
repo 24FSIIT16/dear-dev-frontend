@@ -1,11 +1,11 @@
 'use client';
 
 import * as React from 'react';
-import useApi from '@hooks/useApi';
+import useSWRClient from '@hooks/useSWRClient';
 import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
-import User from '@/types/UserType';
+import { User } from '@/types/UserType';
 import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert/Alert';
 import { Megaphone } from 'lucide-react';
 import WorkItemHappiness from '@components/Surveys/WorkItemHappiness';
@@ -15,7 +15,7 @@ import OverallHappinessWeather from '@components/Surveys/OverallHappinessWeather
 
 const Home: React.FC = () => {
   const { userId } = useAuth();
-  const { data: user, isLoading, error } = useApi<User>(`/v1/user/${userId}`, 'GET');
+  const { data: user, isLoading, error } = useSWRClient<User>(`/v1/user/${userId}`);
 
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;

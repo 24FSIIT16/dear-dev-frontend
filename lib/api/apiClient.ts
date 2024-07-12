@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080';
+export const API_BASE_URL = 'http://localhost:8080';
 
 const setHeaders = (token: string) => ({
   Authorization: `Bearer ${token}`,
@@ -6,28 +6,19 @@ const setHeaders = (token: string) => ({
 });
 
 const apiClient = {
-  get: (endpoint: string, token: string) =>
-    fetch(`${API_BASE_URL}${endpoint}`, {
+  get: async <T>(endpoint: string, token: string): Promise<T> => {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'GET',
       headers: setHeaders(token),
-    }).then((response) => response.json()),
-  post: (endpoint: string, token: string, body: Record<string, unknown>) =>
-    fetch(`${API_BASE_URL}${endpoint}`, {
-      method: 'POST',
-      headers: setHeaders(token),
-      body: JSON.stringify(body),
-    }).then((response) => response.json()),
-  put: (endpoint: string, token: string, body: Record<string, unknown>) =>
-    fetch(`${API_BASE_URL}${endpoint}`, {
-      method: 'PUT',
-      headers: setHeaders(token),
-      body: JSON.stringify(body),
-    }).then((response) => response.json()),
-  delete: (endpoint: string, token: string) =>
-    fetch(`${API_BASE_URL}${endpoint}`, {
-      method: 'DELETE',
-      headers: setHeaders(token),
-    }).then((response) => response.json()),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data as T;
+  },
 };
 
 export default apiClient;

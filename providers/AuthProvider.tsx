@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useSession } from 'next-auth/react';
-import User from '@/types/UserType';
+import { User } from '@/types/UserType';
 import { Session } from 'next-auth';
 
 interface ExtendedSession extends Session {
