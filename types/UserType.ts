@@ -7,7 +7,7 @@ export interface User {
 }
 
 export interface UpdatedUser {
-  id: number;
+  id: string | undefined;
   username: string;
 }
 
