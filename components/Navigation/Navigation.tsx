@@ -15,7 +15,7 @@ const Navigation: React.FC = () => (
       <NavLink href="/">
         <Home className="h-5 w-5 text-black dark:text-white" />
       </NavLink>
-      <NavLink href="/dashboard">
+      <NavLink href="/insights">
         <BarChartHorizontalBig className="h-5 w-5 text-black dark:text-white" />
       </NavLink>
     </nav>
