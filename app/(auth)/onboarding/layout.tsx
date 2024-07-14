@@ -9,7 +9,7 @@ interface OnboardingLayoutProps {
 
 const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({ children }) => (
   <div className="relative flex min-h-screen items-center justify-center">
-    <header className="justif absolute left-0 top-0 flex w-full flex-row items-center p-16">
+    <header className="absolute left-0 top-0 flex w-full flex-row items-center justify-between p-16">
       <OnboardingHeader />
     </header>
     <main>
