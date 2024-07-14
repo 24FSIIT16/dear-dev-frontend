@@ -13,6 +13,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from '@components/ui/AltertDialog/AlertDialog';
+import Link from 'next/link';
 
 const OnboardingHeader: React.FC = () => {
   const handleLogout = async () => {
@@ -21,7 +22,9 @@ const OnboardingHeader: React.FC = () => {
 
   return (
     <AlertDialog>
-      <Logo className="flex h-8 w-8 flex-1" />
+      <Link href="/">
+        <Logo className="flex h-8 w-8 flex-1" />
+      </Link>
       <AlertDialogTrigger asChild>
         <Button variant="outline">Log out</Button>
       </AlertDialogTrigger>
