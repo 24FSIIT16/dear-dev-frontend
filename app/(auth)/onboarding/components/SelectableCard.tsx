@@ -14,7 +14,7 @@ interface SelectableCardProps {
 
 const SelectableCard: React.FC<SelectableCardProps> = ({ selected, onClick, imageSrc, title, description }) => (
   <Card
-    className={`cursor-pointer p-4 shadow-none ${selected ? 'ring-2 ring-inset ring-primaryBlue-main' : ''}`}
+    className={`cursor-pointer p-4 shadow-none ${selected ? 'ring-2 ring-inset ring-slate-900' : ''}`}
     onClick={onClick}
   >
     <CardHeader />

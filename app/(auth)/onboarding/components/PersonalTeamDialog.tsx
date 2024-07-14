@@ -48,9 +48,7 @@ const PersonalTeamDialog: React.FC = () => {
             )}
           />
           <DialogFooter>
-            <Button type="submit" className="bg-primaryBlue-main px-8 hover:bg-primaryBlue-main">
-              Create
-            </Button>
+            <Button type="submit">Create Team</Button>
           </DialogFooter>
         </form>
       </Form>
