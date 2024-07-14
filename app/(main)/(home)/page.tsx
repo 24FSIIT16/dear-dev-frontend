@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
@@ -13,6 +14,13 @@ import OverallHappinessWeather from '@components/Surveys/OverallHappinessWeather
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (!isLoading && user && !user.hasTeam) {
+      router.push('/onboarding');
+    }
+  }, [isLoading, user, router]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
@@ -27,7 +35,6 @@ const Home: React.FC = () => {
         <AlertTitle>We think you forgot something?</AlertTitle>
         <AlertDescription>You have not tracked your Happines since 2 days.</AlertDescription>
       </Alert>
-
       <div className="grid grid-cols-2 gap-10">
         <OverallHappiness />
         <OverallHappinessWeather />
