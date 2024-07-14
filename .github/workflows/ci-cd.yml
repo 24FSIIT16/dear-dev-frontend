@@ -2,9 +2,9 @@ name: CI / CD yappi
 
 on:
   push:
-    branches: ['*']
+    branches: [ '*' ]
   pull_request:
-    branches: ['main']
+    branches: [ 'main' ]
 
   workflow_dispatch:
 
@@ -60,5 +60,7 @@ jobs:
         run: |
           REPO_NAME=ghcr.io/${{ github.repository_owner }}/dear-dev-frontend
           LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
-          docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest .
+          DATE_TAG=$(date +%Y%m%d)
+          docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest -t $LOWER_REPO_NAME:$DATE_TAG .
           docker push $LOWER_REPO_NAME:latest
+          docker push $LOWER_REPO_NAME:$DATE_TAG
