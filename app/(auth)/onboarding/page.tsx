@@ -50,7 +50,7 @@ const OnboardingPage: React.FC = () => {
       </div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button disabled={!selected} className="bg-primaryBlue-main px-8 hover:bg-primaryBlue-main">
+          <Button disabled={!selected} className="px-8">
             Continue
           </Button>
         </DialogTrigger>
