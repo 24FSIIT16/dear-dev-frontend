@@ -3,7 +3,7 @@ export interface User {
   name: string;
   email: string;
   username: string;
-  image: string | null;
+  hasTeam: boolean;
 }
 
 export interface UpdatedUser {
