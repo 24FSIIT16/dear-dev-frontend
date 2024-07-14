@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Button } from '@components/ui/Buttons/Button';
 import { Dialog, DialogTrigger, DialogContent } from '@components/ui/Dialog/Dialog';
 import SelectableCard from './components/SelectableCard';
-import PersonalTeamDialog from './components/PersonalTeamDialog';
+import CreateTeamDialog from './components/CreatelTeamDialog';
 import JoinTeamDialog from './components/JoinTeamDialog';
 
 const OnboardingPage: React.FC = () => {
@@ -16,7 +16,7 @@ const OnboardingPage: React.FC = () => {
 
   const renderDialogContent = () => {
     if (selected === 'personal') {
-      return <PersonalTeamDialog />;
+      return <CreateTeamDialog />;
     }
     if (selected === 'team') {
       return <JoinTeamDialog />;
@@ -35,7 +35,7 @@ const OnboardingPage: React.FC = () => {
           selected={selected === 'personal'}
           onClick={() => handleSelect('personal')}
           imageSrc="/assets/Illus/personal.svg"
-          title="As an individual"
+          title="Create a team"
           description="You want to use yappi as an individual, so that you can track your own happiness. 
           If you want to start a shared team workspace, you should also select this option and invite your team members in a second step. As the initiator, you will have admin rights."
         />
@@ -43,7 +43,7 @@ const OnboardingPage: React.FC = () => {
           selected={selected === 'team'}
           onClick={() => handleSelect('team')}
           imageSrc="/assets/Illus/team.svg"
-          title="As a part of a team"
+          title="Join a team"
           description="You only select this option if you have been invited to a team workspace and have received a four-digit code. 
           In this workspace, you will see your individual trackings as well as an overview of the team happiness."
         />

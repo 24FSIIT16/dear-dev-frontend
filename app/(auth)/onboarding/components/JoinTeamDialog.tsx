@@ -9,6 +9,10 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@components/ui/Form/Form';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@components/ui/InputOTP/InputOTP';
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from 'input-otp';
+import { useAuth } from '@providers/AuthProvider';
+import useTeamClient from '@hooks/useTeamClient';
+import { BadgeCheck, Loader2 } from 'lucide-react';
+import { Team } from '@/types/TeamType';
 
 const FormSchema = z.object({
   code: z.string().min(4, {
@@ -19,6 +23,11 @@ const FormSchema = z.object({
 type FormValues = z.infer<typeof FormSchema>;
 
 const JoinTeamDialog: React.FC = () => {
+  const { userId } = useAuth();
+  const { joinTeam } = useTeamClient();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [joinedTeam, setJoinedTeam] = React.useState<Team | null>(null);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -27,13 +36,42 @@ const JoinTeamDialog: React.FC = () => {
     mode: 'onSubmit',
   });
 
-  const handleSubmit: SubmitHandler<FormValues> = () => {};
+  const handleSubmit: SubmitHandler<FormValues> = async (data) => {
+    try {
+      setIsLoading(true);
+      await joinTeam({ code: data.code, userId }).then((response) => {
+        setJoinedTeam(response.data);
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
       <DialogHeader>
-        <DialogTitle>Join a team</DialogTitle>
-        <DialogDescription>Fill the four-digit code, that should be provided to you by a team admin.</DialogDescription>
+        <DialogTitle>
+          {joinedTeam ? (
+            <div className="flex items-center">
+              <BadgeCheck className="mr-2 h-5 w-5" />
+              Woho!
+            </div>
+          ) : (
+            'Join a team'
+          )}
+        </DialogTitle>
+        <DialogDescription>
+          {joinedTeam ? (
+            <span className="max-w-md">
+              You have successfully joined the team{' '}
+              <span className="font-bold text-black underline">{joinedTeam.name}</span>.
+            </span>
+          ) : (
+            'Fill the four-digit code, this code should be provided to you by a admin.'
+          )}
+        </DialogDescription>
       </DialogHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
@@ -58,7 +96,14 @@ const JoinTeamDialog: React.FC = () => {
             )}
           />
           <DialogFooter>
-            <Button type="submit">Join Team</Button>
+            {!isLoading ? (
+              <Button type="submit">Join Team</Button>
+            ) : (
+              <Button disabled>
+                <Loader2 className="animate-sping mr-2 h-4 w-4" />
+                Please wait
+              </Button>
+            )}
           </DialogFooter>
         </form>
       </Form>
