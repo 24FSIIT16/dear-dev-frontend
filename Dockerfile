@@ -7,6 +7,8 @@ WORKDIR /app
 # Copy the package.json and package-lock.json file
 COPY package*.json ./
 
+ENV NEXT_PUBLIC_API_URL=http://86.119.49.89:8080
+
 # Install the dependencies
 RUN npm install
 
