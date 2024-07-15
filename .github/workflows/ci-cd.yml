@@ -68,7 +68,7 @@ jobs:
           docker push $LOWER_REPO_NAME:$DATE_TAG
 
   deploy:
-    needs: publish
+    needs: build_and_publish
     name: deploy image
     runs-on: ubuntu-latest
 
