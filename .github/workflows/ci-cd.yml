@@ -3,10 +3,12 @@ name: CI / CD yappi
 on:
   push:
     branches: [ '*' ]
-  pull_request:
-    branches: [ 'main' ]
+  #  pull_request:
+  #    branches: [ 'main' ]
 
   workflow_dispatch:
+
+
 
 jobs:
   test:
@@ -30,9 +32,9 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-  build_and_push:
+  build_and_publish:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    # if: github.ref == 'refs/heads/main'
     needs: test
 
     steps:
@@ -64,3 +66,21 @@ jobs:
           docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest -t $LOWER_REPO_NAME:$DATE_TAG .
           docker push $LOWER_REPO_NAME:latest
           docker push $LOWER_REPO_NAME:$DATE_TAG
+
+  deploy:
+    needs: publish
+    name: deploy image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: install ssh keys
+        # check this thread to understand why its needed:
+        # <https://stackoverflow.com/a/70447517>
+        run: |
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+      - name: connect and pull
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
+      - name: cleanup
+        run: rm -rf ~/.ssh
