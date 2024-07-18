@@ -3,8 +3,8 @@ name: CI / CD yappi
 on:
   push:
     branches: [ '*' ]
-  #  pull_request:
-  #    branches: [ 'main' ]
+  pull_request:
+    branches: [ 'main' ]
 
   workflow_dispatch:
 
@@ -63,24 +63,40 @@ jobs:
           REPO_NAME=ghcr.io/${{ github.repository_owner }}/dear-dev-frontend
           LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
           DATE_TAG=$(date +%Y%m%d)
-          docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest -t $LOWER_REPO_NAME:$DATE_TAG .
+          docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest .
           docker push $LOWER_REPO_NAME:latest
           docker push $LOWER_REPO_NAME:$DATE_TAG
 
   deploy:
+    runs-on: ubuntu-latest
     needs: build_and_publish
     name: deploy image
-    runs-on: ubuntu-latest
 
     steps:
-      - name: install ssh keys
-        # check this thread to understand why its needed:
-        # <https://stackoverflow.com/a/70447517>
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_ITALIAN_PASSWORD: ${{ secrets.SSH_ITALIAN_PASSWORD }}
+          SSH_ITALIAN_USER: ${{ secrets.SSH_ITALIAN_USER }}
         run: |
-          install -m 600 -D /dev/null ~/.ssh/id_rsa
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
-      - name: connect and pull
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORK_DIR }} && docker compose pull && docker compose up -d && exit"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<'EOF'
+          echo '${{ secrets.SSH_ITALIAN_PASSWORD }}' | sudo -S su - ${{ secrets.SSH_ITALIAN_USER }} -c '
+          cd ~/yappi &&
+          docker-compose stop frontend nginx &&
+          docker-compose rm frontend nginx &&
+          docker pull ghcr.io/24FSIIT16/dear-dev-frontend:latest
+          docker-compose up -d'
+          EOF
+
       - name: cleanup
         run: rm -rf ~/.ssh
