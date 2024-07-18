@@ -10,8 +10,6 @@ interface ExtendedSession extends Session {
   accessToken?: string;
   user?: User;
   userId?: string;
-  isLoading?: boolean;
-  error?: string | null;
 }
 
 const AuthContext = React.createContext<ExtendedSession | null>(null);
@@ -25,37 +23,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = React.useState<string>('');
   const [user, setUser] = React.useState<User>();
   const [userId, setUserId] = React.useState<string>();
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<string | null>(null);
 
   const sessionData = session as ExtendedSession;
-
-  const fetchUser = async (id: string, bearerToken: string) => {
-    const response = await fetch(`http://localhost:8080/v1/user/${id}`, {
-      headers: {
-        Authorization: `Bearer ${bearerToken}`,
-      },
-    });
-    const data = await response.json();
-    return data as User;
-  };
 
   React.useEffect(() => {
     if (sessionData) {
       setToken(sessionData.accessToken as string);
       setUserId(sessionData.user?.id ?? undefined);
-      if (sessionData.user?.id && sessionData.accessToken) {
-        setIsLoading(true);
-        fetchUser(sessionData.user.id, sessionData.accessToken)
-          .then((data) => {
-            setUser(data);
-            setIsLoading(false);
-          })
-          .catch(() => {
-            setIsLoading(false);
-            setError('Error fetching user');
-          });
-      }
+      setUser(sessionData.user as User);
     }
   }, [sessionData]);
 
@@ -64,12 +39,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       accessToken: token,
       token,
       expires: '',
-      user,
+      user: user ?? undefined,
       userId: userId ?? undefined,
-      isLoading,
-      error,
     }),
-    [token, user, userId, isLoading, error]
+    [token, user, userId]
   );
 
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
