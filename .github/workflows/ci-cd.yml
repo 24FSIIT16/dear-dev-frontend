@@ -35,7 +35,7 @@ jobs:
 
   build_and_publish:
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main'
     needs: test
 
     steps:
@@ -96,7 +96,7 @@ jobs:
           docker-compose stop frontend nginx &&
           docker-compose rm frontend nginx &&
           docker pull ghcr.io/24FSIIT16/dear-dev-frontend:latest
-          docker-compose up -d'
+          docker-compose up frontend nginx -d'
           EOF
 
       - name: cleanup
