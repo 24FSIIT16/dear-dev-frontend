@@ -8,10 +8,9 @@
 #    restart: always
 #    #    environment:
 #    #      - AUTH_TRUST_HOST=true
-#    #      - NEXTAUTH_URL=http://86.119.49.89
+#    #      - NEXTAUTH_URL=00000001
 #    ports:
 #      - "3000:3000"
-
 
 #backend:
 #  container_name: backend
