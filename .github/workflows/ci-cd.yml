@@ -21,11 +21,11 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Clear npm cache
+        run: npm cache clean --force
+
       - name: Install dependencies
         run: npm install
-
-      - name: Add `node_modules/.bin` to PATH
-        run: echo "::add-path::$(npm bin)"
 
       - name: Run Prettier
         run: npm run format
