@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { Button } from '@components/ui/Buttons/Button';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 

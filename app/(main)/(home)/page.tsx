@@ -6,26 +6,42 @@ import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
 import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert/Alert';
-import { DollarSign, Laugh, Megaphone } from 'lucide-react';
+import { DollarSign, Megaphone } from 'lucide-react';
 import WorkKindSurvey from '@components/Surveys/WorkKindSurvey';
 import HappinessSurvey from '@components/Surveys/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
 import BasicSmallCard from '@components/Cards/Basic';
-import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
+import { AverageScoreResponse, SubmitHappinessScoreDTO } from '@/types/SurveyType';
 import useSurveyClient from '@hooks/useSurveyClient';
 import { toast } from '@components/ui/Toast/use-toast';
-import { Button } from '@components/ui/Buttons/Button';
+import { useState } from 'react';
+import HappinessButton from '@components/Surveys/HappinessButton';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
-  const { submitHappinessScore } = useSurveyClient();
+  const { submitHappinessScore, getAverageScore } = useSurveyClient();
+  const [averageScore, setAverageScore] = useState<AverageScoreResponse>();
 
   React.useEffect(() => {
     if (!isLoading && user && !user.hasTeam) {
       router.push('/onboarding');
     }
   }, [isLoading, user, router]);
+
+  const fetchAverageScore = async () => {
+    if (!user) return;
+    try {
+      const response = await getAverageScore(user.id);
+      setAverageScore(response.data);
+    } catch (error) {
+      toast({
+        title: 'Error!',
+        description: `Fetching average score `,
+        variant: 'destructive',
+      });
+    }
+  };
 
   const handleHappinessSubmit = async (score: number) => {
     const happinessScore: SubmitHappinessScoreDTO = {
@@ -34,20 +50,25 @@ const Home: React.FC = () => {
     };
     try {
       await submitHappinessScore(happinessScore).then(() => {
-        router.refresh();
         toast({
           title: 'Success!',
           description: `Survey Submitted`,
         });
       });
+      await fetchAverageScore();
+      // @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
         title: 'Error!',
-        description: `Something went wrong. Please try again: ` + error.message,
+        description: `Something went wrong. Please try again: ${error.message} `,
         variant: 'destructive',
       });
     }
   };
+
+  React.useEffect(() => {
+    fetchAverageScore().then((r) => r);
+  }, [user, getAverageScore]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
@@ -62,16 +83,7 @@ const Home: React.FC = () => {
                 title: 'Your Overall Happiness',
               }}
               content={{
-                mainContent: (
-                  <Button
-                    variant="mood"
-                    disabled={true}
-                    size="mood"
-                    className="bg-primaryGreen-dark flex items-center justify-center"
-                  >
-                    <Laugh className="h-12 w-12 text-primaryGreen-main" />
-                  </Button>
-                ),
+                mainContent: <HappinessButton score={averageScore ? averageScore : 0} />,
               }}
             />
             <BasicSmallCard
@@ -99,7 +111,7 @@ const Home: React.FC = () => {
             <HappinessSurvey onSubmit={handleHappinessSubmit} />
             <BasicSmallCard
               header={{
-                title: 'Next Week',
+                title: 'Emotions',
                 icon: <DollarSign />,
               }}
               content={{
