@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Button } from '@components/ui/Buttons/Button';
 import { Dialog, DialogTrigger, DialogContent } from '@components/ui/Dialog/Dialog';
 import SelectableCard from './components/SelectableCard';
-import CreateTeamDialog from './components/CreatelTeamDialog';
+import CreateTeamDialog from './components/CreateTeamDialog';
 import JoinTeamDialog from './components/JoinTeamDialog';
 
 const OnboardingPage: React.FC = () => {
