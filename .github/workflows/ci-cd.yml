@@ -63,7 +63,6 @@ jobs:
         run: |
           REPO_NAME=ghcr.io/${{ github.repository_owner }}/dear-dev-frontend
           LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
-          DATE_TAG=$(date +%Y%m%d)
           docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest .
           docker push $LOWER_REPO_NAME:latest
 
@@ -95,7 +94,7 @@ jobs:
           docker-compose stop frontend nginx &&
           docker-compose rm frontend nginx &&
           docker pull ghcr.io/24FSIIT16/dear-dev-frontend:latest
-          docker-compose up frontend nginx -d'
+          docker-compose up -d frontend nginx '
           EOF
 
       - name: cleanup
