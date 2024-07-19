@@ -12,7 +12,7 @@ const TeamTableToolbar = <TData,>({ table }: TeamTableToolbarProps<TData>) => (
   <div className="flex items-center justify-between">
     <div className="max-w-2xl">
       <Input
-        placeholder="Search name..."
+        placeholder="Search name"
         value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
         onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
         className="h-8"

@@ -3,6 +3,7 @@
 'use client';
 
 import { Badge } from '@components/ui/Badge/Badge';
+import { format } from 'date-fns';
 import DataTableColumnHeader from '@components/ui/Table/DataTableColumnHeader';
 import { ColumnDef } from '@tanstack/react-table';
 import cn from '@/lib/utils';
@@ -18,7 +19,7 @@ import { Button } from '@components/ui/Buttons/Button';
 export type TeamType = {
   id: string;
   name: string;
-  created: string;
+  createdAt: string;
   role: 'ADMIN' | 'MEMBER';
 };
 
@@ -32,8 +33,12 @@ export const columns: ColumnDef<TeamType>[] = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
   },
   {
-    accessorKey: 'created',
+    accessorKey: 'createdAt',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Created" />,
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return <span>{format(date, 'yyyy-MM-dd')}</span>
+    }
   },
   {
     accessorKey: 'role',

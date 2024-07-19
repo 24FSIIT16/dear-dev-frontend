@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import useTeamClient from '@hooks/useTeamClient';
 import { BadgeCheck, Loader2, Clipboard, Check } from 'lucide-react';
 import { Team } from '@/types/TeamType';
+import Link from 'next/link';
 
 const FormSchema = z.object({
   name: z.string().nonempty('Team name is required'),
@@ -119,7 +120,9 @@ const CreateTeamDialog: React.FC = () => {
             <Input ref={inputRef} disabled value={createdTeam?.code} />
           </div>
           <DialogFooter>
+            <Link href="/team">
             <Button className="mt-8 px-8">Continue</Button>
+            </Link>
           </DialogFooter>
         </>
       )}
