@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
+/* eslint-disable import/prefer-default-export */
 
 'use client';
 
@@ -16,7 +17,6 @@ import {
 import { ChevronRight, Ellipsis } from 'lucide-react';
 import { Button } from '@components/ui/Buttons/Button';
 import { Team } from '@/types/TeamType';
-
 
 export const columns: ColumnDef<Team>[] = [
   {

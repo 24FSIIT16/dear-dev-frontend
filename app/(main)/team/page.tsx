@@ -13,8 +13,6 @@ const TeamPage: React.FC = () => {
   const { userId } = useAuth();
   const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${userId}`);
 
-  console.log(data);
-
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your teams." action="/" showContact />;
 
