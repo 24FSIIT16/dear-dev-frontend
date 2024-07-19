@@ -15,15 +15,10 @@ import {
 } from '@components/ui/DropdownMenu/Dropdown-menu';
 import { ChevronRight, Ellipsis } from 'lucide-react';
 import { Button } from '@components/ui/Buttons/Button';
+import { Team } from '@/types/TeamType';
 
-export type TeamType = {
-  id: string;
-  name: string;
-  createdAt: string;
-  role: 'ADMIN' | 'MEMBER';
-};
 
-export const columns: ColumnDef<TeamType>[] = [
+export const columns: ColumnDef<Team>[] = [
   {
     accessorKey: 'id',
     header: '',
@@ -37,8 +32,8 @@ export const columns: ColumnDef<TeamType>[] = [
     header: ({ column }) => <DataTableColumnHeader column={column} title="Created" />,
     cell: ({ row }) => {
       const date = new Date(row.original.createdAt);
-      return <span>{format(date, 'yyyy-MM-dd')}</span>
-    }
+      return <span>{format(date, 'yyyy-MM-dd')}</span>;
+    },
   },
   {
     accessorKey: 'role',

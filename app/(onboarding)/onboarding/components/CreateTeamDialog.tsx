@@ -121,7 +121,7 @@ const CreateTeamDialog: React.FC = () => {
           </div>
           <DialogFooter>
             <Link href="/team">
-            <Button className="mt-8 px-8">Continue</Button>
+              <Button className="mt-8 px-8">Continue</Button>
             </Link>
           </DialogFooter>
         </>

@@ -6,7 +6,7 @@ import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import useSWRClient from '@hooks/useSWRClient';
 import { Team } from '@/types/TeamType';
-import { columns, TeamType } from './components/TeamTable/columns';
+import { columns } from './components/TeamTable/columns';
 import TeamTable from './components/TeamTable/TeamTable';
 
 const TeamPage: React.FC = () => {
@@ -22,7 +22,7 @@ const TeamPage: React.FC = () => {
     <div>
       {data ? (
         <div className="space-y-4">
-          <TeamTable<TeamType> columns={columns} data={data} />
+          <TeamTable<Team> columns={columns} data={data} />
         </div>
       ) : (
         <Loading />

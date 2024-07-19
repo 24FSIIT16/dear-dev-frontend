@@ -7,6 +7,7 @@ export interface Team {
   createdBy: number;
   createdAt: string;
   active: boolean;
+  role: string;
 }
 
 export interface CreateTeamDTO {

@@ -18,8 +18,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import TeamTableToolbar from './TeamTableToolbar';
 
 interface TeamTableProps<TData> {
-  columns?: ColumnDef<TData>[];
-  data?: TData[];
+  columns: ColumnDef<TData>[];
+  data: TData[];
 }
 
 const TeamTable = <TData,>({ columns, data }: TeamTableProps<TData>) => {
