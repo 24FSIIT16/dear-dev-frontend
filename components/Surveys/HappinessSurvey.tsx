@@ -12,7 +12,7 @@ type FormValues = {
   question1: string;
 };
 
-const OverallHappiness: React.FC = () => {
+const HappinessSurvey: React.FC = () => {
   const {
     setValue,
     handleSubmit,
@@ -100,4 +100,4 @@ const OverallHappiness: React.FC = () => {
   );
 };
 
-export default OverallHappiness;
+export default HappinessSurvey;

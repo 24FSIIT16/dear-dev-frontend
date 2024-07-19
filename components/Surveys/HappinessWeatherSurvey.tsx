@@ -5,7 +5,7 @@ import { Button } from '@components/ui/Buttons/Button';
 import { CloudLightning, CloudRain, CloudSun, Sun, SunDim } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@components/ui/Card/Card';
 
-const OverallHappinessWeather: React.FC = () => (
+const HappinessWeatherSurvey: React.FC = () => (
   <Card>
     <CardHeader>
       <CardTitle>How happy are you with your working day?</CardTitle>
@@ -35,4 +35,4 @@ const OverallHappinessWeather: React.FC = () => (
   </Card>
 );
 
-export default OverallHappinessWeather;
+export default HappinessWeatherSurvey;

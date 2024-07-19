@@ -13,7 +13,7 @@ type FormValues = {
   question2: Array<{ taskId: string; value: string }>;
 };
 
-const WorkItemHappiness: React.FC = () => {
+const WorkKindSurvey: React.FC = () => {
   const {
     handleSubmit,
     formState: { errors },
@@ -76,4 +76,4 @@ const WorkItemHappiness: React.FC = () => {
   );
 };
 
-export default WorkItemHappiness;
+export default WorkKindSurvey;

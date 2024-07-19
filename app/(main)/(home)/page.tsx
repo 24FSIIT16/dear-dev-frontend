@@ -6,11 +6,12 @@ import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
 import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert/Alert';
-import { Megaphone } from 'lucide-react';
-import WorkItemHappiness from '@components/Surveys/WorkItemHappiness';
-import OverallHappiness from '@components/Surveys/OverallHappiness';
+import { DollarSign, Megaphone } from 'lucide-react';
+import WorkKindSurvey from '@components/Surveys/WorkKindSurvey';
+import HappinessSurvey from '@components/Surveys/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
-import OverallHappinessWeather from '@components/Surveys/OverallHappinessWeather';
+import HappinessWeatherSurvey from '@components/Surveys/HappinessWeatherSurvey';
+import BasicSmallCard from '@components/Cards/Basic';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
@@ -29,20 +30,44 @@ const Home: React.FC = () => {
     <div>
       {user && user.hasTeam ? (
         <div className="space-y-4">
-          <div className="flex w-full">
-            <h1>{user ? `Welcome, ${user?.name}` : 'Welcome'}</h1>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <BasicSmallCard
+              header={{
+                title: 'Overall Happiness',
+                icon: <DollarSign />,
+              }}
+              content={{
+                mainContent: 'dfsdfsdfdfsdf',
+                subContent: 'sdfsdfsdf',
+              }}
+            />
+            <BasicSmallCard
+              header={{
+                title: 'Next Week',
+                icon: <DollarSign />,
+              }}
+              content={{
+                mainContent: 'dfsdfdfsdf',
+                subContent: 'sdfsdfsdf',
+              }}
+            />
+            <div className="col-span-2">
+              <div className="flex h-full">
+                <Alert variant="informative">
+                  <Megaphone />
+                  <AlertTitle>We think you forgot something?</AlertTitle>
+                  <AlertDescription>You have not tracked your Happiness since 2 days.</AlertDescription>
+                </Alert>
+              </div>
+            </div>
           </div>
-          <Alert variant="informative">
-            <Megaphone className="h-4 w-4" />
-            <AlertTitle>We think you forgot something?</AlertTitle>
-            <AlertDescription>You have not tracked your Happiness since 2 days.</AlertDescription>
-          </Alert>
-          <div className="grid grid-cols-2 gap-10">
-            <OverallHappiness />
-            <OverallHappinessWeather />
+
+          <div className="grid grid-cols-2 gap-4">
+            <HappinessSurvey />
+            <HappinessWeatherSurvey />
           </div>
-          <div className="grid grid-cols-2 gap-10">
-            <WorkItemHappiness />
+          <div className="grid grid-cols-2 gap-4">
+            <WorkKindSurvey />
             <Feedback />
           </div>
         </div>
