@@ -1,11 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
-import { Button } from '@components/ui/Buttons/Button';
 import { WorkKind } from '@/types/WorkKindType';
-import { Annoyed, Frown, Laugh, PlusCircle, Smile } from 'lucide-react';
+import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@components/ui/Table/BasicTable';
 import useSurveyClient from '@hooks/useSurveyClient';
 import { SubmitWorkKindScoreDTO } from '@/types/SurveyType';
@@ -101,12 +100,6 @@ const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
           ))}
         </Table>
       </CardContent>
-      <CardFooter className="justify-center border-t p-4">
-        <Button size="sm" variant="ghost" className="gap-1">
-          <PlusCircle className="h-3.5 w-3.5" />
-          Add Worktype
-        </Button>
-      </CardFooter>
     </Card>
   );
 };
