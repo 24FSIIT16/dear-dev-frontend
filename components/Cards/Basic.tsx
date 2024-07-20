@@ -21,8 +21,8 @@ const BasicSmallCard: React.FC<CardProps> = ({ header, content, borderColor, fon
       {header.icon && <div className="text-muted-foreground h-2 w-4">{header.icon}</div>}
     </CardHeader>
     <CardContent className={fontColor}>
-      <div className="text-2xl font-bold">{content.mainContent}</div>
-      {content.subContent && <p className="text-muted-foreground text-xs">{content.subContent}</p>}
+      <div className="text-4xl font-bold">{content.mainContent}</div>
+      {content.subContent && <p className="text-muted-foreground text-s">{content.subContent}</p>}
     </CardContent>
   </Card>
 );
