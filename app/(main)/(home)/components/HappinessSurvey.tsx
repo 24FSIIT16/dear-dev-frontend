@@ -4,22 +4,50 @@ import * as React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
+import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
+import { toast } from '@components/ui/Toast/use-toast';
+import useSurveyClient from '@hooks/useSurveyClient';
+import { User } from '@/types/UserType';
 
 interface HappinessSurveyProps {
-  onSubmit: (score: number) => void;
+  fetchAverageScore: () => void;
+  user: User;
 }
 
-const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ onSubmit }) => {
+const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, user }) => {
   const [rotateButton, setRotateButton] = React.useState<number | null>(null);
+  const { submitHappinessScore } = useSurveyClient();
 
   const handleClick = (score: number) => {
     setRotateButton(score);
     setTimeout(() => setRotateButton(null), 1000);
-    onSubmit(score);
+    handleHappinessSubmit(score);
   };
 
   const iconClasses = (score: number) => `h-12 w-12 ${rotateButton === score ? 'rotate-360' : ''}`;
 
+  const handleHappinessSubmit = async (score: number) => {
+    const happinessScore: SubmitHappinessScoreDTO = {
+      score,
+      userId: user?.id,
+    };
+    try {
+      await submitHappinessScore(happinessScore).then(() => {
+        toast({
+          title: 'Success!',
+          description: `Survey Submitted`,
+        });
+      });
+      await fetchAverageScore();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (submitError: any) {
+      toast({
+        title: 'Error!',
+        description: `Something went wrong. Please try again: ${submitError.message} `,
+        variant: 'destructive',
+      });
+    }
+  };
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

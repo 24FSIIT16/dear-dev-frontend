@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@components/ui/Card/Card';
 import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts';
 import { ChartContainer } from '@components/ui/Chart/Chart';
 

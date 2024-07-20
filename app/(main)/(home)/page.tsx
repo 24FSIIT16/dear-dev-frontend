@@ -5,21 +5,18 @@ import { useRouter } from 'next/navigation';
 import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
-import { Bike, CircleSlash, DollarSign, Megaphone, Shapes, ShipWheel } from 'lucide-react';
-import WorkKindSurvey from '@components/Surveys/WorkKindSurvey';
-import HappinessSurvey from '@components/Surveys/HappinessSurvey';
+import { Bike, CircleSlash, Megaphone, Shapes, ShipWheel } from 'lucide-react';
+import HappinessSurvey from '@/(main)/(home)/components/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
-import BasicSmallCard from '@components/Cards/Basic';
+import BasicSmallCard from '@components/Cards/BasicCard';
 import { AverageScoreResponse, SubmitHappinessScoreDTO } from '@/types/SurveyType';
 import useSurveyClient from '@hooks/useSurveyClient';
 import { toast } from '@components/ui/Toast/use-toast';
 import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
 import { WorkKind } from '@/types/WorkKindType';
 import useWorkKindClient from '@hooks/useWorkKindClient';
-import { Bar, BarChart, LabelList, XAxis, YAxis } from 'recharts';
-import { ChartContainer } from '@components/ui/Chart/Chart';
-import { Progress } from '@components/ui/Progress/Progress';
-import MostTrackedWorkKindChart from '@components/Charts/MostTrackedWorkKindChart';
+import Progress from '@components/ui/Progress/Progress';
+import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
@@ -70,29 +67,6 @@ const Home: React.FC = () => {
         variant: 'destructive',
       });
       setIsLoadingWorkKinds(false);
-    }
-  };
-
-  const handleHappinessSubmit = async (score: number) => {
-    const happinessScore: SubmitHappinessScoreDTO = {
-      score,
-      userId: user?.id,
-    };
-    try {
-      await submitHappinessScore(happinessScore).then(() => {
-        toast({
-          title: 'Success!',
-          description: `Survey Submitted`,
-        });
-      });
-      await fetchAverageScore();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (submitError: any) {
-      toast({
-        title: 'Error!',
-        description: `Something went wrong. Please try again: ${submitError.message} `,
-        variant: 'destructive',
-      });
     }
   };
 
@@ -163,22 +137,19 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <HappinessSurvey onSubmit={handleHappinessSubmit} />
+            <HappinessSurvey fetchAverageScore={fetchAverageScore} user={user} />
             <BasicSmallCard
               header={{
-                title: 'Emotions',
-                icon: <DollarSign />,
+                title: 'Survey',
               }}
               content={{
-                mainContent: 'dfsdfdfsadsasddf',
+                mainContent: 'Emotions',
                 subContent: 'sdfsdfsdf',
               }}
             />
           </div>
-          <div className="grid grid-cols-1 gap-4">
-            <WorkKindSurvey workKinds={workKinds} />
-          </div>
           <div className="grid grid-cols-2 gap-4">
+            <WorkKindSurvey workKinds={workKinds} user={user} />
             <Feedback />
           </div>
         </div>
