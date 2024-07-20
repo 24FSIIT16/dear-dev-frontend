@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { Popover, PopoverTrigger, PopoverContent } from '@components/ui/Popover/Popover';
-import SmiliesRadioButton from '@components/Surveys/SmiliesRadioButton';
+import SmiliesRadioButton from '@components/Buttons/SmiliesRadioButton';
 import { Button } from '@components/ui/Buttons/Button';
 
 type TaskPopoverProps = {

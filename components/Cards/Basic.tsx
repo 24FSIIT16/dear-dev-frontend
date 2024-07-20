@@ -10,15 +10,17 @@ interface CardProps {
     mainContent: React.ReactNode;
     subContent?: React.ReactNode;
   };
+  borderColor?: string;
+  fontColor?: string;
 }
 
-const BasicSmallCard: React.FC<CardProps> = ({ header, content }) => (
-  <Card>
+const BasicSmallCard: React.FC<CardProps> = ({ header, content, borderColor, fontColor }) => (
+  <Card className={borderColor}>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium">{header.title}</CardTitle>
-      {header.icon && <div className="text-muted-foreground h-4 w-4">{header.icon}</div>}
+      <CardTitle className="space-x-2 text-sm font-medium">{header.title}</CardTitle>
+      {header.icon && <div className="text-muted-foreground h-2 w-4">{header.icon}</div>}
     </CardHeader>
-    <CardContent>
+    <CardContent className={fontColor}>
       <div className="text-2xl font-bold">{content.mainContent}</div>
       {content.subContent && <p className="text-muted-foreground text-xs">{content.subContent}</p>}
     </CardContent>

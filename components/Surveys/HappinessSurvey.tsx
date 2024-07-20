@@ -2,17 +2,24 @@
 
 import * as React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
-import { Button } from '@components/ui/Buttons/Button';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
+import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
 
 interface HappinessSurveyProps {
   onSubmit: (score: number) => void;
 }
 
 const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ onSubmit }) => {
+  const [rotateButton, setRotateButton] = React.useState<number | null>(null);
+
   const handleClick = (score: number) => {
+    setRotateButton(score);
+    setTimeout(() => setRotateButton(null), 1000);
     onSubmit(score);
   };
+
+  const iconClasses = (score: number) => `h-12 w-12 ${rotateButton === score ? 'rotate-360' : ''}`;
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -23,19 +30,31 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ onSubmit }) => {
         <p className="text-muted-foreground text-s mb-7">
           Submit your overall happiness survey to track your happiness with your work day.
         </p>
-        <div className="margin flex flex-row items-center justify-between">
-          <Button onClick={() => handleClick(1)} variant="mood" size="mood" className="bg-tertiaryBG-light">
-            <Frown className="h-12 w-12 text-black" />
-          </Button>
-          <Button onClick={() => handleClick(2)} variant="mood" size="mood" className="bg-primaryRed-light">
-            <Annoyed className="h-12 w-12 text-primaryRed-main" />
-          </Button>
-          <Button onClick={() => handleClick(3)} variant="mood" size="mood" className="bg-primaryBlue-light">
-            <Smile className="h-12 w-12 text-primaryBlue-main" />
-          </Button>
-          <Button onClick={() => handleClick(4)} variant="mood" size="mood" className="bg-primaryGreen-light">
-            <Laugh className="h-12 w-12 text-primaryGreen-main" />
-          </Button>
+        <div className="flex flex-row items-center justify-between">
+          <SurveyHappinessButton
+            score={2}
+            onClick={handleClick}
+            className="bg-tertiaryBG-light"
+            icon={<Frown className={iconClasses(2)} />}
+          />
+          <SurveyHappinessButton
+            score={8}
+            onClick={handleClick}
+            className="bg-primaryRed-light text-primaryRed-main"
+            icon={<Annoyed className={iconClasses(8)} />}
+          />
+          <SurveyHappinessButton
+            score={14}
+            onClick={handleClick}
+            className="bg-primaryBlue-light text-primaryBlue-main"
+            icon={<Smile className={iconClasses(14)} />}
+          />
+          <SurveyHappinessButton
+            score={20}
+            onClick={handleClick}
+            className="bg-primaryGreen-light text-primaryGreen-main"
+            icon={<Laugh className={iconClasses(20)} />}
+          />
         </div>
       </CardContent>
     </Card>

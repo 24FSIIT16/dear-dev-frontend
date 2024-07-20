@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
-import { Alert, AlertDescription, AlertTitle } from '@components/ui/Alert/Alert';
-import { DollarSign, Megaphone } from 'lucide-react';
+import { Bike, CircleSlash, DollarSign, Megaphone, ShipWheel } from 'lucide-react';
 import WorkKindSurvey from '@components/Surveys/WorkKindSurvey';
 import HappinessSurvey from '@components/Surveys/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
@@ -14,14 +13,13 @@ import BasicSmallCard from '@components/Cards/Basic';
 import { AverageScoreResponse, SubmitHappinessScoreDTO } from '@/types/SurveyType';
 import useSurveyClient from '@hooks/useSurveyClient';
 import { toast } from '@components/ui/Toast/use-toast';
-import { useState } from 'react';
-import HappinessButton from '@components/Surveys/HappinessButton';
+import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
   const { submitHappinessScore, getAverageScore } = useSurveyClient();
-  const [averageScore, setAverageScore] = useState<AverageScoreResponse>();
+  const [averageScore, setAverageScore] = React.useState<AverageScoreResponse>();
 
   React.useEffect(() => {
     if (!isLoading && user && !user.hasTeam) {
@@ -34,7 +32,7 @@ const Home: React.FC = () => {
     try {
       const response = await getAverageScore(user.id);
       setAverageScore(response.data);
-    } catch (error) {
+    } catch (authError) {
       toast({
         title: 'Error!',
         description: `Fetching average score `,
@@ -56,11 +54,11 @@ const Home: React.FC = () => {
         });
       });
       await fetchAverageScore();
-      // @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (submitError: any) {
       toast({
         title: 'Error!',
-        description: `Something went wrong. Please try again: ${error.message} `,
+        description: `Something went wrong. Please try again: ${submitError.message} `,
         variant: 'destructive',
       });
     }
@@ -80,31 +78,44 @@ const Home: React.FC = () => {
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <BasicSmallCard
               header={{
-                title: 'Your Overall Happiness',
+                title: 'Average Happiness',
+                icon: <CircleSlash />,
               }}
               content={{
-                mainContent: <HappinessButton score={averageScore ? averageScore : 0} />,
+                mainContent: <AverageHappinessButton score={averageScore ?? 0} />,
               }}
             />
             <BasicSmallCard
               header={{
                 title: 'Current Sprint',
-                icon: <DollarSign />,
+                icon: <ShipWheel />,
               }}
               content={{
-                mainContent: 'dfsdfdfsdf',
+                mainContent: '17 days left',
                 subContent: 'sdfsdfsdf',
               }}
             />
-            <div className="col-span-2">
-              <div className="flex h-full">
-                <Alert variant="informative">
-                  <Megaphone />
-                  <AlertTitle>We think you forgot something?</AlertTitle>
-                  <AlertDescription>You have not tracked your Happiness since 2 days.</AlertDescription>
-                </Alert>
-              </div>
-            </div>
+            <BasicSmallCard
+              header={{
+                title: 'Team   Velocity',
+                icon: <Bike />,
+              }}
+              content={{
+                mainContent: '53 story points',
+                subContent: 'sdfsdfsdf',
+              }}
+            />
+            <BasicSmallCard
+              header={{
+                title: 'We think you forgot something?!',
+                icon: <Megaphone />,
+              }}
+              content={{
+                mainContent: 'No Happiness tracking since 2 days.',
+              }}
+              borderColor="border-primaryBlue-main"
+              fontColor="text-primaryBlue-main"
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
