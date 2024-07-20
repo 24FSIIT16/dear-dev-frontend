@@ -9,7 +9,7 @@ import { Bike, CircleSlash, Megaphone, Shapes, ShipWheel } from 'lucide-react';
 import HappinessSurvey from '@/(main)/(home)/components/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
 import BasicSmallCard from '@components/Cards/BasicCard';
-import { AverageScoreResponse, SubmitHappinessScoreDTO } from '@/types/SurveyType';
+import { AverageScoreResponse } from '@/types/SurveyType';
 import useSurveyClient from '@hooks/useSurveyClient';
 import { toast } from '@components/ui/Toast/use-toast';
 import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
@@ -21,24 +21,13 @@ import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
-  const { submitHappinessScore, getAverageScore } = useSurveyClient();
+  const { getAverageScore } = useSurveyClient();
   const { getWorkKinds } = useWorkKindClient();
   const [averageScore, setAverageScore] = React.useState<AverageScoreResponse>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
-  const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>(true);
-  const [errorLoadingWorkKinds, setErrorLoadingWorkKinds] = React.useState<string | null>(null);
+  const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>();
 
-  React.useEffect(() => {
-    if (!isLoading && user && !user.hasTeam) {
-      router.push('/onboarding');
-    } else {
-      fetchWorkKinds().then((r) => r);
-    }
-  }, [isLoading, user, router]);
-
-  React.useEffect(() => {
-    fetchAverageScore().then((r) => r);
-  }, [user, getAverageScore]);
+  // todo display this alert card only if there were no entries in the last 2 days*/
 
   const fetchAverageScore = async () => {
     if (!user) return;
@@ -70,14 +59,25 @@ const Home: React.FC = () => {
     }
   };
 
-  if (isLoading) return <Loading />;
+  React.useEffect(() => {
+    if (!isLoading && user && !user.hasTeam) {
+      router.push('/onboarding');
+    } else {
+      fetchWorkKinds().then((r) => r);
+    }
+  }, [isLoading, user, router]);
+
+  React.useEffect(() => {
+    fetchAverageScore().then((r) => r);
+  }, [user, getAverageScore]);
+
+  if (isLoading || isLoadingWorkKinds) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
 
   return (
     <div>
       {user && user.hasTeam ? (
         <div className="space-y-4">
-          {/*todo display this card only if there were no entries in the last 2 days*/}
           <BasicSmallCard
             header={{
               title: 'We think you forgot something?!',
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
             />
             <BasicSmallCard
               header={{
-                title: 'Most Tracked Workkind',
+                title: 'Most Tracked Worktypes',
                 icon: <Shapes />,
               }}
               content={{

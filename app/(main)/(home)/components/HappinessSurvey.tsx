@@ -18,12 +18,6 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, us
   const [rotateButton, setRotateButton] = React.useState<number | null>(null);
   const { submitHappinessScore } = useSurveyClient();
 
-  const handleClick = (score: number) => {
-    setRotateButton(score);
-    setTimeout(() => setRotateButton(null), 1000);
-    handleHappinessSubmit(score);
-  };
-
   const iconClasses = (score: number) => `h-12 w-12 ${rotateButton === score ? 'rotate-360' : ''}`;
 
   const handleHappinessSubmit = async (score: number) => {
@@ -38,7 +32,7 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, us
           description: `Survey Submitted`,
         });
       });
-      await fetchAverageScore();
+      fetchAverageScore();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (submitError: any) {
       toast({
@@ -48,6 +42,13 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, us
       });
     }
   };
+
+  const handleClick = (score: number) => {
+    setRotateButton(score);
+    setTimeout(() => setRotateButton(null), 1000);
+    handleHappinessSubmit(score);
+  };
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -61,24 +62,28 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, us
         <div className="flex flex-row items-center justify-between">
           <SurveyHappinessButton
             score={2}
+            size="mood"
             onClick={handleClick}
             className="bg-tertiaryBG-light"
             icon={<Frown className={iconClasses(2)} />}
           />
           <SurveyHappinessButton
             score={8}
+            size="mood"
             onClick={handleClick}
             className="bg-primaryRed-light text-primaryRed-main"
             icon={<Annoyed className={iconClasses(8)} />}
           />
           <SurveyHappinessButton
             score={14}
+            size="mood"
             onClick={handleClick}
             className="bg-primaryBlue-light text-primaryBlue-main"
             icon={<Smile className={iconClasses(14)} />}
           />
           <SurveyHappinessButton
             score={20}
+            size="mood"
             onClick={handleClick}
             className="bg-primaryGreen-light text-primaryGreen-main"
             icon={<Laugh className={iconClasses(20)} />}

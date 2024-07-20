@@ -6,10 +6,11 @@ interface SurveyButtonProps {
   onClick: (score: number) => void;
   className: string;
   icon: React.ReactNode;
+  size: 'icon' | 'default' | 'mood' | 'sm' | 'lg' | 'navigation' | null | undefined;
 }
 
-const SurveyHappinessButton: React.FC<SurveyButtonProps> = ({ score, onClick, className, icon }) => (
-  <Button onClick={() => onClick(score)} variant="mood" size="mood" className={className}>
+const SurveyHappinessButton: React.FC<SurveyButtonProps> = ({ score, onClick, className, icon, size }) => (
+  <Button onClick={() => onClick(score)} variant="mood" size={size} className={className}>
     {icon}
   </Button>
 );

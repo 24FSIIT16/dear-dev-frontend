@@ -7,10 +7,10 @@ import { Button } from '@components/ui/Buttons/Button';
 import { WorkKind } from '@/types/WorkKindType';
 import { Annoyed, Frown, Laugh, PlusCircle, Smile } from 'lucide-react';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@components/ui/Table/BasicTable';
-import { ToggleGroup, ToggleGroupItem } from '@components/ui/ToggleGroup/ToggleGroup';
 import useSurveyClient from '@hooks/useSurveyClient';
 import { SubmitWorkKindScoreDTO } from '@/types/SurveyType';
 import { User } from '@/types/UserType';
+import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
 
 interface WorkKindSurveyProps {
   workKinds: Array<WorkKind>;
@@ -20,9 +20,9 @@ interface WorkKindSurveyProps {
 const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
   const { submitWorkKindScore } = useSurveyClient();
 
-  const handleToggle = async (value: number, workKindId: number) => {
+  const handleClick = async (score: number, workKindId: number) => {
     const workKindScore: SubmitWorkKindScoreDTO = {
-      score: value,
+      score,
       userId: user.id,
       workKindId,
     };
@@ -33,6 +33,7 @@ const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
         title: 'Success!',
         description: `Happiness score submitted`,
       });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({
         title: 'Error!',
@@ -49,98 +50,65 @@ const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
       </CardHeader>
 
       <CardContent>
-        <div className="text-2xl font-bold">How happy are you with the specific work kinds?</div>
+        <div className="text-2xl font-bold">How happy are you with specific worktypes?</div>
         <p className="text-muted-foreground text-s">
-          Submit your happiness for specific work kinds to track your happiness with different kind of tasks.
+          Submit your happiness for specific worktypes. Only fill out the relevant ones!
         </p>
 
-        <Table className={'mt-5'}>
+        <Table className="mt-5">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Workkind</TableHead>
-              <TableHead className="w-[100px]">Happiness</TableHead>
+              <TableHead className="font-semibold">Work type</TableHead>
+              <TableHead className="font-semibold">Happiness</TableHead>
             </TableRow>
           </TableHeader>
-          <TableRow>
-            <TableCell className="font-semibold">asdasd</TableCell>
-            <TableCell className="font">
-              <ToggleGroup type="single" defaultValue="s" variant={'outline'}>
-                <ToggleGroupItem value="2" onClick={() => handleToggle(2, 1)}>
-                  <Frown className={'bg-tertiaryBG-light'} />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="8" onClick={() => handleToggle(8, 1)}>
-                  <Annoyed />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="14" onClick={() => handleToggle(8, 1)}>
-                  <Smile />
-                </ToggleGroupItem>
-                <ToggleGroupItem value="20" onClick={() => handleToggle(8, 1)}>
-                  <Laugh />
-                </ToggleGroupItem>
-              </ToggleGroup>
-            </TableCell>
-          </TableRow>
+          {workKinds.map((workKind) => (
+            <TableRow>
+              <TableCell className="font-light">{workKind.name}</TableCell>
+              <TableCell className="font">
+                <div className="flex space-x-2">
+                  <SurveyHappinessButton
+                    score={2}
+                    size="icon"
+                    onClick={(score) => handleClick(score, workKind.id)}
+                    className="bg-tertiaryBG-light"
+                    icon={<Frown className="h-6 w-6" />}
+                  />
+                  <SurveyHappinessButton
+                    score={8}
+                    size="icon"
+                    onClick={(score) => handleClick(score, workKind.id)}
+                    className="bg-primaryRed-light text-primaryRed-main"
+                    icon={<Annoyed className="h-6 w-6" />}
+                  />
+                  <SurveyHappinessButton
+                    score={14}
+                    size="icon"
+                    onClick={(score) => handleClick(score, workKind.id)}
+                    className="bg-primaryBlue-light text-primaryBlue-main"
+                    icon={<Smile className="h-6 w-6" />}
+                  />
+                  <SurveyHappinessButton
+                    score={20}
+                    size="icon"
+                    onClick={(score) => handleClick(score, workKind.id)}
+                    className="bg-primaryGreen-light text-primaryGreen-main"
+                    icon={<Laugh className="h-6 w-6" />}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
         </Table>
       </CardContent>
       <CardFooter className="justify-center border-t p-4">
         <Button size="sm" variant="ghost" className="gap-1">
           <PlusCircle className="h-3.5 w-3.5" />
-          Add Workkind
+          Add Worktype
         </Button>
       </CardFooter>
     </Card>
   );
-
-  // <Card>
-  //   <CardHeader>
-  //     <CardTitle>?</CardTitle>
-  //     <CardDescription>
-  //       Submit your happiness for specific work kinds to track your happiness with different kind of tasks.
-  //     </CardDescription>
-  //   </CardHeader>
-
-  {
-    /*  <form onSubmit={handleSubmit(onSubmit)}>*/
-  }
-  {
-    /*    <CardContent>*/
-  }
-  {
-    /*      <div className="mb-4">*/
-  }
-  {
-    /*        <div className="mt-2">*/
-  }
-  {
-    /*          <TaskPopover onSmilieChange={handleSmilieChange} workKinds={workKinds} />*/
-  }
-  {
-    /*          <Button className="h-8" type="button">*/
-  }
-  {
-    /*            New Workkind*/
-  }
-  {
-    /*          </Button>*/
-  }
-  {
-    /*        </div>*/
-  }
-  {
-    /*        {errors.question2 && <span className="text-red-500">This field is required</span>}*/
-  }
-  {
-    /*      </div>*/
-  }
-  {
-    /*    </CardContent>*/
-  }
-  {
-    /*  </form>*/
-  }
-  {
-    /*</Card>*/
-  }
 };
 
 export default WorkKindSurvey;
