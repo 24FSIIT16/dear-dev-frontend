@@ -6,7 +6,7 @@ import { toast } from '@components/ui/Toast/use-toast';
 import { WorkKind } from '@/types/WorkKindType';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import { Table, TableCell, TableHead, TableHeader, TableRow } from '@components/ui/Table/BasicTable';
-import useSurveyClient from '@hooks/useSurveyClient';
+import useDashboardClient from '@hooks/useDashboardClient';
 import { SubmitWorkKindScoreDTO } from '@/types/SurveyType';
 import { User } from '@/types/UserType';
 import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
@@ -17,7 +17,7 @@ interface WorkKindSurveyProps {
 }
 
 const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
-  const { submitWorkKindScore } = useSurveyClient();
+  const { submitWorkKindScore } = useDashboardClient();
 
   const handleClick = async (score: number, workKindId: number) => {
     const workKindScore: SubmitWorkKindScoreDTO = {

@@ -6,7 +6,7 @@ import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
 import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
 import { toast } from '@components/ui/Toast/use-toast';
-import useSurveyClient from '@hooks/useSurveyClient';
+import useDashboardClient from '@hooks/useDashboardClient';
 import { User } from '@/types/UserType';
 
 interface HappinessSurveyProps {
@@ -16,7 +16,7 @@ interface HappinessSurveyProps {
 
 const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, user }) => {
   const [rotateButton, setRotateButton] = React.useState<number | null>(null);
-  const { submitHappinessScore } = useSurveyClient();
+  const { submitHappinessScore } = useDashboardClient();
 
   const iconClasses = (score: number) => `h-12 w-12 ${rotateButton === score ? 'rotate-360' : ''}`;
 

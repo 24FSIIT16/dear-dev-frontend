@@ -10,7 +10,7 @@ import HappinessSurvey from '@/(main)/(home)/components/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
 import BasicSmallCard from '@components/Cards/BasicCard';
 import { AverageScoreResponse } from '@/types/SurveyType';
-import useSurveyClient from '@hooks/useSurveyClient';
+import useDashboardClient from '@hooks/useDashboardClient';
 import { toast } from '@components/ui/Toast/use-toast';
 import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
 import { WorkKind } from '@/types/WorkKindType';
@@ -21,7 +21,7 @@ import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
-  const { getAverageScore } = useSurveyClient();
+  const { getAverageScore } = useDashboardClient();
   const { getWorkKinds } = useWorkKindClient();
   const [averageScore, setAverageScore] = React.useState<AverageScoreResponse>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);

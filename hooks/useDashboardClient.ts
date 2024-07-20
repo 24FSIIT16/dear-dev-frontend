@@ -5,7 +5,7 @@ import { AverageScoreResponse, SubmitHappinessScoreDTO, SubmitWorkKindScoreDTO }
 
 const client = axios.create({ withCredentials: true, baseURL: API_BASE_URL });
 
-const useSurveyClient = () => {
+const useDashboardClient = () => {
   const { accessToken } = useAuth();
 
   client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
@@ -26,4 +26,4 @@ const useSurveyClient = () => {
   };
 };
 
-export default useSurveyClient;
+export default useDashboardClient;
