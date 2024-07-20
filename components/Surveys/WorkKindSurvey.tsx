@@ -8,12 +8,18 @@ import { toast } from '@components/ui/Toast/use-toast';
 import TaskPopover from '@components/Surveys/TaskPopover';
 import getTodayDate from '@/lib/dateUtils';
 import { Button } from '@components/ui/Buttons/Button';
+import { AverageScoreResponse } from '@/types/SurveyType';
+import { WorkKind } from '@/types/WorkKindType';
 
 type FormValues = {
-  question2: Array<{ taskId: string; value: string }>;
+  question2: Array<{ taskId: number; value: string }>;
 };
 
-const WorkKindSurvey: React.FC = () => {
+interface WorkKindSurveyProps {
+  workKinds: Array<WorkKind>;
+}
+
+const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds }) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -34,7 +40,7 @@ const WorkKindSurvey: React.FC = () => {
     reset();
   };
 
-  const handleSmilieChange = (taskId: string, value: string) => {
+  const handleSmilieChange = (taskId: number, value: string) => {
     const currentValues = getValues('question2') || [];
     const newValues = [...currentValues.filter((item) => item.taskId !== taskId), { taskId, value }];
     setValue('question2', newValues);
@@ -53,17 +59,8 @@ const WorkKindSurvey: React.FC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <div className="mb-4">
-            <Label> {getTodayDate()}</Label>
             <div className="mt-2">
-              <TaskPopover
-                onSmilieChange={handleSmilieChange}
-                tasks={[
-                  { taskId: 'WK-1', buttonLabel: 'Coding' },
-                  { taskId: 'WK-2', buttonLabel: 'Sprint Review' },
-                  { taskId: 'WK-3', buttonLabel: 'Sprint Planning' },
-                  { taskId: 'WK-4', buttonLabel: 'Call with Customer' },
-                ]}
-              />
+              <TaskPopover onSmilieChange={handleSmilieChange} workKinds={workKinds} />
               <Button className="h-8" type="button">
                 New Workkind
               </Button>

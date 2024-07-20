@@ -14,18 +14,30 @@ import { AverageScoreResponse, SubmitHappinessScoreDTO } from '@/types/SurveyTyp
 import useSurveyClient from '@hooks/useSurveyClient';
 import { toast } from '@components/ui/Toast/use-toast';
 import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
+import { WorkKind } from '@/types/WorkKindType';
+import useWorkKindClient from '@hooks/useWorkKindClient';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
   const { submitHappinessScore, getAverageScore } = useSurveyClient();
+  const { getWorkKinds } = useWorkKindClient();
   const [averageScore, setAverageScore] = React.useState<AverageScoreResponse>();
+  const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
+  const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>(true);
+  const [errorLoadingWorkKinds, setErrorLoadingWorkKinds] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (!isLoading && user && !user.hasTeam) {
       router.push('/onboarding');
+    } else {
+      fetchWorkKinds().then((r) => r);
     }
   }, [isLoading, user, router]);
+
+  React.useEffect(() => {
+    fetchAverageScore().then((r) => r);
+  }, [user, getAverageScore]);
 
   const fetchAverageScore = async () => {
     if (!user) return;
@@ -38,6 +50,22 @@ const Home: React.FC = () => {
         description: `Fetching average score `,
         variant: 'destructive',
       });
+    }
+  };
+
+  const fetchWorkKinds = async () => {
+    if (!user) return;
+    try {
+      const response = await getWorkKinds(user.id);
+      setWorkKinds(response.data);
+      setIsLoadingWorkKinds(false);
+    } catch (errorLoadingWorkKinds) {
+      toast({
+        title: 'Error!',
+        description: `Fetching workKinds `,
+        variant: 'destructive',
+      });
+      setIsLoadingWorkKinds(false);
     }
   };
 
@@ -63,10 +91,6 @@ const Home: React.FC = () => {
       });
     }
   };
-
-  React.useEffect(() => {
-    fetchAverageScore().then((r) => r);
-  }, [user, getAverageScore]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
@@ -132,10 +156,9 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid grid-cols-1 gap-4">
-            <WorkKindSurvey />
+            <WorkKindSurvey workKinds={workKinds} />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <WorkKindSurvey />
             <Feedback />
           </div>
         </div>

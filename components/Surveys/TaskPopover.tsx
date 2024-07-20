@@ -4,16 +4,17 @@ import * as React from 'react';
 import { Popover, PopoverTrigger, PopoverContent } from '@components/ui/Popover/Popover';
 import SmiliesRadioButton from '@components/Buttons/SmiliesRadioButton';
 import { Button } from '@components/ui/Buttons/Button';
+import { WorkKind } from '@/types/WorkKindType';
 
 type TaskPopoverProps = {
-  onSmilieChange: (taskId: string, value: string) => void;
-  tasks: Array<{ taskId: string; buttonLabel: string }>;
+  onSmilieChange: (taskId: number, value: string) => void;
+  workKinds: Array<WorkKind>;
 };
 
-const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, tasks }) => {
-  const [openTaskId, setOpenTaskId] = React.useState<string | null>(null);
+const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, workKinds }) => {
+  const [openTaskId, setOpenTaskId] = React.useState<number | null>(null);
 
-  const handleOpen = (taskId: string) => {
+  const handleOpen = (taskId: number) => {
     setOpenTaskId(taskId);
   };
 
@@ -21,21 +22,18 @@ const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, tasks }) => {
     setOpenTaskId(null);
   };
 
-  const handleChange = (taskId: string, value: string) => {
+  const handleChange = (taskId: number, value: string) => {
     onSmilieChange(taskId, value);
     handleClose();
   };
 
   return (
     <>
-      {tasks.map((task) => (
-        <div key={task.taskId} className="mb-4">
-          <Popover
-            open={openTaskId === task.taskId}
-            onOpenChange={(open) => (open ? handleOpen(task.taskId) : handleClose())}
-          >
+      {workKinds.map((task) => (
+        <div key={task.id} className="mb-4">
+          <Popover open={openTaskId === task.id} onOpenChange={(open) => (open ? handleOpen(task.id) : handleClose())}>
             <PopoverTrigger asChild>
-              <Button variant="outline">{task.buttonLabel}</Button>
+              <Button variant="outline">{task.name}</Button>
             </PopoverTrigger>
             <PopoverContent>
               <div className="flex justify-center">
@@ -45,7 +43,7 @@ const TaskPopover: React.FC<TaskPopoverProps> = ({ onSmilieChange, tasks }) => {
                       key={value}
                       value={value}
                       size={50}
-                      handleChange={() => handleChange(task.taskId, value)}
+                      handleChange={() => handleChange(task.id, value)}
                       altText={['Very Unhappy', 'Neutral', 'Happy', 'Very Happy', 'Very Happy', 'Very Unhappy'][index]}
                       imagePath={`/assets/Smilies/${['smily', 'shock', 'cry', 'sick', 'very-happy', 'angry'][index]}.png`}
                     />
