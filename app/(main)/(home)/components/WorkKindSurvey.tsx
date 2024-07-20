@@ -53,7 +53,8 @@ const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ fetchDashboardData, wor
       <CardContent>
         <div className="text-2xl font-bold">How happy are you with specific worktypes?</div>
         <p className="text-muted-foreground text-s">
-          Submit your happiness for specific worktypes. Only fill out the relevant ones!
+          We want to understand your satisfaction with the different types of work you do. Your feedback helps us
+          improve and tailor tasks to better fit your preferences.
         </p>
 
         <Table className="mt-5">

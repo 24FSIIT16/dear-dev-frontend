@@ -57,7 +57,8 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, u
       <CardContent>
         <div className="text-2xl font-bold">How happy are you with your working day?</div>
         <p className="text-muted-foreground text-s mb-7">
-          Submit your overall happiness survey to track your happiness with your work day.
+          We want to know how satisfied you are with your workday today. Your feedback is important to us and helps us
+          understand your daily work experience.
         </p>
         <div className="flex flex-row items-center justify-between">
           <SurveyHappinessButton

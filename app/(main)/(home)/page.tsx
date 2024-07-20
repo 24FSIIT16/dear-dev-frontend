@@ -94,7 +94,7 @@ const Home: React.FC = () => {
     fetchDashboardData().then((r) => r);
   }, [user]);
 
-  if (isLoading || isLoadingWorkKinds) return <Loading />;
+  if (isLoading || isLoadingWorkKinds || isLoadingEmotions) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
 
   return (
@@ -160,22 +160,24 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <HappinessSurvey fetchDashboardData={fetchDashboardData} user={user} />
-            <EmotionSurvey fetchDashboardData={fetchDashboardData} emotions={emotions} user={user} />
-
-            <BasicSmallCard
-              header={{
-                title: 'Survey',
-              }}
-              content={{
-                mainContent: 'Emotions',
-                subContent: 'sdfsdfsdf',
-              }}
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <WorkKindSurvey fetchDashboardData={fetchDashboardData} workKinds={workKinds} user={user} />
-            <Feedback />
+            <div className="space-y-4">
+              <HappinessSurvey fetchDashboardData={fetchDashboardData} user={user} />
+              <EmotionSurvey fetchDashboardData={fetchDashboardData} emotions={emotions} user={user} />
+              <Feedback />
+            </div>
+            <div className="space-y-4">
+              <WorkKindSurvey fetchDashboardData={fetchDashboardData} workKinds={workKinds} user={user} />
+              <BasicSmallCard
+                header={{
+                  title: 'Current Sprint',
+                  icon: <ShipWheel />,
+                }}
+                content={{
+                  mainContent: <Progress value={85} aria-label="12% increase" />,
+                  subContent: '4 days left',
+                }}
+              />
+            </div>
           </div>
         </div>
       ) : (

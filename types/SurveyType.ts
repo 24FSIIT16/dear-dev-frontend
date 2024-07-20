@@ -8,3 +8,8 @@ export interface SubmitWorkKindScoreDTO {
   workKindId: number | undefined;
   score: number;
 }
+
+export interface SubmitEmotionsDTO {
+  userId: string | undefined;
+  emotionId: number | undefined;
+}
