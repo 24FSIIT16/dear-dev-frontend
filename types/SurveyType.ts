@@ -8,7 +8,3 @@ export interface SubmitWorkKindScoreDTO {
   workKindId: number | undefined;
   score: number;
 }
-
-export interface AverageScoreResponse {
-  averageScore: number;
-}

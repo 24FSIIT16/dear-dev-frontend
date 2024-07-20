@@ -10,11 +10,11 @@ import useDashboardClient from '@hooks/useDashboardClient';
 import { User } from '@/types/UserType';
 
 interface HappinessSurveyProps {
-  fetchAverageScore: () => void;
+  fetchDashboardData: () => void;
   user: User;
 }
 
-const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, user }) => {
+const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, user }) => {
   const [rotateButton, setRotateButton] = React.useState<number | null>(null);
   const { submitHappinessScore } = useDashboardClient();
 
@@ -32,7 +32,7 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchAverageScore, us
           description: `Survey Submitted`,
         });
       });
-      fetchAverageScore();
+      fetchDashboardData();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (submitError: any) {
       toast({

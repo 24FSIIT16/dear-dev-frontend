@@ -1,7 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 import { useAuth } from '@providers/AuthProvider';
 import { API_BASE_URL } from '@/lib/api/apiClient';
-import { AverageScoreResponse, SubmitHappinessScoreDTO, SubmitWorkKindScoreDTO } from '@/types/SurveyType';
+import { SubmitHappinessScoreDTO, SubmitWorkKindScoreDTO } from '@/types/SurveyType';
+import { AverageScoreResponse, DashboardDTO } from '@/types/DashboardType';
 
 const client = axios.create({ withCredentials: true, baseURL: API_BASE_URL });
 
@@ -19,10 +20,14 @@ const useDashboardClient = () => {
   const submitWorkKindScore = async (body: SubmitWorkKindScoreDTO): Promise<AxiosResponse<SubmitWorkKindScoreDTO>> =>
     client.post('/v1/dashboard/survey/workkind', body);
 
+  const getDashboardData = async (userId: string): Promise<AxiosResponse<DashboardDTO>> =>
+    client.get(`/v1/dashboard/${userId}`);
+
   return {
     submitHappinessScore,
     submitWorkKindScore,
     getAverageScore,
+    getDashboardData,
   };
 };
 

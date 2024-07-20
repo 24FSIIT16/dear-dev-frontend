@@ -1,6 +1,6 @@
 import React from 'react';
 import { Frown, Annoyed, Smile, Laugh, BoxSelect } from 'lucide-react';
-import { AverageScoreResponse } from '@/types/SurveyType';
+import { AverageScoreResponse } from '@/types/DashboardType';
 
 interface HappinessButtonProps {
   score: AverageScoreResponse | number;

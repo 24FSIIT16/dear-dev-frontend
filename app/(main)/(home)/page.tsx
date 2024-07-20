@@ -9,7 +9,6 @@ import { Bike, CircleSlash, Megaphone, Shapes, ShipWheel } from 'lucide-react';
 import HappinessSurvey from '@/(main)/(home)/components/HappinessSurvey';
 import Feedback from '@components/Surveys/Feedback';
 import BasicSmallCard from '@components/Cards/BasicCard';
-import { AverageScoreResponse } from '@/types/SurveyType';
 import useDashboardClient from '@hooks/useDashboardClient';
 import { toast } from '@components/ui/Toast/use-toast';
 import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
@@ -17,23 +16,28 @@ import { WorkKind } from '@/types/WorkKindType';
 import useWorkKindClient from '@hooks/useWorkKindClient';
 import Progress from '@components/ui/Progress/Progress';
 import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
+import { AverageScoreResponse, DashboardDTO, MostVotedWorkKind } from '@/types/DashboardType';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
-  const { getAverageScore } = useDashboardClient();
+  const { getDashboardData } = useDashboardClient();
   const { getWorkKinds } = useWorkKindClient();
-  const [averageScore, setAverageScore] = React.useState<AverageScoreResponse>();
+  const [dashboardData, setDashboardData] = React.useState<DashboardDTO>();
+  const [mostVotedWorkKind, setMostVotedWorkKind] = React.useState<MostVotedWorkKind>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
   const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>();
 
   // todo display this alert card only if there were no entries in the last 2 days*/
 
-  const fetchAverageScore = async () => {
+  const fetchDashboardData = async () => {
     if (!user) return;
     try {
-      const response = await getAverageScore(user.id);
-      setAverageScore(response.data);
+      const response = await getDashboardData(user.id);
+      setDashboardData(response.data);
+
+      console.log('asdasd');
+      console.log('average', dashboardData);
     } catch (authError) {
       toast({
         title: 'Error!',
@@ -68,8 +72,8 @@ const Home: React.FC = () => {
   }, [isLoading, user, router]);
 
   React.useEffect(() => {
-    fetchAverageScore().then((r) => r);
-  }, [user, getAverageScore]);
+    fetchDashboardData().then((r) => r);
+  }, [user]);
 
   if (isLoading || isLoadingWorkKinds) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
@@ -96,7 +100,7 @@ const Home: React.FC = () => {
                 icon: <CircleSlash />,
               }}
               content={{
-                mainContent: <AverageHappinessButton score={averageScore ?? 0} />,
+                mainContent: <AverageHappinessButton score={dashboardData?.averageScore ?? 0} />,
               }}
             />
             <BasicSmallCard
@@ -111,7 +115,7 @@ const Home: React.FC = () => {
             />
             <BasicSmallCard
               header={{
-                title: 'Team   Velocity',
+                title: 'Team Velocity',
                 icon: <Bike />,
               }}
               content={{
@@ -130,14 +134,14 @@ const Home: React.FC = () => {
                 icon: <Shapes />,
               }}
               content={{
-                mainContent: 'Meetings',
+                mainContent: dashboardData?.mostVotedWorkKind?.workKindName,
                 subContent: 'tracked 37 times in the last 5 Months',
               }}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <HappinessSurvey fetchAverageScore={fetchAverageScore} user={user} />
+            <HappinessSurvey fetchDashboardData={fetchDashboardData} user={user} />
             <BasicSmallCard
               header={{
                 title: 'Survey',
