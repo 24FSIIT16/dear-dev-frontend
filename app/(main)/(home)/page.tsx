@@ -17,17 +17,23 @@ import useWorkKindClient from '@hooks/useWorkKindClient';
 import Progress from '@components/ui/Progress/Progress';
 import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
 import { DashboardDTO } from '@/types/DashboardType';
+import useEmotionClient from '@hooks/useEmotionClient';
+import { Emotion } from '@/types/EmotionType';
+import EmotionSurvey from '@/(main)/(home)/components/EmotionSurvey';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
   const router = useRouter();
   const { getDashboardData } = useDashboardClient();
   const { getWorkKinds } = useWorkKindClient();
+  const { getEmotions } = useEmotionClient();
   const [dashboardData, setDashboardData] = React.useState<DashboardDTO>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
+  const [emotions, setEmotions] = React.useState<Emotion[]>([]);
   const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>();
+  const [isLoadingEmotions, setIsLoadingEmotions] = React.useState<boolean>();
 
-  // todo display this alert card only if there were no entries in the last 2 days*/
+  // todo display alert card only if there were no entries in the last 2 days*/
 
   const fetchDashboardData = async () => {
     if (!user) return;
@@ -59,11 +65,28 @@ const Home: React.FC = () => {
     }
   };
 
+  const fetchEmotions = async () => {
+    if (!user) return;
+    try {
+      const response = await getEmotions();
+      setEmotions(response.data);
+      setIsLoadingEmotions(false);
+    } catch (errorLoadingWorkKinds) {
+      toast({
+        title: 'Error!',
+        description: `Fetching emotions `,
+        variant: 'destructive',
+      });
+      setIsLoadingEmotions(false);
+    }
+  };
+
   React.useEffect(() => {
     if (!isLoading && user && !user.hasTeam) {
       router.push('/onboarding');
     } else {
       fetchWorkKinds().then((r) => r);
+      fetchEmotions().then((r) => r);
     }
   }, [isLoading, user, router]);
 
@@ -138,6 +161,8 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-4">
             <HappinessSurvey fetchDashboardData={fetchDashboardData} user={user} />
+            <EmotionSurvey fetchDashboardData={fetchDashboardData} emotions={emotions} user={user} />
+
             <BasicSmallCard
               header={{
                 title: 'Survey',
