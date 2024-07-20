@@ -14,9 +14,10 @@ import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
 interface WorkKindSurveyProps {
   workKinds: Array<WorkKind>;
   user: User;
+  fetchDashboardData: () => void;
 }
 
-const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
+const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ fetchDashboardData, workKinds, user }) => {
   const { submitWorkKindScore } = useDashboardClient();
 
   const handleClick = async (score: number, workKindId: number) => {
@@ -32,6 +33,7 @@ const WorkKindSurvey: React.FC<WorkKindSurveyProps> = ({ workKinds, user }) => {
         title: 'Success!',
         description: `Happiness score submitted`,
       });
+      fetchDashboardData();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast({

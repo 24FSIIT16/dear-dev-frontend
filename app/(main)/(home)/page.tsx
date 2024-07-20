@@ -16,7 +16,7 @@ import { WorkKind } from '@/types/WorkKindType';
 import useWorkKindClient from '@hooks/useWorkKindClient';
 import Progress from '@components/ui/Progress/Progress';
 import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
-import { AverageScoreResponse, DashboardDTO, MostVotedWorkKind } from '@/types/DashboardType';
+import { DashboardDTO } from '@/types/DashboardType';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
@@ -24,7 +24,6 @@ const Home: React.FC = () => {
   const { getDashboardData } = useDashboardClient();
   const { getWorkKinds } = useWorkKindClient();
   const [dashboardData, setDashboardData] = React.useState<DashboardDTO>();
-  const [mostVotedWorkKind, setMostVotedWorkKind] = React.useState<MostVotedWorkKind>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
   const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>();
 
@@ -35,9 +34,6 @@ const Home: React.FC = () => {
     try {
       const response = await getDashboardData(user.id);
       setDashboardData(response.data);
-
-      console.log('asdasd');
-      console.log('average', dashboardData);
     } catch (authError) {
       toast({
         title: 'Error!',
@@ -153,7 +149,7 @@ const Home: React.FC = () => {
             />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <WorkKindSurvey workKinds={workKinds} user={user} />
+            <WorkKindSurvey fetchDashboardData={fetchDashboardData} workKinds={workKinds} user={user} />
             <Feedback />
           </div>
         </div>
