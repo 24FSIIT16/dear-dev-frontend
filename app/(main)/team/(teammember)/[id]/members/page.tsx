@@ -26,7 +26,8 @@ const TeamMembersPage: React.FC<TeamMembersPageProps> = ({ params }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { data, isLoading, error } = useSWRClient<TeamWithMembers>(`/v1/team-member/${teamId}`);
   const { code: teamCode } = data?.team || {};
-  const { userId: currentUserId } = useAuth();
+  const { userId } = useAuth();
+  const currentUserId = parseInt(userId || '0', 10);
 
   const copyToClipboard = () => {
     const inputValue = inputRef.current?.value;

@@ -7,12 +7,10 @@ import cn from '@/lib/utils';
 import DataTableColumnHeader from '@components/ui/Table/DataTableColumnHeader';
 import { Asterisk } from 'lucide-react';
 
-export const columns = (currentUserId: string | undefined): ColumnDef<TeamMemberWithUser>[] => [
+export const columns = (currentUserId: number): ColumnDef<TeamMemberWithUser>[] => [
   {
     id: 'activeUser',
-    cell: ({ row }) => (
-      <div>{currentUserId === row.original.user.id.toString() && <Asterisk className="h-4 w-4" />}</div>
-    ),
+    cell: ({ row }) => <div>{currentUserId === row.original.user.id && <Asterisk className="h-4 w-4" />}</div>,
   },
   {
     id: 'name',
