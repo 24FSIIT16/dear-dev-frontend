@@ -9,10 +9,12 @@ const getBreadcrumbs = (pathname: string | undefined): Breadcrumb[] => {
   }
   const breadcrumbs = pathname.split('/').filter((crumb) => crumb);
 
-  const breadcrumbItems = breadcrumbs.map((crumb, index) => ({
-    label: crumb.toUpperCase(),
-    href: `/${breadcrumbs.slice(0, index + 1).join('/')}`,
-  }));
+  const breadcrumbItems = breadcrumbs
+    .filter((crumb) => !/^\d+$/.test(crumb))
+    .map((crumb) => ({
+      label: crumb.toUpperCase(),
+      href: `/${breadcrumbs.slice(0, breadcrumbs.indexOf(crumb) + 1).join('/')}`,
+    }));
 
   return [{ label: 'HOME', href: '/' }, ...breadcrumbItems];
 };

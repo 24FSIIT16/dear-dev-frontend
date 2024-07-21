@@ -14,9 +14,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@components/ui/DropdownMenu/Dropdown-menu';
-import { ChevronRight, Ellipsis } from 'lucide-react';
+import { Ellipsis, Settings, Users } from 'lucide-react';
 import { Button } from '@components/ui/Buttons/Button';
 import { Team } from '@/types/TeamType';
+import Link from 'next/link';
 
 export const columns: ColumnDef<Team>[] = [
   {
@@ -51,6 +52,7 @@ export const columns: ColumnDef<Team>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const team = row.original;
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -59,20 +61,22 @@ export const columns: ColumnDef<Team>[] = [
               <Ellipsis className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="p-2">
+          <DropdownMenuContent align="end" className="space-y-1">
             {team.role === 'ADMIN' && (
               <DropdownMenuItem>
-                <div className="flex w-full items-center justify-between">
-                  Team settings
-                  <ChevronRight className="ml-8 h-4 w-4" />
+                <div className="flex w-full items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  Edit team
                 </div>
               </DropdownMenuItem>
             )}
             <DropdownMenuItem>
-              <div className="flex w-full items-center justify-between">
-                Team members
-                <ChevronRight className="ml-8 h-4 w-4" />
-              </div>
+              <Link href={`/team/${team.id}/members`}>
+                <div className="flex w-full items-center justify-between">
+                  <Users className="mr-2 h-4 w-4" />
+                  Show members
+                </div>
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
