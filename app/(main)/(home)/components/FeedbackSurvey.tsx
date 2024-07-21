@@ -3,11 +3,9 @@
 import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Label from '@components/ui/Label/Label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@components/ui/Card/Card';
-import { Button } from '@components/ui/Buttons/Button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { toast } from '@components/ui/Toast/use-toast';
 import { Textarea } from '@components/ui/Text/Textarea';
-import getTodayDate from '@/lib/dateUtils';
 
 type FormValues = {
   question3: string;
@@ -38,30 +36,28 @@ const FeedbackSurvey: React.FC = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Give us some context about your day!</CardTitle>
-        <CardDescription>
-          Submit your feedback to provide positive and negative aspects of your work day.
+        <CardTitle className="space-x-2 text-sm font-medium">Survey</CardTitle>
+        <CardTitle className="text-2xl font-bold">Give us some context about your day!</CardTitle>
+        <CardDescription className="text-muted-foreground text-2lg">
+          Your feedback is invaluable in helping us understand the positive and negative aspects of your workday. By
+          sharing your experiences, you help us identify areas for improvement and celebrate the things that are working
+          well. Please take a moment to provide your insights so we can create a better work environment for everyone.
         </CardDescription>
       </CardHeader>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
-          <Label>{getTodayDate()}</Label>
-
           <div className="mb-4">
-            <Label>What was especially positive about it?</Label>
+            <Label className="text-md space-x-2 font-medium">What was especially positive about it?</Label>
             <Textarea id="positiveFeedback" {...register('question3', { required: false })} />
             {errors.question3 && <span className="text-red-500">This field is required</span>}
           </div>
           <div className="mb-4">
-            <Label>What was especially negative about it?</Label>
+            <Label className="text-md space-x-2 font-medium">What was especially negative about it?</Label>
             <Textarea id="negativeFeedback" {...register('question4', { required: false })} />
             {errors.question4 && <span className="text-red-500">This field is required</span>}
           </div>
         </CardContent>
-        <CardFooter className="border-t px-6 py-4">
-          <Button className="w-full">Submit </Button>
-        </CardFooter>
       </form>
     </Card>
   );

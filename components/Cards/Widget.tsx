@@ -14,17 +14,17 @@ interface CardProps {
   fontColor?: string;
 }
 
-const BasicSmallCard: React.FC<CardProps> = ({ header, content, borderColor, fontColor }) => (
+const Widget: React.FC<CardProps> = ({ header, content, borderColor, fontColor }) => (
   <Card className={borderColor}>
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="space-x-2 text-sm font-medium">{header.title}</CardTitle>
       {header.icon && <div className="text-muted-foreground h-2 w-4">{header.icon}</div>}
     </CardHeader>
     <CardContent className={fontColor}>
-      <div className="text-4xl font-bold">{content.mainContent}</div>
+      <div className="text-3xl font-bold">{content.mainContent}</div>
       {content.subContent && <p className="text-muted-foreground text-s">{content.subContent}</p>}
     </CardContent>
   </Card>
 );
 
-export default BasicSmallCard;
+export default Widget;

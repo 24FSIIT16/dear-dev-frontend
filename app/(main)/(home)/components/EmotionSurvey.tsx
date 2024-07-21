@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { User } from '@/types/UserType';
 import { Emotion } from '@/types/EmotionType';
 import { Badge } from '@components/ui/Badge/Badge';
@@ -39,16 +39,15 @@ const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ fetchDashboardData, emoti
     <Card>
       <CardHeader>
         <CardTitle className="space-x-2 text-sm font-medium">Survey</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <div className="text-2xl font-bold">How do you feel?</div>
-        <p className="text-muted-foreground text-s">
+        <CardTitle className="text-2xl font-bold">How do you feel?</CardTitle>
+        <CardDescription className="text-muted-foreground text-2lg">
           We value your well-being and would love to know how you feel today. Please select the emotion that best
           represents your current mood. Your feedback helps us understand your overall happiness and track changes over
           time.
-        </p>
+        </CardDescription>
+      </CardHeader>
 
+      <CardContent>
         <div className="mt-4 flex flex-wrap gap-2">
           {emotions.map((emotion) => (
             <Badge

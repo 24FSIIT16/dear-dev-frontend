@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
 import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
@@ -51,15 +51,15 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, u
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+      <CardHeader>
         <CardTitle className="text-sm font-medium">Survey</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="text-2xl font-bold">How happy are you with your working day?</div>
-        <p className="text-muted-foreground text-s mb-7">
+        <CardTitle className="text-2xl font-bold">How happy are you with your working day?</CardTitle>
+        <CardDescription className="text-muted-foreground text-2lg">
           We want to know how satisfied you are with your workday today. Your feedback is important to us and helps us
           understand your daily work experience.
-        </p>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
         <div className="flex flex-row items-center justify-between">
           <SurveyHappinessButton
             score={2}
