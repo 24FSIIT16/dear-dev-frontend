@@ -71,7 +71,7 @@ export const columns: ColumnDef<Team>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="space-y-1">
             {team.role === 'ADMIN' && (
-              <DropdownMenuItem>
+              <DropdownMenuItem asChild>
                 <Link href={`/team/${team.id}/config`}>
                   <div className="flex w-full items-center">
                     <Settings className="mr-2 h-4 w-4" />
@@ -80,7 +80,7 @@ export const columns: ColumnDef<Team>[] = [
                 </Link>
               </DropdownMenuItem>
             )}
-            <DropdownMenuItem>
+            <DropdownMenuItem asChild>
               <Link href={`/team/${team.id}/members`}>
                 <div className="flex w-full items-center justify-between">
                   <Users className="mr-2 h-4 w-4" />
