@@ -49,6 +49,14 @@ export const columns: ColumnDef<Team>[] = [
     },
   },
   {
+    accessorKey: 'code',
+    header: 'Team code',
+    cell: ({ row }) => {
+      const { role, code } = row.original;
+      return role === 'ADMIN' ? <span>{code}</span> : '-';
+    },
+  },
+  {
     id: 'actions',
     cell: ({ row }) => {
       const team = row.original;

@@ -9,7 +9,7 @@ const TeamLayout: React.FC<TeamLayoutProps> = ({ children }) => (
   <div className="space-y-8 px-16 pb-16">
     <div className="space-y-0.5">
       <h1>Team</h1>
-      <p className="text-md font-thin">Manage your teams and invite new members to join your team.</p>
+      <p className="text-md font-thin">Manage your teams.</p>
     </div>
     <Separtor className="dark:border-secondaryBG-dark" />
     <div>{children}</div>
