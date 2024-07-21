@@ -72,10 +72,12 @@ export const columns: ColumnDef<Team>[] = [
           <DropdownMenuContent align="end" className="space-y-1">
             {team.role === 'ADMIN' && (
               <DropdownMenuItem>
-                <div className="flex w-full items-center">
-                  <Settings className="mr-2 h-4 w-4" />
-                  Edit team
-                </div>
+                <Link href={`/team/${team.id}/config`}>
+                  <div className="flex w-full items-center">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Edit team
+                  </div>
+                </Link>
               </DropdownMenuItem>
             )}
             <DropdownMenuItem>
