@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import { DashboardDTO } from '@/types/DashboardType';
 import Widget from '@components/Cards/Widget';
-import { AudioWaveform, Bike, CircleSlash, Shapes } from 'lucide-react';
+import { AudioWaveform, Bike, CircleSlash } from 'lucide-react';
 import Progress from '@components/ui/Progress/Progress';
 import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
 
@@ -44,12 +44,17 @@ const WidgetRow: React.FC<DashboardOverviewProps> = ({ dashboardData }) => (
     />
     <Widget
       header={{
-        title: 'Most Tracked Worktype',
-        icon: <Shapes />,
+        title: `Most Tracked Worktype - tracked ${dashboardData?.mostVotedWorkKind ? dashboardData?.mostVotedWorkKind?.voteCount : 0} times`,
       }}
       content={{
-        mainContent: dashboardData?.mostVotedWorkKind ? dashboardData?.mostVotedWorkKind?.workKindName : '-',
-        subContent: 'tracked 37 times, Happiness :(',
+        mainContent: dashboardData?.mostVotedWorkKind ? (
+          <div className="flex items-center space-x-4">
+            <span>{dashboardData.mostVotedWorkKind.workKindName}</span>
+            <AverageHappinessButton score={dashboardData?.mostVotedWorkKind.happinessScore ?? 0} size="h-8 w-8" />
+          </div>
+        ) : (
+          '-'
+        ),
       }}
     />
   </div>
