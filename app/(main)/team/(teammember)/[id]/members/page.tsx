@@ -10,6 +10,7 @@ import Separator from '@components/ui/Separator/Separator';
 import { Clipboard, Check } from 'lucide-react';
 import Input from '@components/ui/Input/Input';
 import { Button } from '@components/ui/Buttons/Button';
+import { useAuth } from '@providers/AuthProvider';
 import { columns } from '../../../components/TeamMembersTable/columns';
 import TeamMemberTable from '../../../components/TeamMembersTable/TeamMemberTable';
 
@@ -25,6 +26,7 @@ const TeamMembersPage: React.FC<TeamMembersPageProps> = ({ params }) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const { data, isLoading, error } = useSWRClient<TeamWithMembers>(`/v1/team-member/${teamId}`);
   const { code: teamCode } = data?.team || {};
+  const { userId: currentUserId } = useAuth();
 
   const copyToClipboard = () => {
     const inputValue = inputRef.current?.value;
@@ -61,11 +63,11 @@ const TeamMembersPage: React.FC<TeamMembersPageProps> = ({ params }) => {
                   <h2>Manage</h2>
                   <p className="text-sm font-thin">All team members listed.</p>
                 </div>
-                <TeamMemberTable<TeamMemberWithUser> columns={columns} data={data.members} />
+                <TeamMemberTable<TeamMemberWithUser> columns={columns(currentUserId)} data={data.members} />
               </div>
             </>
           ) : (
-            <TeamMemberTable<TeamMemberWithUser> columns={columns} data={data.members} />
+            <TeamMemberTable<TeamMemberWithUser> columns={columns(currentUserId)} data={data.members} />
           )}
         </div>
       ) : (
