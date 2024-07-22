@@ -9,6 +9,7 @@ const LoginPage: React.FC = () => (
     <div className="bg-primaryGreen-light dark:bg-primaryGreen-bg">
       <div className="flex min-h-screen flex-col p-16">
         <Logo className="h-8 w-8 flex-1" />
+        <h1 className="text-2xlx font-medium">Where productivity meets happiness</h1>
         <p className="py-8 pr-12 text-lg font-light dark:text-black">
           Discover a new way to track your happiness and boost your productivity. yappi helps you monitor your emotional
           well-being, learn from your experiences, and achieve greater efficiency in your daily life. Join us now and

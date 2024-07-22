@@ -24,11 +24,11 @@ const UserAuthForm: React.FC<UserAuthFormProps> = ({ className }) => {
 
   return (
     <div className={cn('flex min-h-screen items-center justify-center', className)}>
-      <div className="grid max-w-sm gap-3 text-center">
+      <div className="grid max-w-md gap-3 text-center">
         <h1>Get started with yappi</h1>
-        <p className="mb-2 text-xs font-thin">Sign in with Google or GitHub to start your happiness journey.</p>
+        <p className="mb-2 text-sm font-thin">Sign in with Google or GitHub to start your happiness journey.</p>
         <Button
-          className="h-8"
+          className="h-10"
           variant="outline"
           type="button"
           disabled={loadingProvider === 'github'}
@@ -47,7 +47,7 @@ const UserAuthForm: React.FC<UserAuthFormProps> = ({ className }) => {
           <Separator className="flex-1" />
         </div>
         <Button
-          className="h-8"
+          className="h-10"
           variant="outline"
           type="button"
           disabled={loadingProvider === 'google'}
