@@ -2,9 +2,9 @@ name: CI / CD yappi
 
 on:
   push:
-    branches: ['*']
+    branches: [ '*' ]
   pull_request:
-    branches: ['main']
+    branches: [ 'main' ]
 
   workflow_dispatch:
 
@@ -35,7 +35,7 @@ jobs:
 
   build_and_publish:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    #  if: github.ref == 'refs/heads/main'
     needs: test
 
     steps:

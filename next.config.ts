@@ -1,5 +1,6 @@
 module.exports = {
+  reactStrictMode: true,
   images: {
-    domains: ['media.giphy.com'],
+    domains: ['yappi.ch', '86.119.49.89'],
   },
 };
