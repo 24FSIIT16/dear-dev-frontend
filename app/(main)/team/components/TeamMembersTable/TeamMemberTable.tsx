@@ -74,6 +74,11 @@ const TeamMemberTable = <TData,>({ columns, data }: TeamMemberTableProps<TData>)
           </TableBody>
         </Table>
       </div>
+      <div className="flex items-center justify-start gap-4">
+        <span className="text-sm font-light">
+          Total members: <span className="font-semibold">{data.length}</span>
+        </span>
+      </div>
     </div>
   );
 };
