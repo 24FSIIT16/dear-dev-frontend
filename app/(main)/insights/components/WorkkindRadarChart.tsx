@@ -44,9 +44,9 @@ export default function WorkkindRadarChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
-              <p className="font-semibold">Trackings per workkind</p>
+              <p className="font-semibold">Trackings per work type</p>
             </div>
-            <div className="flex items-center text-xs font-light">Showing number of tracked workkinds this year</div>
+            <div className="flex items-center text-xs font-light">Showing number of tracked worktypes this year</div>
           </div>
         </div>
       </CardFooter>
