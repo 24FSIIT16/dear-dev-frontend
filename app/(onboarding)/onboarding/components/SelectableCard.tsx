@@ -1,28 +1,27 @@
 'use client';
 
 import * as React from 'react';
-import Image from 'next/image';
-import { Card, CardHeader, CardContent } from '@components/ui/Card/Card';
+import { Card, CardContent } from '@components/ui/Card/Card';
 
 interface SelectableCardProps {
-  selected: boolean;
   onClick: () => void;
-  imageSrc: string;
+  icon?: React.ReactNode;
   title: string;
   description: string;
 }
 
-const SelectableCard: React.FC<SelectableCardProps> = ({ selected, onClick, imageSrc, title, description }) => (
+const SelectableCard: React.FC<SelectableCardProps> = ({ onClick, title, description, icon }) => (
   <Card
-    className={`cursor-pointer p-4 shadow-none ${selected ? 'ring-2 ring-inset ring-slate-900' : ''}`}
+    className="group cursor-pointer rounded-3xl bg-primaryGreen-light p-4 shadow-none hover:bg-primaryGreen-main"
     onClick={onClick}
   >
-    <CardHeader />
-    <CardContent>
-      <div className="flex flex-col items-center py-4">
-        <Image src={imageSrc} width="80" height="80" className="py-4" alt="Illustration" />
-        <h2 className="pt-8 font-semibold">{title}</h2>
-        <p className="mt-2 max-w-xs text-sm leading-relaxed">{description}</p>
+    <CardContent className="text-primaryGreen-main group-hover:text-white">
+      <div className="flex flex-col items-start py-4 text-left">
+        <div className="rounded-full bg-primaryGreen-main p-4 group-hover:bg-white">{icon}</div>
+        <div className="space-y-1 pt-8">
+          <h2 className="text-3xl font-bold">{title}</h2>
+          <p className="text-md max-w-xs font-light">{description}</p>
+        </div>
       </div>
     </CardContent>
   </Card>

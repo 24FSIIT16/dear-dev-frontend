@@ -1,8 +1,8 @@
 'use client';
 
 import * as React from 'react';
-import { Button } from '@components/ui/Buttons/Button';
 import { Dialog, DialogTrigger, DialogContent } from '@components/ui/Dialog/Dialog';
+import { Plus, Users } from 'lucide-react';
 import SelectableCard from './components/SelectableCard';
 import CreateTeamDialog from './components/CreateTeamDialog';
 import JoinTeamDialog from './components/JoinTeamDialog';
@@ -25,38 +25,33 @@ const OnboardingPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 text-center">
-      <div className="mb-8">
-        <h1>How would you like to use yappi?</h1>
-        <p>You have just created an account. Choose what to do next.</p>
-      </div>
-      <div className="mb-4 flex flex-row gap-8">
-        <SelectableCard
-          selected={selected === 'personal'}
-          onClick={() => handleSelect('personal')}
-          imageSrc="/assets/Illus/personal.svg"
-          title="Create a team"
-          description="You want to use yappi as an individual, so that you can track your own happiness. 
-          If you want to start a shared team workspace, you should also select this option and invite your team members in a second step. As the initiator, you will have admin rights."
-        />
-        <SelectableCard
-          selected={selected === 'team'}
-          onClick={() => handleSelect('team')}
-          imageSrc="/assets/Illus/team.svg"
-          title="Join a team"
-          description="You only select this option if you have been invited to a team workspace and have received a four-digit code. 
-          In this workspace, you will see your individual trackings as well as an overview of the team happiness."
-        />
-      </div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button disabled={!selected} className="px-8">
-            Continue
-          </Button>
-        </DialogTrigger>
+    <Dialog>
+      <div className="flex flex-col items-center justify-center gap-8 text-center">
+        <div className="mb-8">
+          <h1>How would you like to use yappi?</h1>
+          <p>You have just created an account. Choose what to do next.</p>
+        </div>
+        <div className="mb-4 flex flex-row gap-8">
+          <DialogTrigger asChild>
+            <SelectableCard
+              onClick={() => handleSelect('personal')}
+              icon={<Plus className="h-8 w-8 text-white group-hover:text-primaryGreen-main" />}
+              title="Create a team"
+              description="Start yappi as an individual to track your happiness. You can later invite members to join your team workspace."
+            />
+          </DialogTrigger>
+          <DialogTrigger asChild>
+            <SelectableCard
+              onClick={() => handleSelect('team')}
+              icon={<Users className="h-8 w-8 text-white group-hover:text-primaryGreen-main" />}
+              title="Join a team"
+              description="Select this option if you have been invited to a team workspace and have received a four-digit code."
+            />
+          </DialogTrigger>
+        </div>
         <DialogContent>{renderDialogContent()}</DialogContent>
-      </Dialog>
-    </div>
+      </div>
+    </Dialog>
   );
 };
 
