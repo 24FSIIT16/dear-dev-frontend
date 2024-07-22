@@ -20,6 +20,8 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const { data: session } = useSession();
   const [token, setToken] = React.useState<string>('');
@@ -31,7 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const sessionData = session as ExtendedSession;
 
   const fetchUser = async (id: string, bearerToken: string) => {
-    const response = await fetch(`http://localhost:8080/v1/user/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/v1/user/${id}`, {
       headers: {
         Authorization: `Bearer ${bearerToken}`,
       },
