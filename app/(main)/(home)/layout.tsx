@@ -10,7 +10,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => (
     <div className="space-y-0.5">
       <h1>Dashboard</h1>
       <p className="text-md font-thin">
-        Manage your surveys, track workkind, stay updated, and optimize your day — all in one place.
+        Manage your surveys, track worktypes, stay updated, and optimize your day — all in one place.
       </p>
     </div>
     <Separator className="dark:border-secondaryBG-dark" />
