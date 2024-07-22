@@ -1,3 +1,5 @@
+import { TeamMemberWithUser } from './TeamMemberType';
+
 export interface Team {
   id: number;
   name: string;
@@ -7,6 +9,7 @@ export interface Team {
   createdBy: number;
   createdAt: string;
   active: boolean;
+  role: string;
 }
 
 export interface CreateTeamDTO {
@@ -17,4 +20,10 @@ export interface CreateTeamDTO {
 export interface JoinTeamDTO {
   userId: string | undefined;
   code: string;
+}
+
+export interface TeamWithMembers {
+  isAdmin: boolean;
+  team: Team;
+  members: TeamMemberWithUser[];
 }

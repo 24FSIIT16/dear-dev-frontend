@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@components/ui/Dialog/Dialog';
 import { Button } from '@components/ui/Buttons/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,6 +45,10 @@ const JoinTeamDialog: React.FC = () => {
       });
     } catch (error) {
       console.error(error);
+      form.setError('code', {
+        type: 'manual',
+        message: 'Failed to join team with this code. Please try again.',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -69,44 +74,54 @@ const JoinTeamDialog: React.FC = () => {
               <span className="font-bold text-black underline">{joinedTeam.name}</span>.
             </span>
           ) : (
-            'Fill the four-digit code, this code should be provided to you by a admin.'
+            'Fill the four-digit code, this code should be provided to you by an admin.'
           )}
         </DialogDescription>
       </DialogHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="code"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Team code</FormLabel>
-                <FormControl>
-                  <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} {...field}>
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <DialogFooter>
-            {!isLoading ? (
-              <Button type="submit">Join Team</Button>
-            ) : (
-              <Button disabled>
-                <Loader2 className="animate-sping mr-2 h-4 w-4" />
-                Please wait
-              </Button>
-            )}
-          </DialogFooter>
-        </form>
-      </Form>
+      {!joinedTeam ? (
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="code"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Team code</FormLabel>
+                  <FormControl>
+                    <InputOTP maxLength={4} pattern={REGEXP_ONLY_DIGITS_AND_CHARS} {...field}>
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <DialogFooter>
+              {!isLoading ? (
+                <Button type="submit">Join Team</Button>
+              ) : (
+                <Button disabled>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Please wait
+                </Button>
+              )}
+            </DialogFooter>
+          </form>
+        </Form>
+      ) : (
+        <DialogFooter>
+          <div>
+            <Link href="/team">
+              <Button className="mt-8 px-8">Continue</Button>
+            </Link>
+          </div>
+        </DialogFooter>
+      )}
     </>
   );
 };

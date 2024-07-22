@@ -21,7 +21,9 @@ const SettingsSidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
         const isActive = pathname === item.href;
         return (
           <Link key={item.href} href={item.href}>
-            <Button variant={isActive ? 'selected' : 'ghost'}>{item.title}</Button>
+            <Button className="w-3/4 justify-start" variant={isActive ? 'selected' : 'ghost'}>
+              {item.title}
+            </Button>
           </Link>
         );
       })}
