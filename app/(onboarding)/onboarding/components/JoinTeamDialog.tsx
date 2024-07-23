@@ -67,11 +67,10 @@ const JoinTeamDialog: React.FC = () => {
             'Join a team'
           )}
         </DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="font-thin text-black">
           {joinedTeam ? (
             <span className="max-w-md">
-              You have successfully joined the team{' '}
-              <span className="font-bold text-black underline">{joinedTeam.name}</span>.
+              You have successfully joined the team <span className="font-bold underline">{joinedTeam.name}</span>.
             </span>
           ) : (
             'Fill the four-digit code, this code should be provided to you by an admin.'
