@@ -44,6 +44,10 @@ const CreateTeamDialog: React.FC = () => {
       });
     } catch (error) {
       console.error(error);
+      form.setError('name', {
+        type: 'manual',
+        message: 'Failed to create team. Please try again.',
+      });
     } finally {
       setIsLoading(false);
     }
@@ -72,7 +76,7 @@ const CreateTeamDialog: React.FC = () => {
             'Create a team'
           )}
         </DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="font-thin text-black">
           {createdTeam ? (
             <span className="max-w-md">
               Your yappi team was created successfully. Start your happiness journey and invite new team members with

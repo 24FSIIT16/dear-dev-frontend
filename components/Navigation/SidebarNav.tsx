@@ -12,7 +12,7 @@ interface SidebarNavProps {
   }[];
 }
 
-const SettingsSidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
+const SidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
   const pathname = usePathname();
 
   return (
@@ -31,4 +31,4 @@ const SettingsSidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
   );
 };
 
-export default SettingsSidebarNav;
+export default SidebarNav;

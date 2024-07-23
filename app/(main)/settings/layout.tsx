@@ -1,6 +1,6 @@
-import SettingsSidebarNav from '@components/Navigation/SettingsSidebarNav';
-import Separator from '@components/ui/Separator/Separator';
 import * as React from 'react';
+import SidebarNav from '@components/Navigation/SidebarNav';
+import Separator from '@components/ui/Separator/Separator';
 
 interface SettingsLayoutProps {
   children: React.ReactNode;
@@ -26,7 +26,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => (
     <Separator className="dark:border-secondaryBG-dark" />
     <div className="flex space-x-8">
       <aside className="w-1/4">
-        <SettingsSidebarNav items={settingsSidebarNavItems} />
+        <SidebarNav items={settingsSidebarNavItems} />
       </aside>
       <div className="mt-2 flex-1">{children}</div>
     </div>

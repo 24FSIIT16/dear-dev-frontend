@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Button } from '@components/ui/Buttons/Button';
-import { User, Settings, LogOut, LifeBuoyIcon, Plus } from 'lucide-react';
+import { User, Settings, LogOut, LifeBuoyIcon, Plus, CircleHelp } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -68,10 +68,18 @@ const Account: React.FC = () => {
               </DialogTrigger>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link href="/contact">
+                <Link href="/about/contact">
                   <div className="flex items-center">
                     <LifeBuoyIcon className="mr-2 h-4 w-4" />
                     <span>Support</span>
+                  </div>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/about/FAQ">
+                  <div className="flex items-center">
+                    <CircleHelp className="mr-2 h-4 w-4" />
+                    <span>FAQs</span>
                   </div>
                 </Link>
               </DropdownMenuItem>
