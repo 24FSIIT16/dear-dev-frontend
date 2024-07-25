@@ -7,29 +7,34 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '
 import * as React from 'react';
 import { Line, LineChart, XAxis } from 'recharts';
 import { TrendingUp } from 'lucide-react';
+import { HappinessInsightsChartDTO } from '@/types/InsightsType';
 
-const chartData = [
-  { day: 'Monday', personal: 4, team: 5 },
-  { day: 'Tuesday', personal: 3, team: 4 },
-  { day: 'Wednesday', personal: 5, team: 3 },
-  { day: 'Thursday', personal: 4, team: 4 },
-  { day: 'Friday', personal: 5, team: 5 },
-  { day: 'Saturday', personal: 3, team: 4 },
-  { day: 'Sunday', personal: 4, team: 4 },
-];
+// const chartData = [
+//   { day: '2024-12-01', userAverage: 4, teamAverage: 5 },
+//   { day: '2024-12-02', userAverage: 3, teamAverage: 4 },
+//   { day: '2024-12-03', userAverage: 5, teamAverage: 3 },
+//   { day: '2024-12-05', userAverage: 4, teamAverage: 4 },
+//   { day: '2024-12-06', userAverage: 5, teamAverage: 5 },
+//   { day: '2024-12-07', userAverage: 3, teamAverage: 4 },
+//   { day: '2024-12-08', userAverage: 4, teamAverage: 4 },
+// ];
 
 const chartConfig = {
-  personal: {
+  userAverage: {
     label: 'Personal',
     color: '#41B963',
   },
-  team: {
+  teamAverage: {
     label: 'Team',
     color: '#E94B68',
   },
 } satisfies ChartConfig;
 
-const HappinessLineChart: React.FC = () => (
+interface HappinessInsightProps {
+  happinessInsights?: HappinessInsightsChartDTO[];
+}
+
+const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => (
   <Card>
     <CardHeader>
       <CardTitle className="space-y-1">
@@ -41,7 +46,7 @@ const HappinessLineChart: React.FC = () => (
       <ChartContainer config={chartConfig}>
         <LineChart
           accessibilityLayer
-          data={chartData}
+          data={happinessInsights}
           margin={{
             left: 12,
             right: 12,
