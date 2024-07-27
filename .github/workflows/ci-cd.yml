@@ -65,7 +65,7 @@ jobs:
           LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
           docker build \
           --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} \
-          --build-arg NEXT_PUBLIC_API_URL=http://86.119.49.89 \
+          --build-arg NEXT_PUBLIC_API_URL=http://yappi.ch \
           -t $LOWER_REPO_NAME:latest .
           docker push $LOWER_REPO_NAME:latest
 
