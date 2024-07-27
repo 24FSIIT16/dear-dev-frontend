@@ -63,7 +63,10 @@ jobs:
         run: |
           REPO_NAME=ghcr.io/${{ github.repository_owner }}/dear-dev-frontend
           LOWER_REPO_NAME=$(echo $REPO_NAME | tr '[A-Z]' '[a-z]')
-          docker build --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} -t $LOWER_REPO_NAME:latest .
+          docker build \
+          --build-arg SECRET_KEY_NEXT_AUTH=${{ secrets.SECRET_KEY_NEXT_AUTH }} \
+          --build-arg NEXT_PUBLIC_API_URL=http://yappi.ch \
+          -t $LOWER_REPO_NAME:latest .
           docker push $LOWER_REPO_NAME:latest
 
   deploy:
@@ -91,10 +94,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<'EOF'
           echo '${{ secrets.SSH_ITALIAN_PASSWORD }}' | sudo -S su - ${{ secrets.SSH_ITALIAN_USER }} -c '
           cd ~/yappi &&
-          docker-compose stop frontend nginx &&
-          docker-compose rm frontend nginx &&
+          docker-compose stop frontend &&
+          docker-compose rm frontend &&
           docker pull ghcr.io/24fsiit16/dear-dev-frontend:latest
-          docker-compose up -d frontend nginx '
+          docker-compose up -d frontend'
           EOF
 
       - name: cleanup
