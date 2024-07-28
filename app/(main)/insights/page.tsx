@@ -23,13 +23,13 @@ const DashboardPage: React.FC = () => {
 
   const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
   const [selectedTeam, setSelectedTeam] = React.useState<Team>();
+  const [sprint, setSprint] = React.useState<string>('none');
 
-  const fetchDashboardData = async (teamId: number) => {
+  const fetchDashboardData = async () => {
     if (!user) return;
-    if (teamId === undefined) return;
+    if (selectedTeam === undefined) return;
     try {
-      const response = await getHappinessInsightsByTeam(user.id, teamId);
-      console.log('response------------------------', response);
+      const response = await getHappinessInsightsByTeam(user.id, selectedTeam.id, sprint);
       setHappinessInsightData(response.data);
     } catch (authError) {
       toast({
@@ -42,8 +42,8 @@ const DashboardPage: React.FC = () => {
 
   React.useEffect(() => {
     if (!selectedTeam) return;
-    fetchDashboardData(selectedTeam.id).then((r) => r);
-  }, [selectedTeam]);
+    fetchDashboardData().then((r) => r);
+  }, [selectedTeam, sprint]);
 
   React.useEffect(() => {
     if (!data) return;
@@ -68,6 +68,10 @@ const DashboardPage: React.FC = () => {
     }
   };
 
+  const handleDateChange = (value: string) => {
+    setSprint(value);
+  };
+
   return (
     <div>
       {user && selectedTeam && data ? (
@@ -84,6 +88,26 @@ const DashboardPage: React.FC = () => {
                     {team.name}
                   </SelectItem>
                 ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
+          <Select onValueChange={handleDateChange} defaultValue={sprint}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a Team" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>My Teams</SelectLabel>
+                <SelectItem key={1} value={'none'}>
+                  All Sprints
+                </SelectItem>
+                <SelectItem key={1} value={'current'}>
+                  Current Sprint
+                </SelectItem>
+                <SelectItem key={1} value={'last'}>
+                  Last Sprint
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

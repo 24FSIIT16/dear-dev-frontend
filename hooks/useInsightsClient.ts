@@ -15,9 +15,10 @@ const useInsightsClient = () => {
 
   const getHappinessInsightsByTeam = async (
     userId: string,
-    teamId: number
+    teamId: number,
+    sprint: string
   ): Promise<AxiosResponse<HappinessInsightsChartDTO[]>> =>
-    client.get(`/v1/insights/happiness/${userId}/team/${teamId}`);
+    client.get(`/v1/insights/happiness/${userId}/team/${teamId}/sprint/${sprint}`);
 
   return {
     getHappinessTeamVsPersonal,
