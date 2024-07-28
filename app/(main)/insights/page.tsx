@@ -10,18 +10,25 @@ import WorkkindBarChart from './components/WorkkindBarChart';
 import DaysTrackedRadialChart from './components/DaysTrackedRadialChart';
 import WorkkindRadarChart from './components/WorkkindRadarChart';
 import HappinessMonthlyBarChart from './components/HappinessMonthlyBarChart';
+import useSWRClient from '@hooks/useSWRClient';
+
+import { Team, TeamDTO } from '@/types/TeamType';
 
 // todo rename
+
 const DashboardPage: React.FC = () => {
   const { user } = useAuth();
-  const { getHappinessTeamVsPersonal } = useInsightsClient();
+  const { getHappinessInsightsByTeam } = useInsightsClient();
   const [happinessInsightData, setHappinessInsightData] = React.useState<HappinessInsightsChartDTO[]>();
+  const [selectedTeam, setSelectedTeam] = React.useState<TeamDTO>();
+  const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
 
-  const fetchDashboardData = async () => {
-    if (!user) return;
+  const fetchDashboardData = async (selectedTeamId: number) => {
+    if (!user || !selectedTeam) return;
     try {
-      const response = await getHappinessTeamVsPersonal(user.id);
+      const response = await getHappinessInsightsByTeam(selectedTeamId.toString(), user.id);
       setHappinessInsightData(response.data);
+      // @ts-ignore
     } catch (authError) {
       toast({
         title: 'Error!',
@@ -32,11 +39,34 @@ const DashboardPage: React.FC = () => {
   };
 
   React.useEffect(() => {
-    fetchDashboardData().then((r) => r);
-  }, [user]);
+    setSelectedTeam(data ? data[0] : undefined); // default team 1 todo
+
+    if (selectedTeam) {
+      fetchDashboardData(selectedTeam.id).then((r) => r);
+    }
+  }, [user, selectedTeam]);
+  //
+  // const handleTeamChange = (team: Team) => {
+  //   setSelectedTeam(team);
+  // };
 
   return (
     <div className="space-y-4">
+      {/* <Select value={selectedTeam? selectedTeam : undefined} onValueChange={handleTeamChange}> */}
+      {/*   <SelectTrigger> */}
+      {/*     <SelectContent> */}
+      {/*       {data ? ( */}
+      {/*         data.map((team) => ( */}
+      {/*           <SelectItem key={team.id} value={team}> */}
+      {/*             {team.name} */}
+      {/*           </SelectItem> */}
+      {/*         )) */}
+      {/*       ) : ( */}
+      {/*         <Loading /> */}
+      {/*       )} */}
+      {/*     </SelectContent> */}
+      {/*   </SelectTrigger> */}
+      {/* </Select> */}
       <div className="grid grid-cols-3 gap-10">
         <HappinessMonthlyBarChart />
         <DaysTrackedRadialChart />

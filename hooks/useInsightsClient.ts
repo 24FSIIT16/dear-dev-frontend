@@ -11,10 +11,17 @@ const useInsightsClient = () => {
   client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
   const getHappinessTeamVsPersonal = async (userId: string): Promise<AxiosResponse<HappinessInsightsChartDTO[]>> =>
-    client.get(`/v1/insights/happiness/team-vs-personal/user/${userId}`);
+    client.get(`/v1/insights/happiness/team-vs-personal/${userId}`);
+
+  const getHappinessInsightsByTeam = async (
+    userId: string,
+    teamId: string
+  ): Promise<AxiosResponse<HappinessInsightsChartDTO[]>> =>
+    client.get(`/v1/insights/happiness/${userId}/team/${teamId}`);
 
   return {
     getHappinessTeamVsPersonal,
+    getHappinessInsightsByTeam,
   };
 };
 
