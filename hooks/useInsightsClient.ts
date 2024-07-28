@@ -15,7 +15,7 @@ const useInsightsClient = () => {
 
   const getHappinessInsightsByTeam = async (
     userId: string,
-    teamId: string
+    teamId: number
   ): Promise<AxiosResponse<HappinessInsightsChartDTO[]>> =>
     client.get(`/v1/insights/happiness/${userId}/team/${teamId}`);
 
