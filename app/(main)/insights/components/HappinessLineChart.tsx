@@ -5,11 +5,9 @@
 import { Card, CardTitle, CardHeader, CardContent, CardFooter } from '@components/ui/Card/Card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/Chart/Chart';
 import * as React from 'react';
-import { Line, LineChart, XAxis } from 'recharts';
+import { Line, LineChart, XAxis, YAxis } from 'recharts';
 import { TrendingUp } from 'lucide-react';
 import { HappinessInsightsChartDTO } from '@/types/InsightsType';
-import { TeamDTO } from '@/types/TeamType';
-import { Select, SelectItem } from '@components/ui/Select/Select';
 
 const chartConfig = {
   userAverage: {
@@ -26,6 +24,8 @@ interface HappinessInsightProps {
   happinessInsights?: HappinessInsightsChartDTO[];
 }
 
+// todo allow to set a daterange
+// todo insert legend --- or icons to indicate happi - unhappy
 const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => {
   return (
     <Card>
@@ -33,7 +33,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
             <p className="text-xl font-semibold">Happiness - Personal vs. Team</p>
-            <p className="-mt-4 text-sm font-thin">Monday, 01.07.24 - Sunday, 07.07.24</p>
+            {/* <p className="-mt-4 text-sm font-thin">Monday, 01.07.24 - Sunday, 07.07.24</p> */}
           </CardTitle>
         </div>
       </CardHeader>
@@ -49,14 +49,17 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
           >
             <XAxis
               dataKey="day"
-              tickLine={false}
+              tickLine={true}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value.slice(0, 10)}
+              angle={-20}
+              dx={-5}
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Line dataKey="personal" type="monotone" stroke="var(--color-personal)" dot={false} />
-            <Line dataKey="team" type="monotone" stroke="var(--color-team)" dot={false} />
+            <YAxis />
+            <ChartTooltip cursor={true} content={<ChartTooltipContent />} />
+            <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
+            <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
           </LineChart>
         </ChartContainer>
       </CardContent>

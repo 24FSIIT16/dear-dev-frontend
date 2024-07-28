@@ -27,8 +27,3 @@ export interface TeamWithMembers {
   team: Team;
   members: TeamMemberWithUser[];
 }
-
-export interface TeamDTO {
-  id: number;
-  name: string;
-}

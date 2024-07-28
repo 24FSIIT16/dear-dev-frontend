@@ -9,9 +9,9 @@ import HappinessLineChart from './components/HappinessLineChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import useSWRClient from '@hooks/useSWRClient';
 
-import { Team, TeamDTO } from '@/types/TeamType';
+import { Team } from '@/types/TeamType';
 import { Select, SelectContent, SelectItem } from '@components/ui/Select/Select';
-import { SelectTrigger } from '@radix-ui/react-select';
+import { SelectGroup, SelectLabel, SelectTrigger, SelectValue } from '@radix-ui/react-select';
 import Loading from '@components/Loading/Loading';
 
 // todo rename
@@ -22,7 +22,7 @@ const DashboardPage: React.FC = () => {
   const [happinessInsightData, setHappinessInsightData] = React.useState<HappinessInsightsChartDTO[]>();
 
   const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
-  const [selectedTeam, setSelectedTeam] = React.useState<TeamDTO>();
+  const [selectedTeam, setSelectedTeam] = React.useState<Team>();
 
   const fetchDashboardData = async (teamId: number) => {
     if (!user) return;
@@ -47,43 +47,64 @@ const DashboardPage: React.FC = () => {
 
   React.useEffect(() => {
     if (!data) return;
-    setSelectedTeam(data[1]);
+    setSelectedTeam(data[0]);
   }, [data]);
 
-  const handleTeamChange = (option: string) => {
-    setSelectedTeam(option);
+  const handleTeamChange = (value: string) => {
+    if (!data) return;
+    const selected = data.find((team) => team.name === value);
+    if (selected) {
+      setSelectedTeam({
+        active: false,
+        code: '',
+        configId: 0,
+        createdAt: '',
+        createdBy: 0,
+        currentSprintId: 0,
+        role: '',
+        id: selected.id,
+        name: selected.name,
+      });
+    }
   };
 
   return (
-    <div className="space-y-4">
-      <Select value={selectedTeam ? selectedTeam : undefined} onValueChange={handleTeamChange}>
-        <SelectTrigger>
-          <SelectContent>
-            {data ? (
-              data.map((team) => (
-                <SelectItem key={team.id} value={team}>
-                  {team.name}
-                </SelectItem>
-              ))
-            ) : (
-              <Loading />
-            )}
-          </SelectContent>
-        </SelectTrigger>
-      </Select>
-      <div className="grid grid-cols-3 gap-10">
-        {/* <HappinessMonthlyBarChart /> */}
-        {/* <DaysTrackedRadialChart /> */}
-        {/* <WorkkindRadarChart /> */}
-      </div>
-      <div className="grid grid-cols-2 gap-10">
-        <div>
-          <HappinessLineChart happinessInsights={happinessInsightData} />
+    <div>
+      {user && selectedTeam && data ? (
+        <div className="space-y-4">
+          <Select onValueChange={handleTeamChange} defaultValue={selectedTeam.name}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a Team" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>My Teams</SelectLabel>
+                {data.map((team) => (
+                  <SelectItem key={team.id} value={team.name}>
+                    {team.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+
+          <div className="grid grid-cols-3 gap-10">
+            {/* <HappinessMonthlyBarChart /> */}
+            {/* <DaysTrackedRadialChart /> */}
+            {/* <WorkkindRadarChart /> */}
+          </div>
+          <div className="grid grid-cols-2 gap-10">
+            <div>
+              <HappinessLineChart happinessInsights={happinessInsightData} />
+            </div>
+            <div>
+              <WorkkindBarChart />
+            </div>
+          </div>
         </div>
-        <div>
-          <WorkkindBarChart />
-        </div>
-      </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };
