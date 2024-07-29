@@ -21,10 +21,9 @@ import Loading from '@components/Loading/Loading';
 import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
+import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
-import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
-import DaysTrackedRadialChart from '@/(main)/insights/components/DaysTrackedRadialChart';
 
 export interface Sprint {
   id: number;

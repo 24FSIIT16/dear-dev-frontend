@@ -61,7 +61,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         >
           <XAxis
             dataKey="day"
-            tickLine={false}
+            tickLine
             axisLine={false}
             tickMargin={13}
             tickFormatter={formatXAxis}
