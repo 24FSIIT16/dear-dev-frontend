@@ -12,7 +12,7 @@ interface SelectableCardProps {
 
 const SelectableCard: React.FC<SelectableCardProps> = ({ onClick, title, description, icon }) => (
   <Card
-    className="group cursor-pointer rounded-3xl bg-primaryGreen-light p-4 shadow-none hover:bg-primaryGreen-main"
+    className="group cursor-pointer rounded-3xl border-none bg-primaryGreen-light p-4 shadow-none hover:bg-primaryGreen-main"
     onClick={onClick}
   >
     <CardContent className="text-primaryGreen-main group-hover:text-white">

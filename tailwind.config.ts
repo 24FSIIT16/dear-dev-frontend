@@ -40,6 +40,10 @@ const config: Config = {
           main: 'rgba(78, 138, 227)',
           light: 'rgba(78, 138, 227, 0.2)',
         },
+        primaryYellow: {
+          main: 'rgba(255, 179, 0)',
+          light: 'rgba(255, 179, 0, 0.2)',
+        },
 
         // background colors
         primaryBG: {

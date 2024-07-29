@@ -7,7 +7,7 @@ interface WidgetProps {
   description: string;
 }
 
-const Widget2: React.FC<WidgetProps> = ({ icon, content, description }) => (
+const Widget: React.FC<WidgetProps> = ({ icon, content, description }) => (
   <Card className="group flex flex-col rounded-2xl border-none bg-primaryBlue-light shadow-none hover:bg-primaryBlue-main">
     <CardHeader className="flex flex-row">
       <div className="flex-1" />
@@ -17,11 +17,11 @@ const Widget2: React.FC<WidgetProps> = ({ icon, content, description }) => (
     </CardHeader>
     <CardContent className="flex flex-grow flex-col justify-end">
       <div className="space-y-1 text-primaryBlue-main group-hover:text-white">
-        <h1 className="text-4xl md:text-4xl lg:text-4xl">{content}</h1>
+        <h1 className="text-2xl sm:text-3xl md:text-4xl">{content}</h1>
         <p className="md:text-md text-sm font-light">{description}</p>
       </div>
     </CardContent>
   </Card>
 );
 
-export default Widget2;
+export default Widget;
