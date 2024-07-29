@@ -21,6 +21,7 @@ import {} from '@radix-ui/react-select';
 import Loading from '@components/Loading/Loading';
 import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
+import convertToCSV from '@/(main)/insights/utils/downloadCSV';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -103,11 +104,25 @@ const InsightsPage: React.FC = () => {
     }
   };
 
+  const downloadCSV = (): void => {
+    if (!happinessInsightData) return;
+    const csv = convertToCSV(happinessInsightData);
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'happiness_insights.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div>
+    <div className="print-content">
       {user && selectedTeam && data && sprints ? (
-        <div className="space-y-4">
-          <div className="grid grid-cols-4 gap-4">
+        <div className="print-content space-y-4">
+          <div className="grid grid-cols-4 items-center gap-4">
             <Select onValueChange={handleTeamChange} defaultValue={selectedTeam.name}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Select a Team" />
@@ -139,20 +154,20 @@ const InsightsPage: React.FC = () => {
               </SelectContent>
             </Select>
 
-            <Button size="sm" variant="outline" onClick={window.print}>
-              <FileBarChart2 className="mr-2 h-4 w-4" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Export CSV</span>
-            </Button>
-            <Button size="sm" variant="outline" onClick={window.print}>
-              <Printer className="mr-2 h-4 w-4" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">Print</span>
-            </Button>
+            <div className="col-span-2 flex justify-end space-x-4">
+              <Button size="icon" variant="outline" onClick={downloadCSV} className="no-print">
+                <FileBarChart2 className="w-4" />
+              </Button>
+              <Button size="icon" variant="outline" onClick={window.print} className="no-print">
+                <Printer className="w-4" />
+              </Button>
+            </div>
           </div>
-          <div className="grid grid-cols-3 gap-10">
-            {/* <HappinessMonthlyBarChart /> */}
-            {/* <DaysTrackedRadialChart /> */}
-            {/* <WorkkindRadarChart /> */}
-          </div>
+          {/* <div className="grid grid-cols-3 gap-10"> */}
+          {/*   <HappinessMonthlyBarChart /> */}
+          {/*   <DaysTrackedRadialChart /> */}
+          {/*   <WorkkindRadarChart /> */}
+          {/* </div> */}
           <div className="grid grid-cols-2 gap-10">
             <div>
               <HappinessLineChart happinessInsights={happinessInsightData} />
