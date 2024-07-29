@@ -3,11 +3,19 @@
 'use client';
 
 import { Card, CardTitle, CardHeader, CardContent, CardFooter } from '@components/ui/Card/Card';
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/Chart/Chart';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@components/ui/Chart/Chart';
 import * as React from 'react';
 import { Line, LineChart, XAxis, YAxis } from 'recharts';
 import { TrendingUp } from 'lucide-react';
-import { HappinessInsightsChartDTO } from '@/types/InsightsType';
+import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
+import { HappinessInsightsDTO } from '@/types/InsightsType';
 
 const chartConfig = {
   userAverage: {
@@ -20,8 +28,15 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
+const formatXAxis = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  return `${day}.${month}`;
+};
+
 interface HappinessInsightProps {
-  happinessInsights?: HappinessInsightsChartDTO[];
+  happinessInsights?: HappinessInsightsDTO[];
 }
 
 const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => (
@@ -29,31 +44,33 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
     <CardHeader>
       <div className="flex items-center justify-between">
         <CardTitle className="space-y-1">
-          <p className="text-xl font-semibold">Happiness - Personal vs. Team</p>
+          <p className="text-xl font-semibold">Happiness - Team vs. Personal</p>
         </CardTitle>
       </div>
     </CardHeader>
     <CardContent>
-      <ChartContainer config={chartConfig}>
+      <ChartContainer config={chartConfig} className="h-52 w-full">
         <LineChart
           accessibilityLayer
           data={happinessInsights}
           margin={{
-            left: 12,
+            left: 0,
             right: 12,
+            top: 5,
           }}
         >
           <XAxis
             dataKey="day"
-            tickLine
+            tickLine={false}
             axisLine={false}
-            tickMargin={8}
-            tickFormatter={(value) => value.slice(0, 10)}
+            tickMargin={13}
+            tickFormatter={formatXAxis}
             angle={-20}
             dx={-5}
           />
-          <YAxis />
+          <YAxis tickMargin={45} tickLine axisLine={false} tick={CustomYAxisTick as never} />
           <ChartTooltip cursor content={<ChartTooltipContent />} />
+          <ChartLegend content={<ChartLegendContent />} />
           <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
           <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
         </LineChart>
