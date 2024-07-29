@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import axios from 'axios';
 import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
 import { WorkKind } from '@/types/WorkKindType';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
@@ -8,7 +9,7 @@ import useDashboardClient from '@hooks/useDashboardClient';
 import { User } from '@/types/UserType';
 import { SubmitWorkKindScoreDTO } from '@/types/SurveyType';
 import { Button } from '@components/ui/Buttons/Button';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import SurveyHoverCard from './SurveyHoverCard';
 
 interface WorktypeSurveyProps {
@@ -20,7 +21,7 @@ interface WorktypeSurveyProps {
 const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ fetchDashboardData, workKinds, user }) => {
   const { submitWorkKindScore } = useDashboardClient();
 
-  const handleClick = async (score: number, workKindId: number) => {
+  const handleSubmit = async (score: number, workKindId: number) => {
     const workKindScore: SubmitWorkKindScoreDTO = {
       score,
       userId: user.id,
@@ -29,18 +30,14 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ fetchDashboardData, wor
 
     try {
       await submitWorkKindScore(workKindScore);
-      toast({
-        title: 'Success!',
-        description: `Happiness score submitted`,
-      });
+      toast.success('Worktype score has been submitted');
       fetchDashboardData();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast({
-        title: 'Error!',
-        description: `Failed to submit score: ${error.message}`,
-        variant: 'destructive',
-      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Something went wrong: ${error.message}`);
+      } else {
+        console.warn('Error: ', error);
+      }
     }
   };
 
@@ -55,17 +52,27 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ fetchDashboardData, wor
           <div className="mb-4 flex w-full flex-col items-start gap-2 sm:flex-row md:items-center" key={workKind.id}>
             <h1 className="min-w-40 font-light">{workKind.name}</h1>
             <div className="flex flex-row space-x-2 md:ml-auto md:space-x-0">
-              <Button variant="icon" size="survey" className="rounded-full" onClick={() => handleClick(2, workKind.id)}>
+              <Button
+                variant="icon"
+                size="survey"
+                className="rounded-full"
+                onClick={() => handleSubmit(2, workKind.id)}
+              >
                 <Frown className="h-6 w-6" />
               </Button>
-              <Button variant="icon" size="survey" className="rounded-full" onClick={() => handleClick(8, workKind.id)}>
+              <Button
+                variant="icon"
+                size="survey"
+                className="rounded-full"
+                onClick={() => handleSubmit(8, workKind.id)}
+              >
                 <Annoyed className="h-6 w-6" />
               </Button>
               <Button
                 variant="icon"
                 size="survey"
                 className="rounded-full"
-                onClick={() => handleClick(14, workKind.id)}
+                onClick={() => handleSubmit(14, workKind.id)}
               >
                 <Smile className="h-6 w-6" />
               </Button>
@@ -73,7 +80,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ fetchDashboardData, wor
                 variant="icon"
                 size="survey"
                 className="rounded-full"
-                onClick={() => handleClick(20, workKind.id)}
+                onClick={() => handleSubmit(20, workKind.id)}
               >
                 <Laugh className="h-6 w-6" />
               </Button>

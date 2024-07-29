@@ -5,9 +5,10 @@ import 'styles/globals.css';
 import Navigation from '@components/Navigation/Navigation';
 import Header from '@components/Header/Header';
 import ThemeProvider from '@providers/ThemeProvider';
-import Toaster from '@components/ui/Toast/Toaster';
+import { Toaster } from '@components/ui/Sonner/Sonner';
 import NextAuthProvider from '@providers/NextAuthProvider';
 import { AuthProvider } from '@providers/AuthProvider';
+import { CircleCheck, CircleX } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'yappi',
@@ -23,7 +24,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
               <Navigation />
               <Header />
-              <Toaster />
+              <Toaster
+                position="top-right"
+                icons={{
+                  success: <CircleCheck className="h-5 w-5" />,
+                  error: <CircleX className="h-5 w-5" />,
+                }}
+              />
               <main className="mt-10 flex justify-center">
                 <div className="ml-20 w-full max-w-7xl px-4">{children}</div>
               </main>

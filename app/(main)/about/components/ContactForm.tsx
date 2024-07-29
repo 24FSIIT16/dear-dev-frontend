@@ -15,7 +15,7 @@ import {
 } from '@components/ui/Form/Form';
 import { Textarea } from '@components/ui/Text/Textarea';
 import { Button } from '@components/ui/Buttons/Button';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import { useAuth } from '@providers/AuthProvider';
 import Input from '@components/ui/Input/Input';
 
@@ -39,10 +39,7 @@ const ContactForm: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = () => {
-    toast({
-      title: 'Success',
-      description: 'Your message | issue has been sent.',
-    });
+    toast.success('Message has been sent');
     form.reset();
   };
 

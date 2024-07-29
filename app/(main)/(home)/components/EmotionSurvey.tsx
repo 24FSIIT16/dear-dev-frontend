@@ -4,9 +4,10 @@ import * as React from 'react';
 import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
 import { User } from '@/types/UserType';
 import { Emotion } from '@/types/EmotionType';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import useDashboardClient from '@hooks/useDashboardClient';
 import { Button } from '@components/ui/Buttons/Button';
+import axios from 'axios';
 import SurveyHoverCard from './SurveyHoverCard';
 
 interface EmotionSurveyProps {
@@ -18,21 +19,17 @@ interface EmotionSurveyProps {
 const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ fetchDashboardData, emotions, user }) => {
   const { submitEmotions } = useDashboardClient();
 
-  const handleClick = async (emotionId: number) => {
+  const handleSubmit = async (emotionId: number) => {
     try {
       await submitEmotions({ userId: user.id, emotionId });
-      toast({
-        title: 'Success!',
-        description: `Emotion submitted`,
-      });
+      toast.success('Emotion has been submitted');
       fetchDashboardData();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      toast({
-        title: 'Error!',
-        description: `Failed to submit emotion: ${error.message}`,
-        variant: 'destructive',
-      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Something went wrong: ${error.message}`);
+      } else {
+        console.warn('Error: ', error);
+      }
     }
   };
 
@@ -50,7 +47,7 @@ const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ fetchDashboardData, emoti
                 key={emotion.id}
                 variant="outline"
                 className="rounded-xl border-black text-sm font-light"
-                onClick={() => handleClick(emotion.id)}
+                onClick={() => handleSubmit(emotion.id)}
               >
                 {emotion.name.toUpperCase()}
               </Button>

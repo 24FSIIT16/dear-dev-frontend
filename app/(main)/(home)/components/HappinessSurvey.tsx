@@ -1,13 +1,14 @@
 'use client';
 
 import * as React from 'react';
+import axios from 'axios';
 import { User } from '@/types/UserType';
 import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
 import useDashboardClient from '@hooks/useDashboardClient';
 import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import { Button } from '@components/ui/Buttons/Button';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import SurveyHoverCard from './SurveyHoverCard';
 
 interface HappinessSurveyProps {
@@ -18,31 +19,23 @@ interface HappinessSurveyProps {
 const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, user }) => {
   const { submitHappinessScore } = useDashboardClient();
 
-  const handleHappinessSubmit = async (score: number) => {
+  const handleSubmit = async (score: number) => {
     const happinessScore: SubmitHappinessScoreDTO = {
       score,
       userId: user?.id,
     };
     try {
       await submitHappinessScore(happinessScore).then(() => {
-        toast({
-          title: 'Success!',
-          description: `Survey Submitted`,
-        });
+        toast.success('Happiness score has been submitted');
       });
       fetchDashboardData();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (submitError: any) {
-      toast({
-        title: 'Error!',
-        description: `Something went wrong. Please try again: ${submitError.message} `,
-        variant: 'destructive',
-      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Something went wrong: ${error.message}`);
+      } else {
+        console.warn('Error: ', error);
+      }
     }
-  };
-
-  const handleClick = (score: number) => {
-    handleHappinessSubmit(score);
   };
 
   return (
@@ -57,16 +50,16 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, u
       <CardContent className="flex flex-grow flex-col justify-end">
         <div className="flex flex-col space-y-2">
           <div className="mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
-            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleClick(2)}>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(2)}>
               <Frown className="h-14 w-14" />
             </Button>
-            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleClick(8)}>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(8)}>
               <Annoyed className="h-14 w-14" />
             </Button>
-            <Button variant="icon" size="mood" className="rounded-full" on Click={() => handleClick(14)}>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(14)}>
               <Smile className="h-14 w-14" />
             </Button>
-            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleClick(20)}>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(20)}>
               <Laugh className="h-14 w-14" />
             </Button>
           </div>

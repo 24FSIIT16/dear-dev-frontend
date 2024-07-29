@@ -7,7 +7,7 @@ import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
 import { Activity, Bike, Component, CircleSlash2, Annoyed } from 'lucide-react';
 import useDashboardClient from '@hooks/useDashboardClient';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import { WorkKind } from '@/types/WorkKindType';
 import useWorkKindClient from '@hooks/useWorkKindClient';
 import { DashboardDTO } from '@/types/DashboardType';
@@ -21,7 +21,8 @@ const Home: React.FC = () => {
   const { getDashboardData } = useDashboardClient();
   const { getWorkKinds } = useWorkKindClient();
   const { getEmotions } = useEmotionClient();
-  const [setDashboardData] = React.useState<DashboardDTO>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [dashboardData, setDashboardData] = React.useState<DashboardDTO>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
   const [emotions, setEmotions] = React.useState<Emotion[]>([]);
   const [isLoadingWorkKinds, setIsLoadingWorkKinds] = React.useState<boolean>();
@@ -33,11 +34,7 @@ const Home: React.FC = () => {
       const response = await getDashboardData(user.id);
       setDashboardData(response.data);
     } catch (authError) {
-      toast({
-        title: 'Error!',
-        description: `Fetching average score `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching average score');
     }
   };
 
@@ -48,11 +45,7 @@ const Home: React.FC = () => {
       setWorkKinds(response.data);
       setIsLoadingWorkKinds(false);
     } catch (errorLoadingWorkKinds) {
-      toast({
-        title: 'Error!',
-        description: `Fetching workKinds `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching worktypes');
       setIsLoadingWorkKinds(false);
     }
   };
@@ -64,11 +57,7 @@ const Home: React.FC = () => {
       setEmotions(response.data);
       setIsLoadingEmotions(false);
     } catch (errorLoadingWorkKinds) {
-      toast({
-        title: 'Error!',
-        description: `Fetching emotions `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching emotions');
       setIsLoadingEmotions(false);
     }
   };

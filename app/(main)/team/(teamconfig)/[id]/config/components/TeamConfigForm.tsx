@@ -17,7 +17,7 @@ import {
 } from '@components/ui/Form/Form';
 import Input from '@components/ui/Input/Input';
 import { Button } from '@components/ui/Buttons/Button';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import cn from '@/lib/utils';
 
 interface TeamConfigFormProps {
@@ -53,10 +53,7 @@ const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ teamId }) => {
   });
 
   const onSubmit: SubmitHandler<FormValues> = () => {
-    toast({
-      title: 'Success',
-      description: 'Your team has been updated.',
-    });
+    toast.success('Team has been updated');
   };
 
   return (
