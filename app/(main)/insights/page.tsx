@@ -17,16 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@components/ui/Select/Select';
-import {} from '@radix-ui/react-select';
 import Loading from '@components/Loading/Loading';
 import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
-
-// todo add legend (team/personal)
-// todo Add Export Function
+import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
+import DaysTrackedRadialChart from '@/(main)/insights/components/DaysTrackedRadialChart';
 
 export interface Sprint {
   id: number;
@@ -48,7 +46,7 @@ const InsightsPage: React.FC = () => {
   const sprints: Sprint[] = [
     { id: 1, name: 'All Sprints', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
     { id: 2, name: 'Current Sprint', value: 'current', startDate: '2020-01-01', endDate: '2020-01-01' },
-    { id: 1, name: 'Last Sprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
+    { id: 3, name: 'Last Sprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
   ];
 
   const fetchDashboardData = async () => {
@@ -124,7 +122,7 @@ const InsightsPage: React.FC = () => {
         <div className="print-content space-y-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Select onValueChange={handleTeamChange} defaultValue={selectedTeam.name}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="">
                 <SelectValue placeholder="Select a Team" />
               </SelectTrigger>
               <SelectContent>
@@ -140,7 +138,7 @@ const InsightsPage: React.FC = () => {
             </Select>
 
             <Select onValueChange={handleSprintChange} defaultValue={sprint?.name}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger>
                 <SelectValue placeholder="Select a Sprint" />
               </SelectTrigger>
               <SelectContent>
@@ -155,26 +153,23 @@ const InsightsPage: React.FC = () => {
             </Select>
 
             <div className="col-span-2 flex justify-end space-x-4">
-              <Button size="icon" variant="outline" onClick={downloadCSV} className="no-print">
+              <Button size="icon" variant="outline" onClick={downloadCSV} className="no-print h-10 w-10">
                 <FileBarChart2 className="w-4" />
               </Button>
-              <Button size="icon" variant="outline" onClick={window.print} className="no-print">
+              <Button size="icon" variant="outline" onClick={window.print} className="no-print h-10 w-10">
                 <Printer className="w-4" />
               </Button>
             </div>
           </div>
-          {/* <div className="grid grid-cols-3 gap-10"> */}
-          {/*   <HappinessMonthlyBarChart /> */}
-          {/*   <DaysTrackedRadialChart /> */}
-          {/*   <WorkkindRadarChart /> */}
-          {/* </div> */}
-          <div className="grid grid-cols-2 gap-10">
-            <div>
-              <HappinessLineChart happinessInsights={happinessInsightData} />
-            </div>
-            <div>
-              <WorkkindBarChart />
-            </div>
+          <div className="grid gap-10">
+            <HappinessLineChart happinessInsights={happinessInsightData} />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <WorkkindBarChart />
+            <WorkkindRadarChart />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <WorkkindRadarChart />
           </div>
         </div>
       ) : (
