@@ -13,9 +13,9 @@ import {
 } from '@components/ui/Chart/Chart';
 import * as React from 'react';
 import { Line, LineChart, XAxis, YAxis } from 'recharts';
-import { HappinessInsightsChartDTO } from '@/types/InsightsType';
 import { TrendingUp } from 'lucide-react';
 import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
+import { HappinessInsightsDTO } from '@/types/InsightsType';
 
 const chartConfig = {
   userAverage: {
@@ -36,7 +36,7 @@ const formatXAxis = (dateString: string): string => {
 };
 
 interface HappinessInsightProps {
-  happinessInsights?: HappinessInsightsChartDTO[];
+  happinessInsights?: HappinessInsightsDTO[];
 }
 
 const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => (
@@ -61,7 +61,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         >
           <XAxis
             dataKey="day"
-            tickLine
+            tickLine={false}
             axisLine={false}
             tickMargin={13}
             tickFormatter={formatXAxis}

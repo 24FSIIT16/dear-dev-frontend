@@ -4,7 +4,6 @@ import * as React from 'react';
 import { toast } from '@components/ui/Toast/use-toast';
 import { useAuth } from '@providers/AuthProvider';
 import useInsightsClient from '@hooks/useInsightsClient';
-import { HappinessInsightsChartDTO } from '@/types/InsightsType';
 import useSWRClient from '@hooks/useSWRClient';
 
 import { Team } from '@/types/TeamType';
@@ -22,6 +21,7 @@ import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
 import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
+import { InsightsDTO, HappinessInsightsDTO } from '@/types/InsightsType';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -35,26 +35,31 @@ export interface Sprint {
 
 const InsightsPage: React.FC = () => {
   const { user } = useAuth();
-  const { getHappinessInsightsByTeam } = useInsightsClient();
-  const [happinessInsightData, setHappinessInsightData] = React.useState<HappinessInsightsChartDTO[]>();
+  const { getInsightsByTeam } = useInsightsClient();
+  const [insightData, setInsightData] = React.useState<InsightsDTO>();
+  const [happinessInsights, setHappinessInsights] = React.useState<HappinessInsightsDTO[]>([]);
 
   const { data } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
+
   const [selectedTeam, setSelectedTeam] = React.useState<Team>();
   const [sprint, setSprint] = React.useState<Sprint>();
 
+  // todo get actual data
   const sprints: Sprint[] = [
     { id: 1, name: 'All Sprints', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
     { id: 2, name: 'Current Sprint', value: 'current', startDate: '2020-01-01', endDate: '2020-01-01' },
     { id: 3, name: 'Last Sprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
   ];
 
-  const fetchDashboardData = async () => {
+  const fetchInsights = async () => {
     if (!user) return;
     if (selectedTeam === undefined) return;
     if (sprint === undefined) return;
     try {
-      const response = await getHappinessInsightsByTeam(user.id, selectedTeam.id, sprint.value);
-      setHappinessInsightData(response.data);
+      const response = await getInsightsByTeam(user.id, selectedTeam.id, sprint.value);
+      if (response) {
+        setInsightData(response.data);
+      }
     } catch (authError) {
       toast({
         title: 'Error!',
@@ -66,7 +71,7 @@ const InsightsPage: React.FC = () => {
 
   React.useEffect(() => {
     if (!selectedTeam) return;
-    fetchDashboardData().then((r) => r);
+    fetchInsights().then((r) => r);
   }, [selectedTeam, sprint]);
 
   React.useEffect(() => {
@@ -74,6 +79,11 @@ const InsightsPage: React.FC = () => {
     setSelectedTeam(data[0]);
     setSprint(sprints[0]);
   }, [data]);
+
+  React.useEffect(() => {
+    if (!insightData) return;
+    setHappinessInsights(insightData.happinessInsights);
+  }, [insightData]);
 
   const handleTeamChange = (value: string) => {
     if (!data) return;
@@ -102,8 +112,8 @@ const InsightsPage: React.FC = () => {
   };
 
   const downloadCSV = (): void => {
-    if (!happinessInsightData) return;
-    const csv = convertToCSV(happinessInsightData);
+    if (!insightData) return;
+    const csv = convertToCSV(insightData);
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
@@ -161,7 +171,7 @@ const InsightsPage: React.FC = () => {
             </div>
           </div>
           <div className="grid gap-10">
-            <HappinessLineChart happinessInsights={happinessInsightData} />
+            <HappinessLineChart happinessInsights={happinessInsights} />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <WorkkindBarChart />
