@@ -18,12 +18,16 @@ import {
 import Input from '@components/ui/Input/Input';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from 'sonner';
+import useSWRClient from '@hooks/useSWRClient';
 import cn from '@/lib/utils';
 import { Checkbox } from '@components/ui/Checkbox/Checkbox';
 import { TeamConfigType } from '@/types/TeamConfigType';
+import useTeamClient from '@hooks/useTeamClient';
+import axios from 'axios';
+import Loading from '@components/Loading/Loading';
 
 interface TeamConfigFormProps {
-  config: TeamConfigType;
+  teamId: string;
 }
 
 const FormSchema = z.object({
@@ -34,23 +38,29 @@ const FormSchema = z.object({
       name: z.string(),
     })
   ),
-  happinessSurvey: z.boolean().default(true).optional(),
-  workKindSurvey: z.boolean().default(true).optional(),
-  emotionSurvey: z.boolean().default(true).optional(),
+  happinessSurvey: z.boolean().optional(),
+  workKindSurvey: z.boolean().optional(),
+  emotionSurvey: z.boolean().optional(),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
 
-const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ config }) => {
+const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ teamId }) => {
+  const { data: config, isLoading } = useSWRClient<TeamConfigType>(`/v1/team/${teamId}/config`);
+  const { updateTeamConfig } = useTeamClient();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
-    defaultValues: {
-      teamName: config?.teamName || '',
-      workKinds: config?.workKinds.map((w) => ({ id: w.id, name: w.name })) || [{ id: undefined, name: '' }],
-      happinessSurvey: config?.happinessSurvey || true,
-      workKindSurvey: config?.workKindSurvey || true,
-      emotionSurvey: config?.emotionSurvey || true,
-    },
+    defaultValues: React.useMemo(
+      () => ({
+        teamName: config?.teamName || '',
+        workKinds: config?.workKinds.map((w) => ({ id: w.id, name: w.name })) || [{ id: undefined, name: '' }],
+        happinessSurvey: config?.happinessSurvey ?? false,
+        workKindSurvey: config?.workKindSurvey ?? false,
+        emotionSurvey: config?.emotionSurvey ?? false,
+      }),
+      [config]
+    ),
     mode: 'onSubmit',
   });
 
@@ -60,14 +70,41 @@ const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ config }) => {
   });
 
   const surveyItems = [
-    { id: 'happinessSurvey', label: 'Happiness' },
-    { id: 'workKindSurvey', label: 'Worktype' },
-    { id: 'emotionSurvey', label: 'Emotion' },
+    { id: 'happinessSurvey', label: 'Happiness', value: config?.happinessSurvey, disabled: true },
+    { id: 'workKindSurvey', label: 'Worktype', value: config?.workKindSurvey, disabled: false },
+    { id: 'emotionSurvey', label: 'Emotion', value: config?.emotionSurvey, disabled: false },
   ];
 
-  const onSubmit: SubmitHandler<FormValues> = () => {
-    toast.success('Team has been updated');
+  React.useEffect(() => {
+    if (config) {
+      form.reset({
+        teamName: config.teamName,
+        workKinds: config.workKinds.map((w) => ({ id: w.id, name: w.name })),
+        happinessSurvey: config.happinessSurvey,
+        workKindSurvey: config.workKindSurvey,
+        emotionSurvey: config.emotionSurvey,
+      });
+    }
+  }, [config, form]);
+
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const updatedConfig = {
+      ...data,
+      id: teamId,
+    } as TeamConfigType;
+    try {
+      await updateTeamConfig(teamId, updatedConfig);
+      toast.success('Team configuration has been updated');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Something went wrong: ${error.message}`);
+      } else {
+        console.warn('Error: ', error);
+      }
+    }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <Form {...form}>
@@ -100,7 +137,7 @@ const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ config }) => {
                       <Checkbox
                         checked={field.value as boolean}
                         onCheckedChange={(checked) => field.onChange(checked)}
-                        disabled={item.id === 'happinessSurvey'}
+                        disabled={item.disabled}
                       />
                     </FormControl>
                     <FormLabel className="cursor-pointer font-light">{item.label}</FormLabel>
