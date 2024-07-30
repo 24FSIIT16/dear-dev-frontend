@@ -7,17 +7,11 @@ import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '
 import * as React from 'react';
 
 const chartData = [
-  { workkind: 'Desing', userAverage: 18, teamAverage: 8 },
-  { workkind: 'Coding', userAverage: 12, teamAverage: 15 },
-  { workkind: 'Testing', userAverage: 3, teamAverage: 10 },
-  { workkind: 'asd', userAverage: 20, teamAverage: 10 },
-  { workkind: 'sdfsdfsdf', userAverage: 3, teamAverage: 13 },
-  { workkind: 'asdfsdfdfsdsd', userAverage: 3, teamAverage: 6 },
-  { workkind: 'sd', userAverage: 13, teamAverage: 10 },
-  { workkind: 'rt', userAverage: 3, teamAverage: 11 },
-  { workkind: 'Retro', userAverage: 14, teamAverage: 15 },
-  { workkind: 'Planning', userAverage: 14, teamAverage: 11 },
-  { workkind: 'fs', userAverage: 8, teamAverage: 10 },
+  { emotion: 'Angry', userAverage: 11, teamAverage: 18 },
+  { emotion: 'Relaxed', userAverage: 12, teamAverage: 15 },
+  { emotion: 'Tired', userAverage: 13, teamAverage: 10 },
+  { emotion: 'Stressed', userAverage: 2, teamAverage: 18 },
+  { emotion: 'Hungry', userAverage: 13, teamAverage: 13 },
 ];
 
 const chartConfig = {
@@ -31,14 +25,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export default function WorkkindRadarChart() {
+export default function EmotionRadarChart() {
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
             <p className="text-xl font-semibold">Happiness per work type - Personal vs. team</p>
-            <p className="-mt-4 text-sm font-thin">Top 10 Workkinds</p>
+            <p className="-mt-4 text-sm font-thin">Top 10 Emotions</p>
           </CardTitle>
         </div>
       </CardHeader>
@@ -52,7 +46,7 @@ export default function WorkkindRadarChart() {
             }}
           >
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <PolarAngleAxis dataKey="workkind" />
+            <PolarAngleAxis dataKey="emotion" />
             <PolarGrid />
             <Radar dataKey="userAverage" fill="var(--color-userAverage)" fillOpacity={0.4} />
             <Radar dataKey="teamAverage" fill="var(--color-teamAverage)" fillOpacity={0.4} />

@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-
 'use client';
 
-import { Card, CardTitle, CardHeader, CardContent, CardFooter } from '@components/ui/Card/Card';
+import { Card, CardTitle, CardHeader, CardContent } from '@components/ui/Card/Card';
 import {
   ChartConfig,
   ChartContainer,
@@ -13,7 +11,6 @@ import {
 } from '@components/ui/Chart/Chart';
 import * as React from 'react';
 import { Line, LineChart, XAxis, YAxis } from 'recharts';
-import { TrendingUp } from 'lucide-react';
 import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
 import { HappinessInsightsDTO } from '@/types/InsightsType';
 
@@ -76,7 +73,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         </LineChart>
       </ChartContainer>
     </CardContent>
-    <CardFooter>
+    {/* <CardFooter>
       <div className="flex w-full items-start gap-2 text-sm">
         <div className="grid gap-2">
           <div className="flex items-center gap-2 font-semibold">
@@ -86,7 +83,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
           <div className="flex items-center text-xs font-light">Showing Happiness-Score over the last week</div>
         </div>
       </div>
-    </CardFooter>
+    </CardFooter> */}
   </Card>
 );
 

@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 import { Bar, BarChart, XAxis, LabelList } from 'recharts';
-import { Card, CardContent, CardTitle, CardHeader, CardFooter } from '@components/ui/Card/Card';
+import { Card, CardContent, CardTitle, CardHeader } from '@components/ui/Card/Card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/Chart/Chart';
 
 const chartData = [
@@ -27,8 +27,8 @@ const WorkkindBarChart: React.FC = () => (
   <Card>
     <CardHeader>
       <CardTitle className="space-y-1">
-        <p className="text-xl font-semibold">Workkinds - Happiness Average</p>
-        <p className="-mt-4 text-sm font-thin">Across All Time</p>
+        <p className="text-xl font-semibold">Happiness per Type of Work </p>
+        <p className="-mt-4 text-sm font-thin">Top 20 Workkinds</p>
       </CardTitle>
     </CardHeader>
     <CardContent>
@@ -42,7 +42,7 @@ const WorkkindBarChart: React.FC = () => (
         </BarChart>
       </ChartContainer>
     </CardContent>
-    <CardFooter>
+    {/* <CardFooter>
       <div className="flex w-full items-start gap-2 text-sm">
         <div className="grid gap-2">
           <div className="flex items-center gap-2">
@@ -51,7 +51,7 @@ const WorkkindBarChart: React.FC = () => (
           <div className="flex items-center text-xs font-light">Showing Happiness-Score per workkind</div>
         </div>
       </div>
-    </CardFooter>
+    </CardFooter> */}
   </Card>
 );
 

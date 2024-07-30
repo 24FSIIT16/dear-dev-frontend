@@ -22,6 +22,8 @@ import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
 import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
 import { InsightsDTO, HappinessInsightsDTO } from '@/types/InsightsType';
+import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
+import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -31,10 +33,6 @@ export interface Sprint {
   value: string;
   startDate: string;
   endDate: string;
-}
-
-function InsightsSummary() {
-  return null;
 }
 
 const InsightsPage: React.FC = () => {
@@ -185,6 +183,7 @@ const InsightsPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <WorkkindRadarChart />
+            <EmotionRadarChart />
           </div>
         </div>
       ) : (
