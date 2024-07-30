@@ -14,7 +14,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@components/ui/DropdownMenu/Dropdown-menu';
-import { Ellipsis, Settings, Users } from 'lucide-react';
+import { Ellipsis, Pencil, Users } from 'lucide-react';
 import { Button } from '@components/ui/Buttons/Button';
 import { Team } from '@/types/TeamType';
 import Link from 'next/link';
@@ -74,7 +74,7 @@ export const columns: ColumnDef<Team>[] = [
               <DropdownMenuItem asChild>
                 <Link href={`/team/${team.id}/config`}>
                   <div className="flex w-full items-center">
-                    <Settings className="mr-2 h-4 w-4" />
+                    <Pencil className="mr-2 h-4 w-4" />
                     Edit team
                   </div>
                 </Link>

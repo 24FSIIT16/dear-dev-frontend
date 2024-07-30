@@ -5,22 +5,15 @@ import { useRouter } from 'next/navigation';
 import Loading from '@components/Loading/Loading';
 import Error from '@components/Error/Error';
 import { useAuth } from '@providers/AuthProvider';
-import { ShipWheel } from 'lucide-react';
-import HappinessSurvey from '@/(main)/(home)/components/HappinessSurvey';
-import Widget from '@components/Cards/Widget';
+import { Activity, Bike, Component, CircleSlash2, Annoyed } from 'lucide-react';
 import useDashboardClient from '@hooks/useDashboardClient';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import { WorkKind } from '@/types/WorkKindType';
 import useWorkKindClient from '@hooks/useWorkKindClient';
-import WorkKindSurvey from '@/(main)/(home)/components/WorkKindSurvey';
 import { DashboardDTO } from '@/types/DashboardType';
 import useEmotionClient from '@hooks/useEmotionClient';
 import { Emotion } from '@/types/EmotionType';
-import EmotionSurvey from '@/(main)/(home)/components/EmotionSurvey';
-import WidgetRow from '@/(main)/(home)/components/WidgetRow';
-import InactivityAlert from '@/(main)/(home)/components/InactivityAlert';
-import FeedbackSurvey from '@/(main)/(home)/components/FeedbackSurvey';
-import AverageHappinessButton from '@components/Buttons/AverageHappinessButton';
+import { HappinessSurvey, WorktypeSurvey, EmotionSurvey, Widget, AlertWidget, SprintWidget } from './components';
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
@@ -28,6 +21,7 @@ const Home: React.FC = () => {
   const { getDashboardData } = useDashboardClient();
   const { getWorkKinds } = useWorkKindClient();
   const { getEmotions } = useEmotionClient();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [dashboardData, setDashboardData] = React.useState<DashboardDTO>();
   const [workKinds, setWorkKinds] = React.useState<WorkKind[]>([]);
   const [emotions, setEmotions] = React.useState<Emotion[]>([]);
@@ -40,11 +34,7 @@ const Home: React.FC = () => {
       const response = await getDashboardData(user.id);
       setDashboardData(response.data);
     } catch (authError) {
-      toast({
-        title: 'Error!',
-        description: `Fetching average score `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching average score');
     }
   };
 
@@ -55,11 +45,7 @@ const Home: React.FC = () => {
       setWorkKinds(response.data);
       setIsLoadingWorkKinds(false);
     } catch (errorLoadingWorkKinds) {
-      toast({
-        title: 'Error!',
-        description: `Fetching workKinds `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching worktypes');
       setIsLoadingWorkKinds(false);
     }
   };
@@ -71,11 +57,7 @@ const Home: React.FC = () => {
       setEmotions(response.data);
       setIsLoadingEmotions(false);
     } catch (errorLoadingWorkKinds) {
-      toast({
-        title: 'Error!',
-        description: `Fetching emotions `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching emotions');
       setIsLoadingEmotions(false);
     }
   };
@@ -100,42 +82,18 @@ const Home: React.FC = () => {
     <div>
       {user && user.hasTeam ? (
         <div className="space-y-4">
-          <div className="grid grid-cols-1 gap-4">
-            <InactivityAlert />
-            <WidgetRow dashboardData={dashboardData} />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-4">
-              <HappinessSurvey fetchDashboardData={fetchDashboardData} user={user} />
-              <EmotionSurvey fetchDashboardData={fetchDashboardData} emotions={emotions} user={user} />
-              <FeedbackSurvey />
-            </div>
-            <div className="space-y-4">
-              <WorkKindSurvey fetchDashboardData={fetchDashboardData} workKinds={workKinds} user={user} />
-              <div className="grid grid-cols-2 gap-4">
-                <Widget
-                  header={{
-                    title: 'Current Velocity',
-                    icon: <ShipWheel />,
-                  }}
-                  content={{
-                    mainContent: 53,
-                    subContent: 'Story Points',
-                  }}
-                />
-                <Widget
-                  header={{
-                    title: 'Noch irgendwas..',
-                    icon: <ShipWheel />,
-                  }}
-                  content={{
-                    mainContent: <AverageHappinessButton score={15} />,
-                  }}
-                />
-              </div>
-            </div>
-          </div>
+          <HappinessSurvey fetchDashboardData={fetchDashboardData} user={user} />
+          <WorktypeSurvey fetchDashboardData={fetchDashboardData} workKinds={workKinds} user={user} />
+          <EmotionSurvey fetchDashboardData={fetchDashboardData} emotions={emotions} user={user} />
+          <AlertWidget days={12} />
+          <SprintWidget icon={<Bike className="h-5 w-5" />} content="4" description="Days left in the sprint" />
+          <Widget icon={<Activity className="h-5 w-5" />} content="Bored, Lonely" description="Most tracked emotions" />
+          <Widget icon={<Component className="h-5 w-5" />} content="Coding" description="Most tracked worktype" />
+          <Widget
+            icon={<CircleSlash2 className="h-5 w-5" />}
+            content={<Annoyed className="h-16 w-16 group-hover:animate-spin" />}
+            description="Average Happiness"
+          />
         </div>
       ) : (
         <Loading />
