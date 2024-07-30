@@ -14,7 +14,7 @@ const chartData = [
 ];
 
 const chartConfig = {
-  quantity: {
+  userAverage: {
     label: 'Quantity',
     color: '#E94B68',
   },
@@ -35,7 +35,8 @@ export default function WorkkindRadarChart() {
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <PolarAngleAxis dataKey="workkind" />
             <PolarGrid />
-            <Radar dataKey="quantity" fill="var(--color-quantity)" fillOpacity={0.4} />
+            <Radar dataKey="userAverage" fill="var(--color-quantity)" fillOpacity={0.4} />
+            <Radar dataKey="teamAverage" fill="var(--color-quantity)" fillOpacity={0.9} />
           </RadarChart>
         </ChartContainer>
       </CardContent>
@@ -43,7 +44,7 @@ export default function WorkkindRadarChart() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2">
-              <p className="font-semibold">Trackings per work type</p>
+              <p className="font-semibold">Happiness per work type - Personal vs. team</p>
             </div>
             <div className="flex items-center text-xs font-light">Showing number of tracked worktypes this year</div>
           </div>

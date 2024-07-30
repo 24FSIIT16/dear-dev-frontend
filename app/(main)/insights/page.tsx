@@ -33,6 +33,10 @@ export interface Sprint {
   endDate: string;
 }
 
+function InsightsSummary() {
+  return null;
+}
+
 const InsightsPage: React.FC = () => {
   const { user } = useAuth();
   const { getInsightsByTeam } = useInsightsClient();
@@ -125,6 +129,8 @@ const InsightsPage: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  // todo
+
   return (
     <div className="print-content">
       {user && selectedTeam && data && sprints ? (
@@ -175,7 +181,7 @@ const InsightsPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <WorkkindBarChart />
-            <WorkkindRadarChart />
+            <InsightsSummary />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <WorkkindRadarChart />
