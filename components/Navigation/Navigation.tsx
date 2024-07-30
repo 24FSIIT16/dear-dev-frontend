@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Link from 'next/link';
-import { Home, Settings, BarChartHorizontalBig, Info, Users } from 'lucide-react';
+import { Home, Settings, BarChartHorizontalBig, Info, Users, Kanban } from 'lucide-react';
 import NavLink from '@components/Navigation/NavLink';
 import Logo from '@components/ui/Logo/Logo';
 
@@ -20,6 +20,9 @@ const Navigation: React.FC = () => (
       </NavLink>
       <NavLink href="/team">
         <Users className="h-5 w-5 text-black dark:text-white" />
+      </NavLink>
+      <NavLink href="/sprint">
+        <Kanban className="h-5 w-5 text-black dark:text-white" />
       </NavLink>
     </nav>
     <nav className="flex flex-col items-center gap-6 px-2">
