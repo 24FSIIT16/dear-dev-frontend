@@ -64,3 +64,40 @@ body {
     transform: rotate(360deg);
   }
 }
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 1em;
+  }
+
+  body {
+    transform: scale(0.9);
+    transform-origin: top left;
+  }
+
+  /* Hide elements that should not be printed */
+  .no-print {
+    display: none;
+  }
+
+  .print-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .print-content {
+    page-break-inside: avoid;
+    margin: 0;
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  /* Prevent page breaks within the print content */
+  .print-content,
+  .print-content > div {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

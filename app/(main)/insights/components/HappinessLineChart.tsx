@@ -3,60 +3,76 @@
 'use client';
 
 import { Card, CardTitle, CardHeader, CardContent, CardFooter } from '@components/ui/Card/Card';
-import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/Chart/Chart';
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from '@components/ui/Chart/Chart';
 import * as React from 'react';
-import { Line, LineChart, XAxis } from 'recharts';
+import { Line, LineChart, XAxis, YAxis } from 'recharts';
 import { TrendingUp } from 'lucide-react';
-
-const chartData = [
-  { day: 'Monday', personal: 4, team: 5 },
-  { day: 'Tuesday', personal: 3, team: 4 },
-  { day: 'Wednesday', personal: 5, team: 3 },
-  { day: 'Thursday', personal: 4, team: 4 },
-  { day: 'Friday', personal: 5, team: 5 },
-  { day: 'Saturday', personal: 3, team: 4 },
-  { day: 'Sunday', personal: 4, team: 4 },
-];
+import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
+import { HappinessInsightsDTO } from '@/types/InsightsType';
 
 const chartConfig = {
-  personal: {
+  userAverage: {
     label: 'Personal',
     color: '#41B963',
   },
-  team: {
+  teamAverage: {
     label: 'Team',
     color: '#E94B68',
   },
 } satisfies ChartConfig;
 
-const HappinessLineChart: React.FC = () => (
+const formatXAxis = (dateString: string): string => {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  return `${day}.${month}`;
+};
+
+interface HappinessInsightProps {
+  happinessInsights?: HappinessInsightsDTO[];
+}
+
+const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => (
   <Card>
     <CardHeader>
-      <CardTitle className="space-y-1">
-        <p className="text-xl font-semibold">Happiness - Personal vs. Team</p>
-        <p className="-mt-4 text-sm font-thin">Monday, 01.07.24 - Sunday, 07.07.24</p>
-      </CardTitle>
+      <div className="flex items-center justify-between">
+        <CardTitle className="space-y-1">
+          <p className="text-xl font-semibold">Happiness - Team vs. Personal</p>
+        </CardTitle>
+      </div>
     </CardHeader>
     <CardContent>
-      <ChartContainer config={chartConfig}>
+      <ChartContainer config={chartConfig} className="h-52 w-full">
         <LineChart
           accessibilityLayer
-          data={chartData}
+          data={happinessInsights}
           margin={{
-            left: 12,
+            left: 0,
             right: 12,
+            top: 5,
           }}
         >
           <XAxis
             dataKey="day"
             tickLine={false}
             axisLine={false}
-            tickMargin={8}
-            tickFormatter={(value) => value.slice(0, 3)}
+            tickMargin={13}
+            tickFormatter={formatXAxis}
+            angle={-20}
+            dx={-5}
           />
-          <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-          <Line dataKey="personal" type="monotone" stroke="var(--color-personal)" dot={false} />
-          <Line dataKey="team" type="monotone" stroke="var(--color-team)" dot={false} />
+          <YAxis tickMargin={45} tickLine axisLine={false} tick={CustomYAxisTick as never} />
+          <ChartTooltip cursor content={<ChartTooltipContent />} />
+          <ChartLegend content={<ChartLegendContent />} />
+          <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
+          <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
         </LineChart>
       </ChartContainer>
     </CardContent>

@@ -6,12 +6,11 @@ import { Card, CardContent, CardFooter } from '@components/ui/Card/Card';
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@components/ui/Chart/Chart';
 
 const chartData = [
-  { workkind: 'Desing', quantity: 186 },
-  { workkind: 'Coding', quantity: 305 },
-  { workkind: 'Testing', quantity: 237 },
-  { workkind: 'Retro', quantity: 273 },
-  { workkind: 'Planning', quantity: 209 },
-  { workkind: 'Calls', quantity: 214 },
+  { workkind: 'Desing', userAverage: 18, teamAverage: 8 },
+  { workkind: 'Coding', userAverage: 2, teamAverage: 5 },
+  { workkind: 'Testing', userAverage: 3, teamAverage: 10 },
+  { workkind: 'Retro', userAverage: 4, teamAverage: 20 },
+  { workkind: 'Planning', userAverage: 14, teamAverage: 11 },
 ];
 
 const chartConfig = {
