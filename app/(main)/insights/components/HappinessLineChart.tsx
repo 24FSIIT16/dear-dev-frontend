@@ -1,18 +1,12 @@
 'use client';
 
 import { Card, CardTitle, CardHeader, CardContent } from '@components/ui/Card/Card';
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@components/ui/Chart/Chart';
+import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@components/ui/Chart/Chart';
 import * as React from 'react';
 import { Line, LineChart, XAxis, YAxis } from 'recharts';
 import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
 import { HappinessInsightsDTO } from '@/types/InsightsType';
+import CustomToolTip from '@/(main)/insights/components/CustomToolTip';
 
 const chartConfig = {
   userAverage: {
@@ -71,8 +65,11 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
             axisLine={false}
             tick={CustomYAxisTick as never}
             ticks={[2, 8, 14, 20]}
+            domain={[0, 20]}
           />
-          <ChartTooltip cursor content={<ChartTooltipContent />} />
+
+          <ChartTooltip cursor content={<CustomToolTip />} />
+
           <ChartLegend content={<ChartLegendContent />} />
           <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
           <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
