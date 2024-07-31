@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@providers/AuthProvider';
 import useInsightsClient from '@hooks/useInsightsClient';
 import useSWRClient from '@hooks/useSWRClient';
+import Error from '@components/Error/Error';
 
 import { Team } from '@/types/TeamType';
 import {
@@ -41,7 +42,7 @@ const InsightsPage: React.FC = () => {
   const [insightData, setInsightData] = React.useState<InsightsDTO>();
   const [happinessInsights, setHappinessInsights] = React.useState<HappinessInsightsDTO[]>([]);
 
-  const { data } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
+  const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
 
   const [selectedTeam, setSelectedTeam] = React.useState<Team>();
   const [sprint, setSprint] = React.useState<Sprint>();
@@ -123,11 +124,12 @@ const InsightsPage: React.FC = () => {
     document.body.removeChild(link);
   };
 
-  // todo
+  if (isLoading || !user || !selectedTeam || !data || !sprints) return <Loading />;
+  if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
 
   return (
     <div className="print-content">
-      {user && selectedTeam && data && sprints ? (
+      {selectedTeam ? (
         <div className="print-content space-y-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Select onValueChange={handleTeamChange} defaultValue={selectedTeam.name}>
@@ -178,8 +180,8 @@ const InsightsPage: React.FC = () => {
             <InsightsSummary />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <WorkkindRadarChart />
             <EmotionRadarChart />
+            <WorkkindRadarChart />
           </div>
         </div>
       ) : (

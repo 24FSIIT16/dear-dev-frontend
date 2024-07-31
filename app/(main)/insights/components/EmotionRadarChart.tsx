@@ -31,8 +31,8 @@ export default function EmotionRadarChart() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
-            <p className="text-xl font-semibold">Happiness per work type - Personal vs. team</p>
-            <p className="-mt-4 text-sm font-thin">Top 10 Emotions</p>
+            <p className="text-xl font-semibold">Emotions - Personal vs. team</p>
+            <p className="-mt-4 text-sm font-thin">Top 5 Emotions</p>
           </CardTitle>
         </div>
       </CardHeader>

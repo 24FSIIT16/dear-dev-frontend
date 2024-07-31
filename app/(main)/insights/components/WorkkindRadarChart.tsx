@@ -37,8 +37,9 @@ export default function WorkkindRadarChart() {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
-            <p className="text-xl font-semibold">Happiness per work type - Personal vs. team</p>
-            <p className="-mt-4 text-sm font-thin">Top 10 Workkinds</p>
+            <p className="text-xl font-semibold">Velocity / Sprint irgendwas.. oder textalanlyse - Personal vs. team</p>
+            <p>... oder anzahl von worktypes an einzennen tagen und die entsprehcende happiness</p>
+            <p>... average number of workkinds on a happy day, and on a unhappy day..</p>
           </CardTitle>
         </div>
       </CardHeader>
