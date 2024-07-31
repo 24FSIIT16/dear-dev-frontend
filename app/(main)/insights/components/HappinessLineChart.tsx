@@ -3,7 +3,7 @@
 import { Card, CardTitle, CardHeader, CardContent } from '@components/ui/Card/Card';
 import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@components/ui/Chart/Chart';
 import * as React from 'react';
-import { Line, LineChart, XAxis, YAxis } from 'recharts';
+import { Line, LineChart, ReferenceLine, XAxis, YAxis } from 'recharts';
 import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
 import { HappinessInsightsDTO } from '@/types/InsightsType';
 import CustomToolTip from '@/(main)/insights/components/CustomToolTip';
@@ -30,53 +30,80 @@ interface HappinessInsightProps {
   happinessInsights?: HappinessInsightsDTO[];
 }
 
-const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => (
-  <Card>
-    <CardHeader>
-      <div className="flex items-center justify-between">
-        <CardTitle className="space-y-1">
-          <p className="text-xl font-semibold">Happiness - Team vs. Personal</p>
-        </CardTitle>
-      </div>
-    </CardHeader>
-    <CardContent>
-      <ChartContainer config={chartConfig} className="h-52 w-full">
-        <LineChart
-          accessibilityLayer
-          data={happinessInsights}
-          margin={{
-            left: 0,
-            right: 12,
-            top: 5,
-          }}
-        >
-          <XAxis
-            dataKey="day"
-            tickLine={false}
-            axisLine={false}
-            tickMargin={13}
-            tickFormatter={formatXAxis}
-            angle={-20}
-            dx={-5}
-          />
-          <YAxis
-            tickMargin={45}
-            tickLine={false}
-            axisLine={false}
-            tick={CustomYAxisTick as never}
-            ticks={[2, 8, 14, 20]}
-            domain={[0, 20]}
-          />
+const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => {
+  const referenceLines = happinessInsights
+    ? happinessInsights
+        .map((point, index) => {
+          const nextPoint = happinessInsights[index + 1];
+          if (nextPoint && Math.abs(point.userAverage - point.teamAverage) > 8) {
+            return {
+              x: point.day,
+              y1: point.userAverage,
+              y2: point.teamAverage,
+              key: `${point.day}-${index}`,
+            };
+          }
+          return null;
+        })
+        .filter((line) => line !== null)
+    : [];
 
-          <ChartTooltip cursor content={<CustomToolTip />} />
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle className="space-y-1">
+            <p className="text-xl font-semibold">Happiness - Team vs. Personal</p>
+          </CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="h-52 w-full">
+          <LineChart
+            accessibilityLayer
+            data={happinessInsights}
+            margin={{
+              left: 0,
+              right: 12,
+              top: 5,
+            }}
+          >
+            <XAxis
+              dataKey="day"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={13}
+              tickFormatter={formatXAxis}
+              angle={-20}
+              dx={-5}
+            />
+            <YAxis
+              tickMargin={45}
+              tickLine={false}
+              axisLine={false}
+              tick={CustomYAxisTick as never}
+              ticks={[2, 8, 14, 20]}
+              domain={[0, 20]}
+            />
 
-          <ChartLegend content={<ChartLegendContent />} />
-          <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
-          <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
-        </LineChart>
-      </ChartContainer>
-    </CardContent>
-    {/* <CardFooter>
+            <ChartTooltip cursor content={<CustomToolTip />} />
+            <ChartLegend content={<ChartLegendContent />} />
+            <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
+            <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
+            {referenceLines.map((line) => (
+              <ReferenceLine
+                key={line.key}
+                x={line.x}
+                y1={line.y1}
+                y2={line.y2}
+                stroke="rgba(255, 179, 0)"
+                strokeDasharray="3 3"
+              />
+            ))}
+          </LineChart>
+        </ChartContainer>
+      </CardContent>
+      {/* <CardFooter>
       <div className="flex w-full items-start gap-2 text-sm">
         <div className="grid gap-2">
           <div className="flex items-center gap-2 font-semibold">
@@ -87,7 +114,8 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         </div>
       </div>
     </CardFooter> */}
-  </Card>
-);
+    </Card>
+  );
+};
 
 export default HappinessLineChart;
