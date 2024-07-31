@@ -4,7 +4,7 @@ import * as React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Label from '@components/ui/Label/Label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import { Textarea } from '@components/ui/Text/Textarea';
 
 type FormValues = {
@@ -25,11 +25,8 @@ const FeedbackSurvey: React.FC = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    toast({
-      title: 'Success!',
-      description: `Feedback Survey Submitted: Positive - ${data.question3}, Negative - ${data.question4}`,
-    });
+  const onSubmit: SubmitHandler<FormValues> = () => {
+    toast.success('Feedback has been submitted');
     reset();
   };
 

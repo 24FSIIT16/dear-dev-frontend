@@ -40,6 +40,10 @@ const config: Config = {
           main: 'rgba(78, 138, 227)',
           light: 'rgba(78, 138, 227, 0.2)',
         },
+        primaryYellow: {
+          main: 'rgba(255, 179, 0)',
+          light: 'rgba(255, 179, 0, 0.2)',
+        },
 
         // background colors
         primaryBG: {
@@ -64,11 +68,21 @@ const config: Config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        'icon-bounce': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'icon-bounce': 'icon-bounce 0.5s ease-in-out infinite',
       },
+    },
+  },
+  variants: {
+    extends: {
+      animation: ['hover'],
     },
   },
   plugins: [],

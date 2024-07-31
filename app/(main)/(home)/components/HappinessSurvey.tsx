@@ -1,13 +1,15 @@
 'use client';
 
 import * as React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/Card/Card';
-import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
-import SurveyHappinessButton from '@components/Buttons/SurveyHappinessButton';
-import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
-import { toast } from '@components/ui/Toast/use-toast';
-import useDashboardClient from '@hooks/useDashboardClient';
+import axios from 'axios';
 import { User } from '@/types/UserType';
+import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
+import useDashboardClient from '@hooks/useDashboardClient';
+import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
+import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
+import { Button } from '@components/ui/Buttons/Button';
+import { toast } from 'sonner';
+import SurveyHoverCard from './SurveyHoverCard';
 
 interface HappinessSurveyProps {
   fetchDashboardData: () => void;
@@ -15,80 +17,53 @@ interface HappinessSurveyProps {
 }
 
 const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, user }) => {
-  const [rotateButton, setRotateButton] = React.useState<number | null>(null);
   const { submitHappinessScore } = useDashboardClient();
 
-  const iconClasses = (score: number) => `h-12 w-12 ${rotateButton === score ? 'rotate-360' : ''}`;
-
-  const handleHappinessSubmit = async (score: number) => {
+  const handleSubmit = async (score: number) => {
     const happinessScore: SubmitHappinessScoreDTO = {
       score,
       userId: user?.id,
     };
     try {
       await submitHappinessScore(happinessScore).then(() => {
-        toast({
-          title: 'Success!',
-          description: `Survey Submitted`,
-        });
+        toast.success('Happiness score has been submitted');
       });
       fetchDashboardData();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (submitError: any) {
-      toast({
-        title: 'Error!',
-        description: `Something went wrong. Please try again: ${submitError.message} `,
-        variant: 'destructive',
-      });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        toast.error(`Something went wrong: ${error.message}`);
+      } else {
+        console.warn('Error: ', error);
+      }
     }
   };
 
-  const handleClick = (score: number) => {
-    setRotateButton(score);
-    setTimeout(() => setRotateButton(null), 1000);
-    handleHappinessSubmit(score);
-  };
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-sm font-medium">Survey</CardTitle>
-        <CardTitle className="text-2xl font-bold">How happy are you with your working day?</CardTitle>
-        <CardDescription className="text-muted-foreground text-2lg">
-          We want to know how satisfied you are with your workday today. Your feedback is important to us and helps us
-          understand your daily work experience.
-        </CardDescription>
+    <Card className="flex h-full flex-col rounded-2xl border-black shadow-none">
+      <CardHeader className="flex flex-row">
+        <div className="flex-1" />
+        <SurveyHoverCard
+          title="Track happiness"
+          description="We want to know how satisfied you are with your workday today. Your feedback is important to us and helps us understand your daily work experience."
+        />
       </CardHeader>
-      <CardContent>
-        <div className="flex flex-row items-center justify-between">
-          <SurveyHappinessButton
-            score={2}
-            size="mood"
-            onClick={handleClick}
-            className="bg-tertiaryBG-light"
-            icon={<Frown className={iconClasses(2)} />}
-          />
-          <SurveyHappinessButton
-            score={8}
-            size="mood"
-            onClick={handleClick}
-            className="bg-primaryRed-light text-primaryRed-main"
-            icon={<Annoyed className={iconClasses(8)} />}
-          />
-          <SurveyHappinessButton
-            score={14}
-            size="mood"
-            onClick={handleClick}
-            className="bg-primaryBlue-light text-primaryBlue-main"
-            icon={<Smile className={iconClasses(14)} />}
-          />
-          <SurveyHappinessButton
-            score={20}
-            size="mood"
-            onClick={handleClick}
-            className="bg-primaryGreen-light text-primaryGreen-main"
-            icon={<Laugh className={iconClasses(20)} />}
-          />
+      <CardContent className="flex flex-grow flex-col justify-end">
+        <div className="flex flex-col space-y-2">
+          <div className="mx-auto grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(2)}>
+              <Frown className="h-14 w-14" />
+            </Button>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(8)}>
+              <Annoyed className="h-14 w-14" />
+            </Button>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(14)}>
+              <Smile className="h-14 w-14" />
+            </Button>
+            <Button variant="icon" size="mood" className="rounded-full" onClick={() => handleSubmit(20)}>
+              <Laugh className="h-14 w-14" />
+            </Button>
+          </div>
+          <p className="md:text-md text-sm font-light">How happy are you with your working day?</p>
         </div>
       </CardContent>
     </Card>

@@ -8,8 +8,8 @@ interface TeamConfigLayoutProps {
 const TeamConfigLayout: React.FC<TeamConfigLayoutProps> = ({ children }) => (
   <div className="space-y-8 px-16 pb-16">
     <div className="space-y-0.5">
-      <h1>Team settings</h1>
-      <p className="text-md font-thin">Customize your team.</p>
+      <h1>Team configurations</h1>
+      <p className="text-md font-thin">Customize your teams experience.</p>
     </div>
     <Separtor className="dark:border-secondaryBG-dark" />
     <div>{children}</div>

@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import { useAuth } from '@providers/AuthProvider';
 import useInsightsClient from '@hooks/useInsightsClient';
 import useSWRClient from '@hooks/useSWRClient';
@@ -63,11 +63,7 @@ const InsightsPage: React.FC = () => {
         setInsightData(response.data);
       }
     } catch (authError) {
-      toast({
-        title: 'Error!',
-        description: `Fetching problems with happiness insights `,
-        variant: 'destructive',
-      });
+      toast.error('Error fetching happiness insights');
     }
   };
 

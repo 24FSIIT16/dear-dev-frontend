@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -16,7 +17,7 @@ import {
 import { Button } from '@components/ui/Buttons/Button';
 import Input from '@components/ui/Input/Input';
 import { useAuth } from '@providers/AuthProvider';
-import { toast } from '@components/ui/Toast/use-toast';
+import { toast } from 'sonner';
 import { UserWithProvider } from '@/types/UserType';
 import Loading from '@components/Loading/Loading';
 import useSWRClient from '@hooks/useSWRClient';
@@ -64,15 +65,13 @@ const ProfileForm: React.FC = () => {
   const onSubmit: SubmitHandler<FormValue> = async (data) => {
     try {
       await update({ id: userId, username: data.username });
-      toast({
-        title: 'Success',
-        description: 'Your profile has been updated.',
-      });
+      toast.success('Profile has been updated');
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'There was an error updating your profile.',
-      });
+      if (axios.isAxiosError(error)) {
+        toast.error(`Something went wrong: ${error.message}`);
+      } else {
+        console.warn('Error: ', error);
+      }
     }
   };
 
