@@ -65,7 +65,13 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
             angle={-20}
             dx={-5}
           />
-          <YAxis tickMargin={45} tickLine axisLine={false} tick={CustomYAxisTick as never} />
+          <YAxis
+            tickMargin={45}
+            tickLine={false}
+            axisLine={false}
+            tick={CustomYAxisTick as never}
+            ticks={[2, 8, 14, 20]}
+          />
           <ChartTooltip cursor content={<ChartTooltipContent />} />
           <ChartLegend content={<ChartLegendContent />} />
           <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
