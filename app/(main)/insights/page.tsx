@@ -38,7 +38,7 @@ export interface Sprint {
 
 const InsightsPage: React.FC = () => {
   const { user } = useAuth();
-  const { getInsightsByTeam } = useInsightsClient();
+  const { getInsightsByTeamAndSprint } = useInsightsClient();
   const [insightData, setInsightData] = React.useState<InsightsDTO>();
   const [happinessInsights, setHappinessInsights] = React.useState<HappinessInsightsDTO[]>([]);
   const [workKindInsights, setWorkKindInsights] = React.useState<WorkKindInsightsDTO[]>([]);
@@ -61,7 +61,7 @@ const InsightsPage: React.FC = () => {
     if (selectedTeam === undefined) return;
     if (sprint === undefined) return;
     try {
-      const response = await getInsightsByTeam(user.id, selectedTeam.id, sprint.value);
+      const response = await getInsightsByTeamAndSprint(user.id, selectedTeam.id, sprint.value);
       if (response) {
         setInsightData(response.data);
       }

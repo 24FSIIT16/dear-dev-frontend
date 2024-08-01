@@ -90,11 +90,11 @@ const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
             <Checkbox
               checked={visibleBars.userAverageBar}
               onCheckedChange={() => handleToggle('userAverageBar')}
-              id="personal"
+              id="personal2"
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
-              htmlFor="personal"
+              htmlFor="personal2"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Personal Average
@@ -104,11 +104,11 @@ const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
             <Checkbox
               checked={visibleBars.teamAverageBar}
               onCheckedChange={() => handleToggle('teamAverageBar')}
-              id="team"
+              id="team2"
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
-              htmlFor="team"
+              htmlFor="team2"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Team Average

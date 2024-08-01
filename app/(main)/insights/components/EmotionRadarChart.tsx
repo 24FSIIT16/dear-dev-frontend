@@ -83,11 +83,11 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
             <Checkbox
               checked={visibleAreas.userCountArea}
               onCheckedChange={() => handleToggle('userCountArea')}
-              id="personal"
+              id="personal3"
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
-              htmlFor="personal"
+              htmlFor="personal3"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Personal Average
@@ -97,11 +97,11 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
             <Checkbox
               checked={visibleAreas.teamCountArea}
               onCheckedChange={() => handleToggle('teamCountArea')}
-              id="team"
+              id="team3"
             />
             {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
             <label
-              htmlFor="team"
+              htmlFor="team3"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Team Average
