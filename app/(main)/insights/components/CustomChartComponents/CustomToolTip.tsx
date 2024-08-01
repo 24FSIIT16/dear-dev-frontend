@@ -8,8 +8,8 @@ interface CustomToolTipProps extends TooltipProps<number, string> {
 
 const CustomToolTip: React.FC<CustomToolTipProps> = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
-    const userAverage = payload[0].value;
-    const teamAverage = payload[1].value;
+    const userAverage = payload[0] ? payload[0].value : 0;
+    const teamAverage = payload[1] ? payload[1].value : 0;
 
     const getIcon = (value: number) => {
       if (value >= 17) {
@@ -41,7 +41,6 @@ const CustomToolTip: React.FC<CustomToolTipProps> = ({ active, payload, label })
       </div>
     );
   }
-
   return null;
 };
 

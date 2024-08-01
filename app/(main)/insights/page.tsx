@@ -22,7 +22,7 @@ import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
 import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
-import { InsightsDTO, HappinessInsightsDTO, WorkKindInsightsDTO } from '@/types/InsightsType';
+import { InsightsDTO, HappinessInsightsDTO, WorkKindInsightsDTO, EmotionInsightsDTO } from '@/types/InsightsType';
 import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
 import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
@@ -42,6 +42,7 @@ const InsightsPage: React.FC = () => {
   const [insightData, setInsightData] = React.useState<InsightsDTO>();
   const [happinessInsights, setHappinessInsights] = React.useState<HappinessInsightsDTO[]>([]);
   const [workKindInsights, setWorkKindInsights] = React.useState<WorkKindInsightsDTO[]>([]);
+  const [emotionInsights, setEmotionInsights] = React.useState<EmotionInsightsDTO[]>([]);
 
   const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
 
@@ -84,6 +85,7 @@ const InsightsPage: React.FC = () => {
     if (!insightData) return;
     setHappinessInsights(insightData.happinessInsights);
     setWorkKindInsights(insightData.workKindInsights);
+    setEmotionInsights(insightData.emotionInsights);
   }, [insightData]);
 
   const handleTeamChange = (value: string) => {
@@ -186,7 +188,7 @@ const InsightsPage: React.FC = () => {
             <InsightsSummary />
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <EmotionRadarChart />
+            <EmotionRadarChart emotionInsights={emotionInsights} />
             <WorkkindRadarChart />
           </div>
         </div>

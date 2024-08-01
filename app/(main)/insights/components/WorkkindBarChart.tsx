@@ -3,17 +3,11 @@
 import * as React from 'react';
 import { Bar, BarChart, XAxis, LabelList, YAxis } from 'recharts';
 import { Card, CardContent, CardTitle, CardHeader } from '@components/ui/Card/Card';
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@components/ui/Chart/Chart';
+import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@components/ui/Chart/Chart';
 import CustomBarChartLabel from '@/(main)/insights/components/CustomChartComponents/CustomBarChartLabel';
 import { WorkKindInsightsDTO } from '@/types/InsightsType';
 import { Checkbox } from '@components/ui/Checkbox/Checkbox';
+import CustomToolTip from '@/(main)/insights/components/CustomChartComponents/CustomToolTip';
 
 const chartConfig = {
   userAverage: {
@@ -63,7 +57,7 @@ const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
               tick={false}
               className="ml-0"
             />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            <ChartTooltip cursor={false} content={<CustomToolTip />} />
             {visibleBars.userAverageBar && (
               <Bar dataKey="userAverage" fill="var(--color-userAverage)" radius={5}>
                 <LabelList
