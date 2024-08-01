@@ -13,6 +13,7 @@ import {
 } from '@components/ui/Chart/Chart';
 import CustomBarChartLabel from '@/(main)/insights/components/CustomChartComponents/CustomBarChartLabel';
 import { WorkKindInsightsDTO } from '@/types/InsightsType';
+import { Checkbox } from '@components/ui/Checkbox/Checkbox';
 
 const chartConfig = {
   userAverage: {
@@ -29,62 +30,100 @@ interface InsightProps {
   workKindInsights?: WorkKindInsightsDTO[];
 }
 
-const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => (
-  <Card>
-    <CardHeader>
-      <CardTitle className="space-y-1">
-        <p className="text-xl font-semibold">Happiness per Type of Work </p>
-        <p className="-mt-4 text-sm font-thin">Top 5 Workkinds</p>
-      </CardTitle>
-    </CardHeader>
-    <CardContent>
-      <ChartContainer config={chartConfig}>
-        <BarChart accessibilityLayer data={workKindInsights} className="ml-0">
-          <XAxis dataKey="workKindName" tickLine={false} tickMargin={10} axisLine={false} />
-          <YAxis
-            width={0}
-            domain={[0, 'dataMax + 4']}
-            tickLine={false}
-            axisLine={false}
-            tick={false}
-            className="ml-0"
-          />
-          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-          <Bar dataKey="userAverage" fill="var(--color-userAverage)" radius={5}>
-            <LabelList
-              dataKey="userAverage"
-              content={<CustomBarChartLabel />}
-              position="inside"
-              offset={12}
-              className="fill-foreground"
-              fontSize={12}
+const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
+  const [visibleBars, setVisibleBars] = React.useState({
+    userAverageBar: true,
+    teamAverageBar: true,
+  });
+
+  const handleToggle = (line: keyof typeof visibleBars) => {
+    setVisibleBars((prev) => ({
+      ...prev,
+      [line]: !prev[line],
+    }));
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="space-y-1">
+          <p className="text-xl font-semibold">Happiness per Type of Work </p>
+          <p className="-mt-4 text-sm font-thin">Top 5 Workkinds</p>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <BarChart accessibilityLayer data={workKindInsights} className="ml-0">
+            <XAxis dataKey="workKindName" tickLine={false} tickMargin={10} axisLine={false} />
+            <YAxis
+              width={0}
+              domain={[0, 'dataMax + 4']}
+              tickLine={false}
+              axisLine={false}
+              tick={false}
+              className="ml-0"
             />
-          </Bar>
-          <Bar dataKey="teamAverage" fill="var(--color-teamAverage)" radius={5}>
-            <LabelList
-              dataKey="teamAverage"
-              content={<CustomBarChartLabel />}
-              position="inside"
-              offset={12}
-              className="fill-foreground"
-              fontSize={12}
+            <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            {visibleBars.userAverageBar && (
+              <Bar dataKey="userAverage" fill="var(--color-userAverage)" radius={5}>
+                <LabelList
+                  dataKey="userAverage"
+                  content={<CustomBarChartLabel />}
+                  position="inside"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            )}
+            {visibleBars.teamAverageBar && (
+              <Bar dataKey="teamAverage" fill="var(--color-teamAverage)" radius={5}>
+                <LabelList
+                  dataKey="teamAverage"
+                  content={<CustomBarChartLabel />}
+                  position="inside"
+                  offset={12}
+                  className="fill-foreground"
+                  fontSize={12}
+                />
+              </Bar>
+            )}
+            <ChartLegend content={<ChartLegendContent />} />
+          </BarChart>
+        </ChartContainer>
+        <div className="mt-8 flex space-x-6">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={visibleBars.userAverageBar}
+              onCheckedChange={() => handleToggle('userAverageBar')}
+              id="personal"
             />
-          </Bar>
-          <ChartLegend content={<ChartLegendContent />} />
-        </BarChart>
-      </ChartContainer>
-    </CardContent>
-    {/* <CardFooter>
-      <div className="flex w-full items-start gap-2 text-sm">
-        <div className="grid gap-2">
-          <div className="flex items-center gap-2">
-            <p className="font-semibold">Coding is your favorite workkind</p>
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="personal"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Personal Average
+            </label>
           </div>
-          <div className="flex items-center text-xs font-light">Showing Happiness-Score per workkind</div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={visibleBars.teamAverageBar}
+              onCheckedChange={() => handleToggle('teamAverageBar')}
+              id="team"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="team"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Team Average
+            </label>
+          </div>
         </div>
-      </div>
-    </CardFooter> */}
-  </Card>
-);
+      </CardContent>
+    </Card>
+  );
+};
 
 export default WorkkindBarChart;

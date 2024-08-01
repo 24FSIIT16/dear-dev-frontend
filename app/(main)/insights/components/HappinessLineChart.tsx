@@ -117,7 +117,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
             />
 
             <ChartTooltip cursor content={<CustomToolTip />} />
-            <ChartLegend content={<ChartLegendContent />} verticalAlign="top" />
+            <ChartLegend content={<ChartLegendContent />} verticalAlign="bottom" />
 
             <Line
               dataKey="userAverage"
