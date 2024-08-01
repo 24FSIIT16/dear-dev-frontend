@@ -29,7 +29,7 @@ const CustomLabel: React.FC<CustomLabelProps> = ({ x, y, value, width }) => {
     return null;
   };
 
-  return <g transform={`translate(${x + width / 2 - iconSize / 2}, ${y + 10})`}>{getIcon(value)}</g>;
+  return <g transform={`translate(${x + width / 2 - iconSize / 2}, ${y - 30})`}>{getIcon(value)}</g>;
 };
 
 export default CustomLabel;

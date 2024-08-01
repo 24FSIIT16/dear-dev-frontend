@@ -1,6 +1,8 @@
 export interface InsightsDTO {
   happinessInsights: HappinessInsightsDTO[];
   workKindInsights: WorkKindInsightsDTO[];
+  userAverageHappiness: number;
+  teamAverageHappiness: number;
 }
 
 export interface HappinessInsightsDTO {
@@ -10,9 +12,10 @@ export interface HappinessInsightsDTO {
 }
 
 export interface WorkKindInsightsDTO {
-  teamId: number | null;
   workKindId: number;
   workKindName: string;
-  averageHappiness: number;
-  totalCount: number;
+  userAverage: number;
+  userCount: number;
+  teamAverage: number;
+  teamCount: number;
 }

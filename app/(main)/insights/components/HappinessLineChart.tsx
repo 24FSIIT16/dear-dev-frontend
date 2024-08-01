@@ -7,6 +7,7 @@ import { Line, LineChart, ReferenceLine, XAxis, YAxis } from 'recharts';
 import CustomYAxisTick from '@/(main)/insights/components/CustomChartComponents/CustomYAxisTick';
 import { HappinessInsightsDTO } from '@/types/InsightsType';
 import CustomToolTip from '@/(main)/insights/components/CustomChartComponents/CustomToolTip';
+import { Checkbox } from '@components/ui/Checkbox/Checkbox';
 
 const chartConfig = {
   userAverage: {
@@ -28,9 +29,15 @@ const formatXAxis = (dateString: string): string => {
 
 interface HappinessInsightProps {
   happinessInsights?: HappinessInsightsDTO[];
+  userAverageHappiness?: number;
+  teamAverageHappiness?: number;
 }
 
-const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights }) => {
+const HappinessLineChart: React.FC<HappinessInsightProps> = ({
+  happinessInsights,
+  userAverageHappiness,
+  teamAverageHappiness,
+}) => {
   const referenceLines = happinessInsights
     ? happinessInsights
         .map((point, index) => {
@@ -48,11 +55,20 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         .filter((line) => line !== null)
     : [];
 
-  // todo do that in the backend - Calculate average happiness scores
-  const totalUserAverage = happinessInsights?.reduce((sum, point) => sum + point.userAverage, 0);
-  const totalTeamAverage = happinessInsights?.reduce((sum, point) => sum + point.teamAverage, 0);
-  const averageUserHappiness = totalUserAverage && happinessInsights ? totalUserAverage / happinessInsights.length : 0;
-  const averageTeamHappiness = totalTeamAverage && happinessInsights ? totalTeamAverage / happinessInsights.length : 0;
+  const [visibleLines, setVisibleLines] = React.useState({
+    userAverage: true,
+    teamAverage: true,
+    userAverageLine: true,
+    teamAverageLine: false,
+    referenceLines: true,
+  });
+
+  const handleToggle = (line: keyof typeof visibleLines) => {
+    setVisibleLines((prev) => ({
+      ...prev,
+      [line]: !prev[line],
+    }));
+  };
 
   return (
     <Card>
@@ -60,6 +76,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
             <p className="text-xl font-semibold">Happiness - Team vs. Personal</p>
+            <p className="-mt-4 text-sm font-thin">Daily Averages</p>
           </CardTitle>
         </div>
       </CardHeader>
@@ -74,29 +91,13 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
               top: 5,
             }}
           >
-            <ReferenceLine
-              y={averageUserHappiness}
-              stroke="#D9F1E0"
-              strokeWidth={2}
-              label={{
-                position: 'insideRight',
-                value: '⌀ ',
-                fontSize: 10,
-                fontWeight: 'light',
-              }}
-            />
+            {visibleLines.userAverageLine && (
+              <ReferenceLine y={userAverageHappiness} stroke="#D9F1E0" strokeWidth={2} />
+            )}
 
-            <ReferenceLine
-              y={averageTeamHappiness}
-              stroke="#F9D1D0"
-              strokeWidth={2}
-              label={{
-                position: 'insideRight',
-                value: '⌀',
-                fontSize: 10,
-                fontWeight: 'light',
-              }}
-            />
+            {visibleLines.teamAverageLine && (
+              <ReferenceLine y={teamAverageHappiness} stroke="#F9D1D0" strokeWidth={2} />
+            )}
             <XAxis
               dataKey="day"
               tickLine={false}
@@ -116,7 +117,8 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
             />
 
             <ChartTooltip cursor content={<CustomToolTip />} />
-            <ChartLegend content={<ChartLegendContent />} />
+            <ChartLegend content={<ChartLegendContent />} verticalAlign="top" />
+
             <Line
               dataKey="userAverage"
               type="monotone"
@@ -132,31 +134,65 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
               dot={false}
             />
 
-            {referenceLines.map((line) => (
-              <ReferenceLine
-                key={line.key}
-                x={line.x}
-                y1={line.y1}
-                y2={line.y2}
-                stroke="rgba(255, 179, 0)"
-                strokeWidth={2}
-                strokeDasharray="3 3"
-              />
-            ))}
+            {visibleLines.referenceLines &&
+              referenceLines.map((line) => (
+                <ReferenceLine
+                  key={line.key}
+                  x={line.x}
+                  y1={line.y1}
+                  y2={line.y2}
+                  stroke="rgba(255, 179, 0)"
+                  strokeWidth={2}
+                  strokeDasharray="3 3"
+                />
+              ))}
           </LineChart>
         </ChartContainer>
-      </CardContent>
-      {/* <CardFooter>
-      <div className="flex w-full items-start gap-2 text-sm">
-        <div className="grid gap-2">
-          <div className="flex items-center gap-2 font-semibold">
-            <p className="font-semibold">Your Happiness is 10% up last week</p>
-            <TrendingUp className="h-4 w-4" />
+        <div className="mt-8 flex space-x-6">
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={visibleLines.referenceLines}
+              onCheckedChange={() => handleToggle('referenceLines')}
+              id="alerts"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="alerts"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Alerts
+            </label>
           </div>
-          <div className="flex items-center text-xs font-light">Showing Happiness-Score over the last week</div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={visibleLines.userAverageLine}
+              onCheckedChange={() => handleToggle('userAverageLine')}
+              id="personal"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="personal"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Personal Average
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={visibleLines.teamAverageLine}
+              onCheckedChange={() => handleToggle('teamAverageLine')}
+              id="team"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="team"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Team Average
+            </label>
+          </div>
         </div>
-      </div>
-    </CardFooter> */}
+      </CardContent>
     </Card>
   );
 };

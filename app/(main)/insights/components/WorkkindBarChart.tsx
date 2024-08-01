@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Bar, BarChart, XAxis, LabelList } from 'recharts';
+import { Bar, BarChart, XAxis, LabelList, YAxis } from 'recharts';
 import { Card, CardContent, CardTitle, CardHeader } from '@components/ui/Card/Card';
 import {
   ChartConfig,
@@ -12,17 +12,10 @@ import {
   ChartTooltipContent,
 } from '@components/ui/Chart/Chart';
 import CustomBarChartLabel from '@/(main)/insights/components/CustomChartComponents/CustomBarChartLabel';
-
-const chartData = [
-  { workkind: 'Design', teamAverage: 11, personalAverage: 8 },
-  { workkind: 'Coding', teamAverage: 14, personalAverage: 12 },
-  { workkind: 'Testing', teamAverage: 14, personalAverage: 10 },
-  { workkind: 'Retro', teamAverage: 8, personalAverage: 6 },
-  { workkind: 'Calls', teamAverage: 5, personalAverage: 17 },
-];
+import { WorkKindInsightsDTO } from '@/types/InsightsType';
 
 const chartConfig = {
-  personalAverage: {
+  userAverage: {
     label: 'Personal',
     color: '#D9F1E0',
   },
@@ -32,7 +25,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const WorkkindBarChart: React.FC = () => (
+interface InsightProps {
+  workKindInsights?: WorkKindInsightsDTO[];
+}
+
+const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => (
   <Card>
     <CardHeader>
       <CardTitle className="space-y-1">
@@ -42,13 +39,20 @@ const WorkkindBarChart: React.FC = () => (
     </CardHeader>
     <CardContent>
       <ChartContainer config={chartConfig}>
-        <BarChart accessibilityLayer data={chartData}>
-          <XAxis dataKey="workkind" tickLine={false} tickMargin={10} axisLine={false} />
+        <BarChart accessibilityLayer data={workKindInsights} className="ml-0">
+          <XAxis dataKey="workKindName" tickLine={false} tickMargin={10} axisLine={false} />
+          <YAxis
+            width={0}
+            domain={[0, 'dataMax + 4']}
+            tickLine={false}
+            axisLine={false}
+            tick={false}
+            className="ml-0"
+          />
           <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-
-          <Bar dataKey="personalAverage" fill="var(--color-personalAverage)" radius={5}>
+          <Bar dataKey="userAverage" fill="var(--color-userAverage)" radius={5}>
             <LabelList
-              dataKey="personalAverage"
+              dataKey="userAverage"
               content={<CustomBarChartLabel />}
               position="inside"
               offset={12}
