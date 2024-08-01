@@ -4,9 +4,9 @@ import { Card, CardTitle, CardHeader, CardContent } from '@components/ui/Card/Ca
 import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip } from '@components/ui/Chart/Chart';
 import * as React from 'react';
 import { Line, LineChart, ReferenceLine, XAxis, YAxis } from 'recharts';
-import CustomYAxisTick from '@/(main)/insights/components/CustomYAxisTick';
+import CustomYAxisTick from '@/(main)/insights/components/CustomChartComponents/CustomYAxisTick';
 import { HappinessInsightsDTO } from '@/types/InsightsType';
-import CustomToolTip from '@/(main)/insights/components/CustomToolTip';
+import CustomToolTip from '@/(main)/insights/components/CustomChartComponents/CustomToolTip';
 
 const chartConfig = {
   userAverage: {
@@ -48,6 +48,12 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
         .filter((line) => line !== null)
     : [];
 
+  // todo do that in the backend - Calculate average happiness scores
+  const totalUserAverage = happinessInsights?.reduce((sum, point) => sum + point.userAverage, 0);
+  const totalTeamAverage = happinessInsights?.reduce((sum, point) => sum + point.teamAverage, 0);
+  const averageUserHappiness = totalUserAverage && happinessInsights ? totalUserAverage / happinessInsights.length : 0;
+  const averageTeamHappiness = totalTeamAverage && happinessInsights ? totalTeamAverage / happinessInsights.length : 0;
+
   return (
     <Card>
       <CardHeader>
@@ -68,6 +74,29 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
               top: 5,
             }}
           >
+            <ReferenceLine
+              y={averageUserHappiness}
+              stroke="#D9F1E0"
+              strokeWidth={2}
+              label={{
+                position: 'insideRight',
+                value: '⌀ ',
+                fontSize: 10,
+                fontWeight: 'light',
+              }}
+            />
+
+            <ReferenceLine
+              y={averageTeamHappiness}
+              stroke="#F9D1D0"
+              strokeWidth={2}
+              label={{
+                position: 'insideRight',
+                value: '⌀',
+                fontSize: 10,
+                fontWeight: 'light',
+              }}
+            />
             <XAxis
               dataKey="day"
               tickLine={false}
@@ -82,14 +111,27 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
               tickLine={false}
               axisLine={false}
               tick={CustomYAxisTick as never}
-              ticks={[2, 8, 14, 20]}
+              ticks={[2, 20]}
               domain={[0, 20]}
             />
 
             <ChartTooltip cursor content={<CustomToolTip />} />
             <ChartLegend content={<ChartLegendContent />} />
-            <Line dataKey="userAverage" type="monotone" stroke={chartConfig.userAverage.color} dot={false} />
-            <Line dataKey="teamAverage" type="monotone" stroke={chartConfig.teamAverage.color} dot={false} />
+            <Line
+              dataKey="userAverage"
+              type="monotone"
+              strokeWidth={2}
+              stroke={chartConfig.userAverage.color}
+              dot={false}
+            />
+            <Line
+              dataKey="teamAverage"
+              type="monotone"
+              strokeWidth={2}
+              stroke={chartConfig.teamAverage.color}
+              dot={false}
+            />
+
             {referenceLines.map((line) => (
               <ReferenceLine
                 key={line.key}
@@ -97,6 +139,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({ happinessInsights
                 y1={line.y1}
                 y2={line.y2}
                 stroke="rgba(255, 179, 0)"
+                strokeWidth={2}
                 strokeDasharray="3 3"
               />
             ))}

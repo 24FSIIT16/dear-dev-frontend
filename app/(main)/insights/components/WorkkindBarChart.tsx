@@ -11,7 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@components/ui/Chart/Chart';
-import CustomBarChartLabel from '@/(main)/insights/components/CustomBarChartLabel';
+import CustomBarChartLabel from '@/(main)/insights/components/CustomChartComponents/CustomBarChartLabel';
 
 const chartData = [
   { workkind: 'Design', teamAverage: 11, personalAverage: 8 },
