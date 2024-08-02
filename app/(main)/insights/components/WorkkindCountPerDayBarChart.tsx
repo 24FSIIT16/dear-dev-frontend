@@ -44,7 +44,7 @@ const WorkkindCountPerDayBarChart: React.FC<InsightProps> = ({ workKindCountPerD
   };
 
   return (
-    <Card>
+    <Card className="flex h-full flex-col rounded-2xl shadow-none">
       <CardHeader>
         <CardTitle className="space-y-1">
           <p className="text-xl font-semibold">Influence of Switching Work Types</p>

@@ -39,7 +39,7 @@ const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
   };
 
   return (
-    <Card>
+    <Card className="flex h-full flex-col rounded-2xl shadow-none">
       <CardHeader>
         <CardTitle className="space-y-1">
           <p className="text-xl font-semibold">Happiness per Type of Work </p>

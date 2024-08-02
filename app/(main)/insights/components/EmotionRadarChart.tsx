@@ -45,7 +45,7 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
   };
 
   return (
-    <Card>
+    <Card className="flex h-full flex-col rounded-2xl shadow-none">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">

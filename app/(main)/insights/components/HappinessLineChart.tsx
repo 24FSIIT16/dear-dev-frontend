@@ -38,7 +38,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
   userAverageHappiness,
   teamAverageHappiness,
 }) => {
-  const referenceLines = happinessInsights
+  const alertLines = happinessInsights
     ? happinessInsights
         .map((point, index) => {
           const nextPoint = happinessInsights[index + 1];
@@ -60,7 +60,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
     teamAverage: true,
     userAverageLine: true,
     teamAverageLine: false,
-    referenceLines: true,
+    alertLines: false,
   });
 
   const handleToggle = (line: keyof typeof visibleLines) => {
@@ -71,7 +71,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
   };
 
   return (
-    <Card>
+    <Card className="flex h-full flex-col rounded-2xl shadow-none">
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
@@ -134,8 +134,8 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
               dot={false}
             />
 
-            {visibleLines.referenceLines &&
-              referenceLines.map((line) => (
+            {visibleLines.alertLines &&
+              alertLines.map((line) => (
                 <ReferenceLine
                   key={line.key}
                   x={line.x}
@@ -149,20 +149,6 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
           </LineChart>
         </ChartContainer>
         <div className="mt-8 flex space-x-6">
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              checked={visibleLines.referenceLines}
-              onCheckedChange={() => handleToggle('referenceLines')}
-              id="alerts"
-            />
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label
-              htmlFor="alerts"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Alerts
-            </label>
-          </div>
           <div className="flex items-center space-x-2">
             <Checkbox
               checked={visibleLines.userAverageLine}
@@ -189,6 +175,20 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
               Team Average
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={visibleLines.alertLines}
+              onCheckedChange={() => handleToggle('alertLines')}
+              id="alerts"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="alerts"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Alerts
             </label>
           </div>
         </div>
