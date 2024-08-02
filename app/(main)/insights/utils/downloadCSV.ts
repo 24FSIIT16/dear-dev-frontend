@@ -1,11 +1,17 @@
-import { InsightsDTO, HappinessInsightsDTO, WorkKindInsightsDTO } from '@/types/InsightsType';
+import {
+  InsightsDTO,
+  HappinessInsightsDTO,
+  WorkKindInsightsDTO,
+  EmotionInsightsDTO,
+  WorkKindCountPerDayInsightDTO,
+} from '@/types/InsightsType';
 
 const convertToCSV = (objArray: InsightsDTO): string => {
   if (!objArray) {
     return '';
   }
 
-  const { happinessInsights, workKindInsights } = objArray;
+  const { happinessInsights, workKindInsights, emotionInsights, workKindCountPerDayInsights } = objArray;
 
   const convertArrayToCSV = <T extends object>(arr: T[]): string => {
     if (!Array.isArray(arr) || arr.length === 0) {
@@ -21,8 +27,10 @@ const convertToCSV = (objArray: InsightsDTO): string => {
 
   const happinessCSV = convertArrayToCSV<HappinessInsightsDTO>(happinessInsights);
   const workKindCSV = convertArrayToCSV<WorkKindInsightsDTO>(workKindInsights);
+  const emotionCSV = convertArrayToCSV<EmotionInsightsDTO>(emotionInsights);
+  const workKindCountPerDayCSV = convertArrayToCSV<WorkKindCountPerDayInsightDTO>(workKindCountPerDayInsights);
 
-  return [happinessCSV, workKindCSV].filter(Boolean).join('\r\n\r\n');
+  return [happinessCSV, workKindCSV, emotionCSV, workKindCountPerDayCSV].filter(Boolean).join('\r\n\r\n');
 };
 
 export default convertToCSV;
