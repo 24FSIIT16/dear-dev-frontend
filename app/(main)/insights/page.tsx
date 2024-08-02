@@ -149,7 +149,7 @@ const InsightsPage: React.FC = () => {
     <div className="print-content">
       {selectedTeam ? (
         <div className="print-content space-y-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid flex-grow grid-cols-4 items-center gap-4">
             <Select onValueChange={handleTeamChange} defaultValue={selectedTeam.name}>
               <SelectTrigger className="">
                 <SelectValue placeholder="Select a Team" />
@@ -197,11 +197,11 @@ const InsightsPage: React.FC = () => {
               userAverageHappiness={insightData ? insightData.userAverageHappiness : 0.0}
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <WorkkindBarChart workKindInsights={workKindInsights} />
             <InsightsSummary />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <EmotionRadarChart emotionInsights={emotionInsights} />
             <WorkkindCountPerDayBarChart workKindCountPerDayInsights={workKindCountPerDayInsights} />
           </div>
