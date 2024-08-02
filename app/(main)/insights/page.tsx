@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@providers/AuthProvider';
 import useInsightsClient from '@hooks/useInsightsClient';
 import useSWRClient from '@hooks/useSWRClient';
+import Error from '@components/Error/Error';
 
 import { Team } from '@/types/TeamType';
 import {
@@ -20,8 +21,16 @@ import Loading from '@components/Loading/Loading';
 import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
-import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
-import { InsightsDTO, HappinessInsightsDTO } from '@/types/InsightsType';
+import {
+  InsightsDTO,
+  HappinessInsightsDTO,
+  WorkKindInsightsDTO,
+  EmotionInsightsDTO,
+  WorkKindCountPerDayInsightDTO,
+} from '@/types/InsightsType';
+import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
+import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
+import WorkkindCountPerDayBarChart from '@/(main)/insights/components/WorkkindCountPerDayBarChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -35,11 +44,16 @@ export interface Sprint {
 
 const InsightsPage: React.FC = () => {
   const { user } = useAuth();
-  const { getInsightsByTeam } = useInsightsClient();
+  const { getInsightsByTeamAndSprint } = useInsightsClient();
   const [insightData, setInsightData] = React.useState<InsightsDTO>();
   const [happinessInsights, setHappinessInsights] = React.useState<HappinessInsightsDTO[]>([]);
+  const [workKindInsights, setWorkKindInsights] = React.useState<WorkKindInsightsDTO[]>([]);
+  const [emotionInsights, setEmotionInsights] = React.useState<EmotionInsightsDTO[]>([]);
+  const [workKindCountPerDayInsights, setWorkKindCountPerDayInsights] = React.useState<WorkKindCountPerDayInsightDTO[]>(
+    []
+  );
 
-  const { data } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
+  const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
 
   const [selectedTeam, setSelectedTeam] = React.useState<Team>();
   const [sprint, setSprint] = React.useState<Sprint>();
@@ -56,7 +70,7 @@ const InsightsPage: React.FC = () => {
     if (selectedTeam === undefined) return;
     if (sprint === undefined) return;
     try {
-      const response = await getInsightsByTeam(user.id, selectedTeam.id, sprint.value);
+      const response = await getInsightsByTeamAndSprint(user.id, selectedTeam.id, sprint.value);
       if (response) {
         setInsightData(response.data);
       }
@@ -79,6 +93,9 @@ const InsightsPage: React.FC = () => {
   React.useEffect(() => {
     if (!insightData) return;
     setHappinessInsights(insightData.happinessInsights);
+    setWorkKindInsights(insightData.workKindInsights);
+    setEmotionInsights(insightData.emotionInsights);
+    setWorkKindCountPerDayInsights(insightData.workKindCountPerDayInsights);
   }, [insightData]);
 
   const handleTeamChange = (value: string) => {
@@ -121,11 +138,18 @@ const InsightsPage: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  if (isLoading || !user || !selectedTeam || !data || !sprints) return <Loading />;
+  if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
+
   return (
     <div className="print-content">
-      {user && selectedTeam && data && sprints ? (
+      {selectedTeam ? (
         <div className="print-content space-y-4">
-          <div className="grid grid-cols-4 items-center gap-4">
+          <div className="grid flex-grow grid-cols-4 items-center gap-4">
             <Select onValueChange={handleTeamChange} defaultValue={selectedTeam.name}>
               <SelectTrigger className="">
                 <SelectValue placeholder="Select a Team" />
@@ -161,20 +185,25 @@ const InsightsPage: React.FC = () => {
               <Button size="icon" variant="outline" onClick={downloadCSV} className="no-print h-10 w-10">
                 <FileBarChart2 className="w-4" />
               </Button>
-              <Button size="icon" variant="outline" onClick={window.print} className="no-print h-10 w-10">
+              <Button size="icon" variant="outline" onClick={handlePrint} className="no-print h-10 w-10">
                 <Printer className="w-4" />
               </Button>
             </div>
           </div>
           <div className="grid gap-10">
-            <HappinessLineChart happinessInsights={happinessInsights} />
+            <HappinessLineChart
+              happinessInsights={happinessInsights}
+              teamAverageHappiness={insightData ? insightData.teamAverageHappiness : 0.0}
+              userAverageHappiness={insightData ? insightData.userAverageHappiness : 0.0}
+            />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <WorkkindBarChart />
-            <WorkkindRadarChart />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <WorkkindBarChart workKindInsights={workKindInsights} />
+            <InsightsSummary />
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <WorkkindRadarChart />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <EmotionRadarChart emotionInsights={emotionInsights} />
+            <WorkkindCountPerDayBarChart workKindCountPerDayInsights={workKindCountPerDayInsights} />
           </div>
         </div>
       ) : (

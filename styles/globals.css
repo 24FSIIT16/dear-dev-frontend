@@ -100,4 +100,12 @@ body {
     page-break-inside: avoid;
     break-inside: avoid;
   }
+
+  .grid {
+    display: block;
+  }
+
+  .grid > div {
+    break-inside: avoid !important;
+  }
 }

@@ -10,14 +10,14 @@ const useInsightsClient = () => {
 
   client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
-  const getInsightsByTeam = async (
+  const getInsightsByTeamAndSprint = async (
     userId: string,
     teamId: number,
     sprint: string
   ): Promise<AxiosResponse<InsightsDTO>> => client.get(`/v1/insights/${userId}/team/${teamId}/sprint/${sprint}`);
 
   return {
-    getInsightsByTeam,
+    getInsightsByTeamAndSprint,
   };
 };
 
