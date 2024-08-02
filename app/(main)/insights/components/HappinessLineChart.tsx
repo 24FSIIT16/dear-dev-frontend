@@ -75,8 +75,8 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
-            <p className="text-xl font-semibold">Happiness - Team vs. Personal</p>
-            <p className="-mt-4 text-sm font-thin">Daily Averages</p>
+            <p className="text-xl font-semibold">Overall Happiness - Team vs. Personal</p>
+            <p className="-mt-4 text-sm font-thin">Based on daily happiness values</p>
           </CardTitle>
         </div>
       </CardHeader>

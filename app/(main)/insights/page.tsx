@@ -138,6 +138,10 @@ const InsightsPage: React.FC = () => {
     document.body.removeChild(link);
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   if (isLoading || !user || !selectedTeam || !data || !sprints) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
 
@@ -181,7 +185,7 @@ const InsightsPage: React.FC = () => {
               <Button size="icon" variant="outline" onClick={downloadCSV} className="no-print h-10 w-10">
                 <FileBarChart2 className="w-4" />
               </Button>
-              <Button size="icon" variant="outline" onClick={window.print} className="no-print h-10 w-10">
+              <Button size="icon" variant="outline" onClick={handlePrint} className="no-print h-10 w-10">
                 <Printer className="w-4" />
               </Button>
             </div>

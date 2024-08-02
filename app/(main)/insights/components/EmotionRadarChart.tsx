@@ -14,6 +14,7 @@ import {
 import * as React from 'react';
 import { EmotionInsightsDTO } from '@/types/InsightsType';
 import { Checkbox } from '@components/ui/Checkbox/Checkbox';
+import truncateString from '@/lib/stringUtils';
 
 const chartConfig = {
   userCount: {
@@ -49,22 +50,22 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
             <p className="text-xl font-semibold">Emotions - Personal vs. Team</p>
-            <p className="-mt-4 text-sm font-thin">Most Mentioned Emotions</p>
+            <p className="-mt-4 text-sm font-thin">10 most tracked emotions</p>
           </CardTitle>
         </div>
       </CardHeader>
       <CardContent className="pb-0">
-        <ChartContainer config={chartConfig} className="mx-auto aspect-square max-h-[250px]">
+        <ChartContainer config={chartConfig} className="mx-auto">
           {visibleAreas.userCountArea || visibleAreas.teamCountArea ? (
             <RadarChart
               data={emotionInsights}
               margin={{
-                left: 20,
-                right: 20,
+                left: 0,
+                right: 0,
               }}
             >
               <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-              <PolarAngleAxis dataKey="emotionName" />
+              <PolarAngleAxis dataKey="emotionName" tickFormatter={(value: string) => truncateString(value, 30)} />
               <PolarGrid />
               {visibleAreas.userCountArea && (
                 <Radar dataKey="userCount" fill="var(--color-userCount)" fillOpacity={0.2} />

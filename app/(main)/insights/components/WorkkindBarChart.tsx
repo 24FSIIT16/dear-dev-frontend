@@ -8,6 +8,7 @@ import CustomBarChartLabel from '@/(main)/insights/components/CustomChartCompone
 import { WorkKindInsightsDTO } from '@/types/InsightsType';
 import { Checkbox } from '@components/ui/Checkbox/Checkbox';
 import CustomToolTip from '@/(main)/insights/components/CustomChartComponents/CustomToolTip';
+import truncateString from '@/lib/stringUtils';
 
 const chartConfig = {
   userAverage: {
@@ -42,13 +43,19 @@ const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
       <CardHeader>
         <CardTitle className="space-y-1">
           <p className="text-xl font-semibold">Happiness per Type of Work </p>
-          <p className="-mt-4 text-sm font-thin">Top 5 Workkinds</p>
+          <p className="-mt-4 text-sm font-thin">Top 5 of collected work types</p>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={workKindInsights} className="ml-0">
-            <XAxis dataKey="workKindName" tickLine={false} tickMargin={10} axisLine={false} />
+            <XAxis
+              dataKey="workKindName"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value: string) => truncateString(value, 10)}
+            />
             <YAxis
               width={0}
               domain={[0, 'dataMax + 4']}
