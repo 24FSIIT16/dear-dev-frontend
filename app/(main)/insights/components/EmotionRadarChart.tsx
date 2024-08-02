@@ -22,7 +22,7 @@ const chartConfig = {
   },
   teamCount: {
     label: 'Team',
-    color: 'rgba(78, 138, 227)',
+    color: '#E94B68',
   },
 } satisfies ChartConfig;
 
@@ -48,7 +48,7 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
       <CardHeader>
         <div className="flex items-center justify-between">
           <CardTitle className="space-y-1">
-            <p className="text-xl font-semibold">Emotions - Personal vs. team</p>
+            <p className="text-xl font-semibold">Emotions - Personal vs. Team</p>
             <p className="-mt-4 text-sm font-thin">Most Mentioned Emotions</p>
           </CardTitle>
         </div>
@@ -67,10 +67,10 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
               <PolarAngleAxis dataKey="emotionName" />
               <PolarGrid />
               {visibleAreas.userCountArea && (
-                <Radar dataKey="userCount" fill="var(--color-userCount)" fillOpacity={0.4} />
+                <Radar dataKey="userCount" fill="var(--color-userCount)" fillOpacity={0.2} />
               )}
               {visibleAreas.teamCountArea && (
-                <Radar dataKey="teamCount" fill="var(--color-teamCount)" fillOpacity={0.4} />
+                <Radar dataKey="teamCount" fill="var(--color-teamCount)" fillOpacity={0.2} />
               )}
               <ChartLegend content={<ChartLegendContent />} />
             </RadarChart>

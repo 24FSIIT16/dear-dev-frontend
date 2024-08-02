@@ -21,10 +21,16 @@ import Loading from '@components/Loading/Loading';
 import { Button } from '@components/ui/Buttons/Button';
 import { FileBarChart2, Printer } from 'lucide-react';
 import convertToCSV from '@/(main)/insights/utils/downloadCSV';
-import WorkkindRadarChart from '@/(main)/insights/components/WorkkindRadarChart';
-import { InsightsDTO, HappinessInsightsDTO, WorkKindInsightsDTO, EmotionInsightsDTO } from '@/types/InsightsType';
+import {
+  InsightsDTO,
+  HappinessInsightsDTO,
+  WorkKindInsightsDTO,
+  EmotionInsightsDTO,
+  WorkKindCountPerDayInsightDTO,
+} from '@/types/InsightsType';
 import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
 import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
+import WorkkindCountPerDayBarChart from '@/(main)/insights/components/WorkkindCountPerDayBarChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -43,6 +49,9 @@ const InsightsPage: React.FC = () => {
   const [happinessInsights, setHappinessInsights] = React.useState<HappinessInsightsDTO[]>([]);
   const [workKindInsights, setWorkKindInsights] = React.useState<WorkKindInsightsDTO[]>([]);
   const [emotionInsights, setEmotionInsights] = React.useState<EmotionInsightsDTO[]>([]);
+  const [workKindCountPerDayInsights, setWorkKindCountPerDayInsights] = React.useState<WorkKindCountPerDayInsightDTO[]>(
+    []
+  );
 
   const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
 
@@ -86,6 +95,7 @@ const InsightsPage: React.FC = () => {
     setHappinessInsights(insightData.happinessInsights);
     setWorkKindInsights(insightData.workKindInsights);
     setEmotionInsights(insightData.emotionInsights);
+    setWorkKindCountPerDayInsights(insightData.workKindCountPerDayInsights);
   }, [insightData]);
 
   const handleTeamChange = (value: string) => {
@@ -189,7 +199,7 @@ const InsightsPage: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <EmotionRadarChart emotionInsights={emotionInsights} />
-            <WorkkindRadarChart />
+            <WorkkindCountPerDayBarChart workKindCountPerDayInsights={workKindCountPerDayInsights} />
           </div>
         </div>
       ) : (

@@ -174,7 +174,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
               htmlFor="personal"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Personal Median
+              Personal Average
             </label>
           </div>
           <div className="flex items-center space-x-2">
@@ -188,7 +188,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
               htmlFor="team"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Team Median
+              Team Average
             </label>
           </div>
         </div>
