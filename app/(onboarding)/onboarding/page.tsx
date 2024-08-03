@@ -35,7 +35,7 @@ const OnboardingPage: React.FC = () => {
           <DialogTrigger asChild>
             <SelectableCard
               onClick={() => handleSelect('personal')}
-              icon={<Plus className="h-8 w-8 text-white group-hover:text-primaryGreen-main" />}
+              icon={<Plus className="h-8 w-8 text-white group-hover:text-primaryBlue-main" />}
               title="Create a team"
               description="Start yappi as an individual to track your happiness. You can later invite members to join your team workspace."
             />
@@ -43,7 +43,7 @@ const OnboardingPage: React.FC = () => {
           <DialogTrigger asChild>
             <SelectableCard
               onClick={() => handleSelect('team')}
-              icon={<Users className="h-8 w-8 text-white group-hover:text-primaryGreen-main" />}
+              icon={<Users className="h-8 w-8 text-white group-hover:text-primaryBlue-main" />}
               title="Join a team"
               description="Select this option if you have been invited to a team workspace and have received a four-digit code."
             />
