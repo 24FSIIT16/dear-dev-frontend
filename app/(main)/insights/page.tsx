@@ -60,7 +60,7 @@ const InsightsPage: React.FC = () => {
 
   // todo get actual data
   const sprints: Sprint[] = [
-    { id: 1, name: 'All Sprints', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
+    { id: 1, name: 'All-Time', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
     { id: 2, name: 'Current Sprint', value: 'current', startDate: '2020-01-01', endDate: '2020-01-01' },
     { id: 3, name: 'Last Sprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
   ];

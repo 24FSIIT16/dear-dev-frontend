@@ -10,6 +10,7 @@ import {
   BreadcrumbLink,
   BreadcrumbSeparator,
 } from '@components/ui/Breadcrumb/Breadcrumb';
+import HeaderNavigationMenu from '@components/NavigationMenu/HeaderNavigationMenu';
 import getBreadcrumbs from './Header.utils';
 import Account from './Account';
 
@@ -36,9 +37,11 @@ const Header: React.FC = () => {
           ))}
         </BreadcrumbList>
       </Breadcrumb>
-      <Account />
+      <div className="flex items-center space-x-4">
+        <HeaderNavigationMenu />
+        <Account />
+      </div>
     </header>
   );
 };
-
 export default Header;

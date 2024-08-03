@@ -7,7 +7,7 @@ import { Avatar } from '@components/ui/Avatar/Avatar';
 
 export default function InsightsSummary() {
   return (
-    <Card className="rounded-2xl border-none bg-primaryBlue-light shadow-none hover:bg-primaryBlue-main">
+    <Card className="rounded-2xl border-none bg-primaryBlue-light shadow-none hover:bg-primaryBlue-main hover:text-white">
       <CardHeader>
         <CardTitle className="space-y-1">
           <div className="flex items-baseline gap-2">
@@ -26,7 +26,7 @@ export default function InsightsSummary() {
           <Avatar className="hidden h-7 w-7 sm:flex">
             <TrendingUp />
           </Avatar>
-          <div className="grid gap-1">
+          <div className="grid gap-1 group-hover:text-white">
             <p className="text-md font-semibold leading-none">Happiness Increased by 10% Last Week</p>
             <p className="text-muted-foreground text-sm">You managed a busy schedule while staying happy. Great job!</p>
           </div>

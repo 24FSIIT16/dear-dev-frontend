@@ -118,22 +118,24 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
 
             <ChartTooltip cursor content={<CustomToolTip />} />
             <ChartLegend content={<ChartLegendContent />} verticalAlign="bottom" />
-
-            <Line
-              dataKey="userAverage"
-              type="monotone"
-              strokeWidth={2}
-              stroke={chartConfig.userAverage.color}
-              dot={false}
-            />
-            <Line
-              dataKey="teamAverage"
-              type="monotone"
-              strokeWidth={2}
-              stroke={chartConfig.teamAverage.color}
-              dot={false}
-            />
-
+            {visibleLines.userAverage && (
+              <Line
+                dataKey="userAverage"
+                type="monotone"
+                strokeWidth={2}
+                stroke={chartConfig.userAverage.color}
+                dot={false}
+              />
+            )}
+            {visibleLines.teamAverage && (
+              <Line
+                dataKey="teamAverage"
+                type="monotone"
+                strokeWidth={2}
+                stroke={chartConfig.teamAverage.color}
+                dot={false}
+              />
+            )}
             {visibleLines.alertLines &&
               alertLines.map((line) => (
                 <ReferenceLine
@@ -151,6 +153,18 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
         <div className="mt-8 flex space-x-6">
           <div className="flex items-center space-x-2">
             <Checkbox
+              checked={visibleLines.userAverage}
+              onCheckedChange={() => handleToggle('userAverage')}
+              id="personal5"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="personal5"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Personal
+            </label>
+            <Checkbox
               checked={visibleLines.userAverageLine}
               onCheckedChange={() => handleToggle('userAverageLine')}
               id="personal"
@@ -162,8 +176,20 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
             >
               Personal Average
             </label>
-          </div>
-          <div className="flex items-center space-x-2">
+
+            <Checkbox
+              checked={visibleLines.teamAverage}
+              onCheckedChange={() => handleToggle('teamAverage')}
+              id="team5"
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label
+              htmlFor="team5"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Team
+            </label>
+
             <Checkbox
               checked={visibleLines.teamAverageLine}
               onCheckedChange={() => handleToggle('teamAverageLine')}
@@ -176,8 +202,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
             >
               Team Average
             </label>
-          </div>
-          <div className="flex items-center space-x-2">
+
             <Checkbox
               checked={visibleLines.alertLines}
               onCheckedChange={() => handleToggle('alertLines')}
