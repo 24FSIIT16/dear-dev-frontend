@@ -46,7 +46,7 @@ const GettingStartedPage: React.FC = () => (
       <ul className="list-disc pl-5 text-sm font-light">
         <li>
           <strong>Profile Settings:</strong> Update your personal information and preferences in the{' '}
-          <a href="/settings/FAQ" className="text-blue-600 hover:underline">
+          <a href="/settings" className="text-blue-600 hover:underline">
             settings menu
           </a>{' '}
           .
