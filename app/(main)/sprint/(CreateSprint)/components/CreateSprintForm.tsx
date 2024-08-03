@@ -25,6 +25,7 @@ import cn from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@components/ui/Calendar/Calendar';
 import { format } from 'date-fns';
+import useSprintConfigClient from '@hooks/useSprintConfigClient';
 
 const FormSchema = z
   .object({
@@ -45,6 +46,8 @@ const FormSchema = z
 type FormValues = z.infer<typeof FormSchema>;
 
 const CreateSprintForm: React.FC = () => {
+  const { createSprint } = useSprintConfigClient();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: React.useMemo(
@@ -59,9 +62,15 @@ const CreateSprintForm: React.FC = () => {
     mode: 'onSubmit',
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+    const formattedData = {
+      ...data,
+      startDate: format(data.startDate, 'yyyy-MM-dd'),
+      endDate: format(data.endDate, 'yyyy-MM-dd'),
+    };
     try {
-      console.warn(data);
+      await createSprint(formattedData);
+      toast.success('Sprint successfully created');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);
