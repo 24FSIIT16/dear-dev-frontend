@@ -1,10 +1,11 @@
 import * as React from 'react';
 import Separator from '@components/ui/Separator/Separator';
+import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 
 const GettingStartedPage: React.FC = () => (
   <div className="space-y-6 p-4 md:p-8">
     <section className="space-y-1">
-      <h2 className="text-xl font-semibold">Where productivity meets happiness</h2>
+      <h2 className="text-xl font-semibold">Where Productivity Meets Happiness</h2>
       <p className="text-sm font-light">
         Discover a new way to track your happiness and boost your productivity. yappi helps you monitor your emotional
         well-being, learn from your experiences, and achieve greater efficiency in your daily life. Join us now and take
@@ -26,7 +27,44 @@ const GettingStartedPage: React.FC = () => (
           activities.
         </li>
         <li>
-          <strong>Happiness Score by Type of Work:</strong> sasdasd asdasd asd.
+          <strong>Happiness Score by Type of Work:</strong> Your happiness score is tied to four easily recognizable
+          smileys that reflect your mood:
+          <ul className="list-disc pl-5 text-sm font-light">
+            <li>
+              <strong>Overall Happiness Score:</strong> A measure of your overall well-being based on your interactions
+              and activities.
+            </li>
+            <li>
+              <strong>Happiness Score by Type of Work:</strong> Your happiness score is tied to four easily recognizable
+              smileys that reflect your mood:
+              <ul className="mt-1 list-disc pl-5">
+                <li className="flex items-center space-x-2">
+                  <Laugh className="h-6 w-6" />
+                  <span>Represents 20 points.</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Smile className="h-6 w-6" />
+                  <span>Represents 14 points.</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Annoyed className="h-6 w-6" />
+                  <span>Represents 8 points.</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Frown className="h-6 w-6" />
+                  <span>Represents 2 points.</span>
+                </li>
+              </ul>
+              Behind these smileys is a point system that quantifies your mood and activities. Please note that the
+              grading is currently in a test phase and will be adjusted as soon as the field testing is evaluated.
+            </li>
+            <li>
+              <strong>Team Sync Score:</strong> Indicates how well you are aligning with your team’s objectives and
+              dynamics.
+            </li>
+          </ul>
+          Behind these smileys is a point system that quantifies your mood and activities. Please note that the grading
+          is currently in a test phase and will be adjusted as soon as the first field testing is evaluated.
         </li>
         <li>
           <strong>Team Sync Score:</strong> Indicates how well you are aligning with your team’s objectives and
@@ -47,7 +85,7 @@ const GettingStartedPage: React.FC = () => (
         <li>
           <strong>Profile Settings:</strong> Update your personal information and preferences in the{' '}
           <a href="/settings" className="text-blue-600 hover:underline">
-            settings menu
+            Settings menu
           </a>{' '}
           .
         </li>
