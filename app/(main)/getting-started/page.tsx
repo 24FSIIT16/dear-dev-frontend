@@ -16,7 +16,7 @@ const GettingStartedPage: React.FC = () => (
     <Separator className="mt-2" />
 
     <section className="space-y-1">
-      <h3 className="text-xl font-semibold">Understanding Scores</h3>
+      <h3 className="text-xl font-semibold">Understanding Happiness Data</h3>
       <p className="text-sm font-light">
         Yappi provides various scores to help you track your performance and happiness. Here&apos;s a quick guide to
         understanding them:
@@ -29,46 +29,62 @@ const GettingStartedPage: React.FC = () => (
         <li>
           <strong>Happiness Score by Type of Work:</strong> Your happiness score is tied to four easily recognizable
           smileys that reflect your mood:
-          <ul className="list-disc pl-5 text-sm font-light">
-            <li>
-              <strong>Overall Happiness Score:</strong> A measure of your overall well-being based on your interactions
-              and activities.
-            </li>
-            <li>
-              <strong>Happiness Score by Type of Work:</strong> Your happiness score is tied to four easily recognizable
-              smileys that reflect your mood:
-              <ul className="mt-1 list-disc pl-5">
-                <li className="flex items-center space-x-2">
-                  <Laugh className="h-6 w-6" />
-                  <span>Represents 20 points.</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Smile className="h-6 w-6" />
-                  <span>Represents 14 points.</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Annoyed className="h-6 w-6" />
-                  <span>Represents 8 points.</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <Frown className="h-6 w-6" />
-                  <span>Represents 2 points.</span>
-                </li>
-              </ul>
-              Behind these smileys is a point system that quantifies your mood and activities. Please note that the
-              grading is currently in a test phase and will be adjusted as soon as the field testing is evaluated.
-            </li>
-            <li>
-              <strong>Team Sync Score:</strong> Indicates how well you are aligning with your team’s objectives and
-              dynamics.
-            </li>
-          </ul>
-          Behind these smileys is a point system that quantifies your mood and activities. Please note that the grading
-          is currently in a test phase and will be adjusted as soon as the first field testing is evaluated.
         </li>
         <li>
           <strong>Team Sync Score:</strong> Indicates how well you are aligning with your team’s objectives and
           dynamics.
+        </li>
+        <li>
+          <strong>Tracking Emotions:</strong> Yappi tracks a range of emotions to provide insights into your emotional
+          state. By analyzing these patterns, you can better understand your emotional triggers and work towards a more
+          balanced emotional state. This includes tracking how different tasks affect your mood and identifying trends
+          over time.
+        </li>
+        <br />
+        Your happiness scores are tied to four easily recognizable smileys that reflect your mood:
+        <ul className="mt-1 list-disc pl-5">
+          <li className="flex items-center space-x-2">
+            <Laugh className="h-6 w-6" />
+            <span>Represents 20 points.</span>
+          </li>
+          <li className="flex items-center space-x-2">
+            <Smile className="h-6 w-6" />
+            <span>Represents 14 points.</span>
+          </li>
+          <li className="flex items-center space-x-2">
+            <Annoyed className="h-6 w-6" />
+            <span>Represents 8 points.</span>
+          </li>
+          <li className="flex items-center space-x-2">
+            <Frown className="h-6 w-6" />
+            <span>Represents 2 points.</span>
+          </li>
+        </ul>
+        <br />
+        Behind these smileys is a point system that quantifies your mood and activities. Please note that the grading is
+        currently in a test phase and will be adjusted as soon as the field testing is evaluated.
+      </ul>
+    </section>
+
+    <Separator className="mt-2" />
+
+    <section className="space-y-1">
+      <h3 className="text-xl font-semibold">Discovering Happiness Patterns</h3>
+      <p className="text-sm font-light">
+        Yappi helps you uncover patterns in your happiness data to make informed decisions:
+      </p>
+      <ul className="list-disc pl-5 text-sm font-light">
+        <li>
+          <strong>Positive Trends:</strong> Identify the activities and interactions that consistently boost your mood.
+          Use these insights to prioritize tasks and relationships that contribute to your well-being.
+        </li>
+        <li>
+          <strong>Team Dynamics:</strong> Understand how your mood aligns with your team. This can help in improving
+          teamwork and communication, fostering a more collaborative environment.
+        </li>
+        <li>
+          <strong>Areas for Improvement:</strong> Pinpoint areas that negatively impact your happiness. Use this
+          information to make necessary changes, whether it’s in your work habits or personal life.
         </li>
       </ul>
     </section>
@@ -98,7 +114,7 @@ const GettingStartedPage: React.FC = () => (
           you. (currently not available)
         </li>
         <li>
-          <strong>Integrate Productivity Tools:</strong> ............. (currently not available)
+          <strong>Integrate Productivity Tools:</strong> (currently not available)
         </li>
       </ul>
     </section>

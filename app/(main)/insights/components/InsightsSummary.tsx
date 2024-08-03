@@ -21,7 +21,6 @@ export default function InsightsSummary() {
         </CardTitle>
       </CardHeader>
       <CardContent className="grid gap-8">
-        {/* Positive Trends */}
         <div className="flex items-center gap-4">
           <Avatar className="hidden h-7 w-7 sm:flex">
             <TrendingUp />
@@ -43,7 +42,6 @@ export default function InsightsSummary() {
           </div>
         </div>
 
-        {/* Team Dynamics */}
         <div className="flex items-center gap-4">
           <Avatar className="hidden h-7 w-7 sm:flex">
             <RefreshCw />
@@ -56,7 +54,6 @@ export default function InsightsSummary() {
           </div>
         </div>
 
-        {/* Areas for Improvement */}
         <div className="flex items-center gap-4">
           <Avatar className="hidden h-7 w-7 sm:flex">
             <CalendarSearch />
