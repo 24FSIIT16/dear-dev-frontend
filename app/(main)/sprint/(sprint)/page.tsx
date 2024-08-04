@@ -7,6 +7,8 @@ import useSWRClient from '@hooks/useSWRClient';
 import Error from '@components/Error/Error';
 import Loading from '@components/Loading/Loading';
 import CreateSprintWidget from '../components/Sprint/CreateSprintWidget';
+import SprintTable from './components/SprintTable/SprintTable';
+import { columns } from './components/SprintTable/columns';
 
 const SprintPage: React.FC = () => {
   const { userId } = useAuth();
@@ -18,7 +20,7 @@ const SprintPage: React.FC = () => {
       <Error errorMessage="It seems there was a problem loading your sprints." action="/sprint" showContact={false} />
     );
 
-  return <div>{data ? <CreateSprintWidget /> : <h1>Data</h1>}</div>;
+  return <div>{data ? <SprintTable<Sprint> columns={columns} data={data} /> : <CreateSprintWidget />}</div>;
 };
 
 export default SprintPage;

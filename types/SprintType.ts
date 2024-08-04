@@ -5,8 +5,8 @@ export interface Sprint {
   sprintName: string;
   sprintGoal: string;
   team: Team;
-  startDate: Date;
-  endDate: Date;
+  startDate: Date | string;
+  endDate: Date | string;
   createdAt: string;
   createdBy: number;
   active: boolean;

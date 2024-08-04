@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Card, CardContent } from '@components/ui/Card/Card';
-import { Bike } from 'lucide-react';
+import { Rabbit } from 'lucide-react';
 import Link from 'next/link';
 
 const CreateSprintWidget: React.FC = () => (
@@ -9,7 +9,7 @@ const CreateSprintWidget: React.FC = () => (
       <CardContent className="text-primaryGreen-main group-hover:text-white">
         <div className="flex flex-col items-start py-4">
           <div className="rounded-full bg-primaryGreen-main p-4 group-hover:bg-white">
-            <Bike className="h-5 w-5 text-white group-hover:text-primaryGreen-main" />
+            <Rabbit className="h-5 w-5 text-white group-hover:text-primaryGreen-main" />
           </div>
           <div className="space-y-1 pt-6">
             <h1>Achieve More, Smile More</h1>
