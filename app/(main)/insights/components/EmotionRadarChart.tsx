@@ -91,7 +91,7 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
               htmlFor="personal3"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Personal Average
+              Personal
             </label>
           </div>
           <div className="flex items-center space-x-2">
@@ -105,7 +105,7 @@ const EmotionRadarChart: React.FC<InsightProps> = ({ emotionInsights }) => {
               htmlFor="team3"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Team Average
+              Team
             </label>
           </div>
         </div>

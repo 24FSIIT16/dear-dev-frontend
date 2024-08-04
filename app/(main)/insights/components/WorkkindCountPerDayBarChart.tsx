@@ -115,7 +115,7 @@ const WorkkindCountPerDayBarChart: React.FC<InsightProps> = ({ workKindCountPerD
               htmlFor="personal4"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Personal Average
+              Personal
             </label>
           </div>
           <div className="flex items-center space-x-2">
@@ -129,7 +129,7 @@ const WorkkindCountPerDayBarChart: React.FC<InsightProps> = ({ workKindCountPerD
               htmlFor="team4"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              Team Average
+              Team
             </label>
           </div>
         </div>
