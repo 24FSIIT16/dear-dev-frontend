@@ -125,7 +125,7 @@ const CreateTeamDialog: React.FC = () => {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Link href="/team">
+              <Link href={`/team/${createdTeam.id}/config`}>
                 <Button className="mt-8 px-8">Continue</Button>
               </Link>
             </DialogClose>
