@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Bar, BarChart, XAxis, LabelList, YAxis, CartesianGrid } from 'recharts';
+import { Bar, BarChart, XAxis, LabelList, YAxis } from 'recharts';
 import { Card, CardContent, CardTitle, CardHeader } from '@components/ui/Card/Card';
 import {
   ChartConfig,
@@ -33,7 +33,7 @@ interface InsightProps {
 const WorkkindCountPerDayBarChart: React.FC<InsightProps> = ({ workKindCountPerDayInsights }) => {
   const [visibleHorizontalBars, setVisibleHorizontalBars] = React.useState({
     userAverageHorizontalBar: true,
-    teamAverageHorizontalBar: false,
+    teamAverageHorizontalBar: true,
   });
 
   const handleToggle = (line: keyof typeof visibleHorizontalBars) => {
@@ -58,11 +58,9 @@ const WorkkindCountPerDayBarChart: React.FC<InsightProps> = ({ workKindCountPerD
             data={workKindCountPerDayInsights}
             layout="vertical"
             margin={{
-              right: 50,
+              right: 70,
             }}
           >
-            <CartesianGrid horizontal={false} />
-
             <YAxis
               dataKey="workKindCount"
               type="category"

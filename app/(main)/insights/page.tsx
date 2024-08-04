@@ -35,7 +35,7 @@ import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
 export interface Sprint {
-  id: number;
+  id: string;
   name: string;
   value: string;
   startDate: string;
@@ -58,11 +58,11 @@ const InsightsPage: React.FC = () => {
   const [selectedTeam, setSelectedTeam] = React.useState<Team>();
   const [sprint, setSprint] = React.useState<Sprint>();
 
-  // todo get actual data
+  // todo get actual data & type it
   const sprints: Sprint[] = [
-    { id: 1, name: 'All-Time', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
-    { id: 2, name: 'Current Sprint', value: 'current', startDate: '2020-01-01', endDate: '2020-01-01' },
-    { id: 3, name: 'Last Sprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
+    { id: '0', name: 'All-Time', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
+    { id: '1', name: 'one Sprint', value: 'current', startDate: '2020-01-01', endDate: '2020-01-01' },
+    { id: '2', name: 'two asdasdSprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
   ];
 
   const fetchInsights = async () => {
@@ -70,7 +70,7 @@ const InsightsPage: React.FC = () => {
     if (selectedTeam === undefined) return;
     if (sprint === undefined) return;
     try {
-      const response = await getInsightsByTeamAndSprint(user.id, selectedTeam.id, sprint.value);
+      const response = await getInsightsByTeamAndSprint(user.id, selectedTeam.id, sprint.id);
       if (response) {
         setInsightData(response.data);
       }

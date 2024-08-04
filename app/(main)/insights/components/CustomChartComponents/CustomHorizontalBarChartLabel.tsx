@@ -32,7 +32,7 @@ const CustomHorizontalBarChartLabel: React.FC<CustomHorizontalBarChartLabelProps
   };
 
   return (
-    <g transform={`translate(${x + width + 8}, ${y - iconSize / 4} )`}>
+    <g transform={`translate(${x + width + 8}, ${y})`}>
       <foreignObject width={iconSize} height={iconSize}>
         {getIcon(value)}
       </foreignObject>
