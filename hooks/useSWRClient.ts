@@ -12,12 +12,13 @@ const useSWRClient = <T = Record<string, unknown>>(endpoint: string) => {
     return apiClient.get<T>(url, token);
   };
 
-  const { data, error, isLoading } = useSWR<T>([endpoint, accessToken], () => fetcher(endpoint));
+  const { data, error, isLoading, mutate } = useSWR<T>([endpoint, accessToken], () => fetcher(endpoint));
 
   return {
     data,
     error,
     isLoading,
+    mutate,
   };
 };
 
