@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@components/ui/Dialog/Dialog';
+import { DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@components/ui/Dialog/Dialog';
 import { Button } from '@components/ui/Buttons/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -115,9 +115,11 @@ const JoinTeamDialog: React.FC = () => {
       ) : (
         <DialogFooter>
           <div>
-            <Link href="/team">
-              <Button className="mt-8 px-8">Continue</Button>
-            </Link>
+            <DialogClose asChild>
+              <Link href={`/team/${joinedTeam.id}/members`}>
+                <Button className="mt-8 px-8">Continue</Button>
+              </Link>
+            </DialogClose>
           </div>
         </DialogFooter>
       )}

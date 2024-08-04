@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@components/ui/Dialog/Dialog';
+import { DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from '@components/ui/Dialog/Dialog';
 import { Button } from '@components/ui/Buttons/Button';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -124,9 +124,11 @@ const CreateTeamDialog: React.FC = () => {
             <Input ref={inputRef} disabled value={createdTeam?.code} />
           </div>
           <DialogFooter>
-            <Link href="/team">
-              <Button className="mt-8 px-8">Continue</Button>
-            </Link>
+            <DialogClose asChild>
+              <Link href={`/team/${createdTeam.id}/config`}>
+                <Button className="mt-8 px-8">Continue</Button>
+              </Link>
+            </DialogClose>
           </DialogFooter>
         </>
       )}

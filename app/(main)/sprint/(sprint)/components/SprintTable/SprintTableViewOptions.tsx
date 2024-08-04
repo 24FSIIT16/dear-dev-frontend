@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import * as React from 'react';
 import { Table } from '@tanstack/react-table';
 import {
@@ -10,11 +9,11 @@ import {
 import { Button } from '@components/ui/Buttons/Button';
 import { Eye } from 'lucide-react';
 
-interface TeamMemberTableViewOptionsProps<TData> {
+interface SprintTableViewOptionsProps<TData> {
   table: Table<TData>;
 }
 
-const TeamMemberTableViewOptions = <TData,>({ table }: TeamMemberTableViewOptionsProps<TData>) => (
+const SprintTableViewOptions = <TData,>({ table }: SprintTableViewOptionsProps<TData>) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="outline" size="sm" className="h-10">
@@ -40,4 +39,4 @@ const TeamMemberTableViewOptions = <TData,>({ table }: TeamMemberTableViewOption
   </DropdownMenu>
 );
 
-export default TeamMemberTableViewOptions;
+export default SprintTableViewOptions;

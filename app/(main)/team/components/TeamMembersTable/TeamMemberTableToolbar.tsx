@@ -15,7 +15,7 @@ const TeamMemberTableToolbar = <TData,>({ table }: TeamMemberTableToolbarProps<T
         placeholder="Search member"
         value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
         onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
-        className="h-8"
+        className="h-10"
       />
     </div>
     <TeamMemberTableViewOptions table={table} />
