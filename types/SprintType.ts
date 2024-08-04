@@ -18,3 +18,8 @@ export interface CreateSprintDTO {
   startDate: string;
   endDate: string;
 }
+
+export interface SprintsAndTeams {
+  teams: Team[];
+  sprints: Sprint[];
+}
