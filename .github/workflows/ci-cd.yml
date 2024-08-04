@@ -94,10 +94,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<'EOF'
           echo '${{ secrets.SSH_ITALIAN_PASSWORD }}' | sudo -S su - ${{ secrets.SSH_ITALIAN_USER }} -c '
           cd ~/yappi &&
-          docker-compose stop frontend &&
-          docker-compose rm frontend &&
+          docker-compose stop frontend nginx &&
+          docker-compose rm frontend nginx &&
           docker pull ghcr.io/24fsiit16/dear-dev-frontend:latest
-          docker-compose up -d frontend'
+          docker-compose up -d'
           EOF
 
       - name: cleanup
