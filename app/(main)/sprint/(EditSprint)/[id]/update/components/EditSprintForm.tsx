@@ -214,7 +214,7 @@ const EditSprintForm: React.FC<EditSprintFormProps> = ({ sprintId }) => {
             )}
           />
         </div>
-        <Button type="submit">Update Sprint</Button>
+        <Button type="submit">Update</Button>
       </form>
     </Form>
   );
