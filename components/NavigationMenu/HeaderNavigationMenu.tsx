@@ -24,7 +24,7 @@ const resourcesItems = [
     external: true,
   },
   {
-    title: 'Yappi Community',
+    title: 'yappi Community',
     href: 'https://discord.gg/XhsmFHnhBF',
     description: 'Join our discord community and connect with others.',
     external: true,

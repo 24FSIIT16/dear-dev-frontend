@@ -5,7 +5,7 @@ import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 const GettingStartedPage: React.FC = () => (
   <div className="space-y-6 p-4 md:p-8">
     <section className="space-y-1">
-      <h2 className="text-xl font-semibold">Where Productivity Meets Happiness</h2>
+      <h2 className="text-xl font-semibold">Welcome to yappi!</h2>
       <p className="text-sm font-light">
         Discover a new way to track your happiness and boost your productivity. yappi helps you monitor your emotional
         well-being, learn from your experiences, and achieve greater efficiency in your daily life. Join us now and take
@@ -18,7 +18,7 @@ const GettingStartedPage: React.FC = () => (
     <section className="space-y-1">
       <h3 className="text-xl font-semibold">Understanding Happiness Data</h3>
       <p className="text-sm font-light">
-        Yappi provides various scores to help you track your performance and happiness. Here&apos;s a quick guide to
+        yappi provides various scores to help you track your performance and happiness. Here&apos;s a quick guide to
         understanding them:
       </p>
       <ul className="list-disc pl-5 text-sm font-light">
@@ -35,7 +35,7 @@ const GettingStartedPage: React.FC = () => (
           dynamics.
         </li>
         <li>
-          <strong>Tracking Emotions:</strong> Yappi tracks a range of emotions to provide insights into your emotional
+          <strong>Tracking Emotions:</strong> yappi tracks a range of emotions to provide insights into your emotional
           state. By analyzing these patterns, you can better understand your emotional triggers and work towards a more
           balanced emotional state. This includes tracking how different tasks affect your mood and identifying trends
           over time.
@@ -71,7 +71,7 @@ const GettingStartedPage: React.FC = () => (
     <section className="space-y-1">
       <h3 className="text-xl font-semibold">Discovering Happiness Patterns</h3>
       <p className="text-sm font-light">
-        Yappi helps you uncover patterns in your happiness data to make informed decisions:
+        yappi helps you uncover patterns in your happiness data to make informed decisions:
       </p>
       <ul className="list-disc pl-5 text-sm font-light">
         <li>
@@ -92,16 +92,61 @@ const GettingStartedPage: React.FC = () => (
     <Separator className="mt-2" />
 
     <section className="space-y-1">
+      <h3 className="text-xl font-semibold">Team Management</h3>
+      <p className="text-sm font-light">
+        As the creator of a team, you become the admin, allowing you to share the invitation code, set team names, and
+        determine the types of work your team will focus on. You can start directly here by creating a{' '}
+        <a href="/team" className="text-blue-600 hover:underline">
+          New Team
+        </a>{' '}
+        or{' '}
+        <a href="/team" className="text-blue-600 hover:underline">
+          Joining
+        </a>{' '}
+        one.
+      </p>
+    </section>
+
+    <Separator className="mt-2" />
+
+    <section className="space-y-1">
+      <h3 className="text-xl font-semibold">Sprint Management</h3>
+      <p className="text-sm font-light">
+        Create, start, and stop sprints for your teams. Set the sprint goals, start and end dates, and add all relevant
+        sprint data here. You can{' '}
+        <a href="/sprints" className="text-blue-600 hover:underline">
+          Manage Sprints
+        </a>{' '}
+        directly here.
+      </p>
+    </section>
+
+    <Separator className="mt-2" />
+
+    <section className="space-y-1">
+      <h3 className="text-xl font-semibold">User Profile</h3>
+      <p className="text-sm font-light">
+        Set your name, roles, and other personal information in your{' '}
+        <a href="/settings" className="text-blue-600 hover:underline">
+          User Profile
+        </a>{' '}
+        to help your team understand better how your happiness is connected with your work and productivity.
+      </p>
+    </section>
+
+    <Separator className="mt-2" />
+
+    <section className="space-y-1">
       <h3 className="text-xl font-semibold">Settings and Customizations</h3>
       <p className="text-sm font-light">
-        Tailor your Yappi experience by adjusting the settings to fit your preferences. Here&apos;s how you can
+        Tailor your yappi experience by adjusting the settings to fit your preferences. Here&apos;s how you can
         customize your settings:
       </p>
       <ul className="list-disc pl-5 text-sm font-light">
         <li>
           <strong>Profile Settings:</strong> Update your personal information and preferences in the{' '}
           <a href="/settings" className="text-blue-600 hover:underline">
-            Settings menu
+            Settings Menu
           </a>{' '}
           .
         </li>
@@ -123,14 +168,14 @@ const GettingStartedPage: React.FC = () => (
 
     <section className="space-y-1">
       <h3 className="text-xl font-semibold">Usage Tips</h3>
-      <p className="text-sm font-light">Here are some tips to help you make the most of Yappi:</p>
+      <p className="text-sm font-light">Here are some tips to help you make the most of yappi:</p>
       <ul className="list-disc pl-5 text-sm font-light">
         <li>
           <strong>Regular Check-Ins:</strong> Make it a habit to review your scores and insights regularly to track your
           progress.
         </li>
         <li>
-          <strong>Set Goals:</strong> Use Yappi’s goal-setting feature to keep your focus sharp and your productivity on
+          <strong>Set Goals:</strong> Use yappi’s goal-setting feature to keep your focus sharp and your productivity on
           track. (currently not available)
         </li>
         <li>
