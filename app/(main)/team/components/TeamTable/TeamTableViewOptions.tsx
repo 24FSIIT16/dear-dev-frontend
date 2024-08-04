@@ -17,7 +17,7 @@ interface TeamTableViewOptionsProps<TData> {
 const TeamTableViewOptions = <TData,>({ table }: TeamTableViewOptionsProps<TData>) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
-      <Button variant="outline" size="sm" className="ml-auto hidden h-8 lg:flex">
+      <Button variant="outline" className="h-10">
         <Eye className="mr-2 h-4 w-4" />
         View
       </Button>
