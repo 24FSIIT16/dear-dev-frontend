@@ -31,6 +31,7 @@ import {
 import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
 import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
 import WorkkindCountPerDayBarChart from '@/(main)/insights/components/WorkkindCountPerDayBarChart';
+import ContributionChart from '@/(main)/insights/components/ContributionChart';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -196,6 +197,9 @@ const InsightsPage: React.FC = () => {
               teamAverageHappiness={insightData ? insightData.teamAverageHappiness : 0.0}
               userAverageHappiness={insightData ? insightData.userAverageHappiness : 0.0}
             />
+          </div>
+          <div className="grid gap-10">
+            <ContributionChart />
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <WorkkindBarChart workKindInsights={workKindInsights} />
