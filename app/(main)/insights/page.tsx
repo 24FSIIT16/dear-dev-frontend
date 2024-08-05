@@ -199,11 +199,11 @@ const InsightsPage: React.FC = () => {
             />
           </div>
           <div className="grid gap-10">
-            <ContributionChart happinessInsights={happinessInsights} />
-          </div>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <WorkkindBarChart workKindInsights={workKindInsights} />
-            <InsightsSummary />
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <WorkkindBarChart workKindInsights={workKindInsights} />
+              <InsightsSummary />
+            </div>
+            <ContributionChart happinessInsights={happinessInsights} startDate={'2024-06-01'} endDate={'2024-09-01'} />
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <EmotionRadarChart emotionInsights={emotionInsights} />
