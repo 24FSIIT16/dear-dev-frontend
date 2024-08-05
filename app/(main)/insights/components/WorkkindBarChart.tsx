@@ -46,7 +46,7 @@ const WorkkindBarChart: React.FC<InsightProps> = ({ workKindInsights }) => {
           <p className="-mt-4 text-sm font-thin">Top 5 of collected work types</p>
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-grow flex-col justify-end">
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={workKindInsights} className="ml-0">
             <XAxis
