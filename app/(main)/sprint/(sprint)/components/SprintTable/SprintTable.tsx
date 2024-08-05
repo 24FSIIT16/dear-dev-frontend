@@ -10,11 +10,13 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   SortingState,
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@components/ui/Table/Table';
+import { DataTablePagination } from '@components/ui/Table/DataTablePagination';
 import SprintTableToolbar from './SprintTableToolbar';
 
 interface SprintTableProps<TData> {
@@ -41,10 +43,16 @@ const SprintTable = <TData,>({ columns, data }: SprintTableProps<TData>) => {
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       sorting,
       columnVisibility,
       columnFilters,
+    },
+    initialState: {
+      pagination: {
+        pageSize: 5,
+      },
     },
   });
 
@@ -83,6 +91,7 @@ const SprintTable = <TData,>({ columns, data }: SprintTableProps<TData>) => {
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} entity="sprints" />
     </div>
   );
 };
