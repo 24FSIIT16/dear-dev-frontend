@@ -24,7 +24,7 @@ import { Popover, PopoverTrigger, PopoverContent } from '@components/ui/Popover/
 import cn from '@/lib/utils';
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@components/ui/Calendar/Calendar';
-import { format } from 'date-fns';
+import { format, startOfToday } from 'date-fns';
 import useSprintConfigClient from '@hooks/useSprintConfigClient';
 
 const FormSchema = z
@@ -47,6 +47,8 @@ type FormValues = z.infer<typeof FormSchema>;
 
 const CreateSprintForm: React.FC = () => {
   const { createSprint } = useSprintConfigClient();
+
+  const today = startOfToday();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -135,7 +137,7 @@ const CreateSprintForm: React.FC = () => {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) => date < new Date('1900-01-01')}
+                      disabled={(date) => date < today}
                       initialFocus
                     />
                   </PopoverContent>
@@ -168,7 +170,7 @@ const CreateSprintForm: React.FC = () => {
                       mode="single"
                       selected={field.value}
                       onSelect={field.onChange}
-                      disabled={(date) => date < new Date('1900-01-01')}
+                      disabled={(date) => date < today}
                       initialFocus
                     />
                   </PopoverContent>
