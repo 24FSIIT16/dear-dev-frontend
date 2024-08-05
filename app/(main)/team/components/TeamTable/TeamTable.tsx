@@ -15,6 +15,7 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@components/ui/Table/Table';
+import { DataTablePagination } from '@components/ui/Table/DataTablePagination';
 import TeamTableToolbar from './TeamTableToolbar';
 
 interface TeamTableProps<TData> {
@@ -23,7 +24,12 @@ interface TeamTableProps<TData> {
 }
 
 const TeamTable = <TData,>({ columns, data }: TeamTableProps<TData>) => {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([
+    {
+      id: 'createdAt',
+      desc: true,
+    },
+  ]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -78,6 +84,7 @@ const TeamTable = <TData,>({ columns, data }: TeamTableProps<TData>) => {
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} entity="teams" />
     </div>
   );
 };

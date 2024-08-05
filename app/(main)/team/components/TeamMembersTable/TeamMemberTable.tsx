@@ -11,6 +11,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
+import { DataTablePagination } from '@components/ui/Table/DataTablePagination';
 import TeamMemberTableToolbar from './TeamMemberTableToolbar';
 
 interface TeamMemberTableProps<TData> {
@@ -74,11 +75,7 @@ const TeamMemberTable = <TData,>({ columns, data }: TeamMemberTableProps<TData>)
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-start gap-4">
-        <span className="text-sm font-light">
-          Total members: <span className="font-semibold">{data.length}</span>
-        </span>
-      </div>
+      <DataTablePagination table={table} entity="members" />
     </div>
   );
 };

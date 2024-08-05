@@ -9,7 +9,12 @@ export interface Sprint {
   endDate: Date | string;
   createdAt: string;
   createdBy: number;
-  active: boolean;
+  status: string;
+}
+
+export interface ActiveSprint {
+  sprint: Sprint;
+  teamName: string;
 }
 
 export interface CreateSprintDTO {
@@ -17,4 +22,9 @@ export interface CreateSprintDTO {
   sprintGoal: string;
   startDate: string;
   endDate: string;
+}
+
+export interface SprintsAndTeams {
+  teams: Team[];
+  sprints: Sprint[];
 }

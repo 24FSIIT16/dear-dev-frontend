@@ -71,8 +71,8 @@ const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ teamId }) => {
 
   const surveyItems = [
     { id: 'happinessSurvey', label: 'Happiness', value: config?.happinessSurvey, disabled: true },
+    { id: 'emotionSurvey', label: 'Emotion', value: config?.emotionSurvey, disabled: true },
     { id: 'workKindSurvey', label: 'Worktype', value: config?.workKindSurvey, disabled: false },
-    { id: 'emotionSurvey', label: 'Emotion', value: config?.emotionSurvey, disabled: false },
   ];
 
   React.useEffect(() => {
