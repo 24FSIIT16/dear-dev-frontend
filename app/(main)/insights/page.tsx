@@ -32,6 +32,7 @@ import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
 import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
 import WorkkindCountPerDayBarChart from '@/(main)/insights/components/WorkkindCountPerDayBarChart';
 import ContributionChart from '@/(main)/insights/components/ContributionChart';
+import { User } from '@/types/UserType';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
 
@@ -54,9 +55,11 @@ const InsightsPage: React.FC = () => {
     []
   );
 
-  const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
+  const { data: teamData, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
+  const { data: userData, isLoading: isLoadingUserData } = useSWRClient<User>(`/v1/user/${user?.id}`);
 
   const [selectedTeam, setSelectedTeam] = React.useState<Team>();
+  const [currentUser, setcurrentUser] = React.useState<User>();
   const [sprint, setSprint] = React.useState<Sprint>();
 
   // todo get actual data & type it
@@ -86,10 +89,15 @@ const InsightsPage: React.FC = () => {
   }, [selectedTeam, sprint]);
 
   React.useEffect(() => {
-    if (!data) return;
-    setSelectedTeam(data[0]);
+    if (!userData) return;
+    setcurrentUser(userData);
+  }, [userData]);
+
+  React.useEffect(() => {
+    if (!teamData) return;
+    setSelectedTeam(teamData[0]);
     setSprint(sprints[0]);
-  }, [data]);
+  }, [teamData]);
 
   React.useEffect(() => {
     if (!insightData) return;
@@ -100,8 +108,8 @@ const InsightsPage: React.FC = () => {
   }, [insightData]);
 
   const handleTeamChange = (value: string) => {
-    if (!data) return;
-    const selected = data.find((team) => team.name === value);
+    if (!teamData) return;
+    const selected = teamData.find((team) => team.name === value);
     if (selected) {
       setSelectedTeam({
         active: false,
@@ -143,7 +151,7 @@ const InsightsPage: React.FC = () => {
     window.print();
   };
 
-  if (isLoading || !user || !selectedTeam || !data || !sprints) return <Loading />;
+  if (isLoading || isLoadingUserData || !user || !selectedTeam || !teamData || !sprints) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
 
   return (
@@ -158,7 +166,7 @@ const InsightsPage: React.FC = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>My Teams</SelectLabel>
-                  {data.map((team) => (
+                  {teamData.map((team) => (
                     <SelectItem key={team.id} value={team.name}>
                       {team.name}
                     </SelectItem>
@@ -203,7 +211,12 @@ const InsightsPage: React.FC = () => {
               <WorkkindBarChart workKindInsights={workKindInsights} />
               <InsightsSummary />
             </div>
-            <ContributionChart happinessInsights={happinessInsights} startDate={'2024-06-01'} endDate={'2024-09-01'} />
+            <ContributionChart
+              happinessInsights={happinessInsights}
+              githubUserName={currentUser ? currentUser.githubUserName : ''}
+              startDate="2024-06-01"
+              endDate="2024-09-01"
+            />
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <EmotionRadarChart emotionInsights={emotionInsights} />

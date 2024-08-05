@@ -28,6 +28,7 @@ const FormSchema = z.object({
   provider: z.string().nonempty('Provider is required'),
   name: z.string().nonempty('Name is required'),
   email: z.string().nonempty('Email is required').email('Please enter a valid email'),
+  githubUserName: z.string(),
 });
 
 type FormValue = z.infer<typeof FormSchema>;
@@ -45,6 +46,7 @@ const ProfileForm: React.FC = () => {
         provider: user?.provider ?? '',
         name: user?.name ?? '',
         email: user?.email ?? '',
+        githubUserName: user?.githubUserName ?? '',
       }),
       [user]
     ),
@@ -58,13 +60,14 @@ const ProfileForm: React.FC = () => {
         provider: user.provider,
         name: user.name,
         email: user.email,
+        githubUserName: user.githubUserName,
       });
     }
   }, [user, form]);
 
   const onSubmit: SubmitHandler<FormValue> = async (data) => {
     try {
-      await update({ id: userId, username: data.username });
+      await update({ id: userId, username: data.username, githubUserName: data.githubUserName });
       toast.success('Profile has been updated');
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -137,6 +140,19 @@ const ProfileForm: React.FC = () => {
               <FormDescription className="text-xs">
                 This field cannot be changed as it is provided by the login provider.
               </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="githubUserName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Github Username</FormLabel>
+              <FormControl>
+                <Input className="resize-none text-sm font-light" placeholder="Github Username" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
