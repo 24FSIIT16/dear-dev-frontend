@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { useAuth } from '@providers/AuthProvider';
-import { Sprint } from '@/types/SprintType';
+import { ActiveSprint, Sprint } from '@/types/SprintType';
 import useSWRClient from '@hooks/useSWRClient';
 import Error from '@components/Error/Error';
 import Loading from '@components/Loading/Loading';
@@ -11,21 +11,26 @@ import { Button } from '@components/ui/Buttons/Button';
 import { Dialog, DialogContent, DialogTrigger } from '@components/ui/Dialog/Dialog';
 import SprintTable from './components/SprintTable/SprintTable';
 import { columns } from './components/SprintTable/columns';
+import { columns as activeSprintcolumns } from './components/ActiveSprintTable/columns';
 import CreateSprintWidget from '../components/Sprint/CreateSprintWidget';
 import StartFirstSprintDialog from './components/StartFirstSprintDialog';
+import ActiveSprintTable from './components/ActiveSprintTable/ActiveSprintTable';
 
 const SprintPage: React.FC = () => {
   const { userId } = useAuth();
   const { data, isLoading, error, mutate } = useSWRClient<Sprint[]>(`/v1/sprint/createdBy/${userId}`);
+  const { data: activeSprints } = useSWRClient<ActiveSprint[]>('/v1/sprint/active');
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
 
-  const hasActiveSprints = (sprints: Sprint[]): boolean => sprints.some((sprint) => sprint.active);
+  const hasActiveSprints = (sprints: Sprint[]) => sprints.some((sprint) => sprint.status === 'IN_PROGRESS');
   const activeSprintExists = data ? hasActiveSprints(data) : false;
 
   const handleSprintStartSuccess = () => {
     setIsDialogOpen(false);
     mutate();
   };
+
+  const handleSprintComplete = () => {};
 
   if (isLoading) return <Loading />;
   if (error)
@@ -39,10 +44,17 @@ const SprintPage: React.FC = () => {
       {data && data.length > 0 && (
         <>
           {activeSprintExists ? (
-            <>
-              <h1>Ein Sprint ist gestartet</h1>
-              <Separator className="my-8" />
-            </>
+            <div className="mb-8 space-y-4">
+              <div className="space-y-1">
+                <h2>Active sprints</h2>
+                <p className="text-sm font-thin">Active sprints for all your teams, where you part of.</p>
+              </div>
+              <ActiveSprintTable<ActiveSprint>
+                columns={activeSprintcolumns}
+                data={activeSprints ?? []}
+                completeSprint={handleSprintComplete}
+              />
+            </div>
           ) : (
             <>
               <div className="space-y-4">

@@ -9,7 +9,12 @@ export interface Sprint {
   endDate: Date | string;
   createdAt: string;
   createdBy: number;
-  active: boolean;
+  status: string;
+}
+
+export interface ActiveSprint {
+  sprint: Sprint;
+  teamName: string;
 }
 
 export interface CreateSprintDTO {
