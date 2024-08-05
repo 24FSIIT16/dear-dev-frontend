@@ -19,10 +19,14 @@ const useSprintConfigClient = () => {
   const startSprint = async (sprintId: string, teamId: string): Promise<AxiosResponse<void>> =>
     client.post('/v1/sprint/start', { sprintId, teamId });
 
+  const completeSprint = async (sprintId: number): Promise<AxiosResponse<void>> =>
+    client.put(`/v1/sprint/complete/${sprintId}`);
+
   return {
     createSprint,
     updateSprint,
     startSprint,
+    completeSprint,
   };
 };
 

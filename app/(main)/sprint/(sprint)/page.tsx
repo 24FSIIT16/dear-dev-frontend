@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 'use client';
 
 import * as React from 'react';
@@ -9,6 +11,9 @@ import Loading from '@components/Loading/Loading';
 import Separator from '@components/ui/Separator/Separator';
 import { Button } from '@components/ui/Buttons/Button';
 import { Dialog, DialogContent, DialogTrigger } from '@components/ui/Dialog/Dialog';
+import { toast } from 'sonner';
+import axios from 'axios';
+import useSprintConfigClient from '@hooks/useSprintConfigClient';
 import SprintTable from './components/SprintTable/SprintTable';
 import { columns } from './components/SprintTable/columns';
 import { columns as activeSprintcolumns } from './components/ActiveSprintTable/columns';
@@ -18,8 +23,9 @@ import ActiveSprintTable from './components/ActiveSprintTable/ActiveSprintTable'
 
 const SprintPage: React.FC = () => {
   const { userId } = useAuth();
-  const { data, isLoading, error, mutate } = useSWRClient<Sprint[]>(`/v1/sprint/createdBy/${userId}`);
-  const { data: activeSprints } = useSWRClient<ActiveSprint[]>('/v1/sprint/active');
+  const { data, isLoading, error, mutate: reloadSprints } = useSWRClient<Sprint[]>(`/v1/sprint/createdBy/${userId}`);
+  const { data: activeSprints, mutate: reloadActiveSprints } = useSWRClient<ActiveSprint[]>('/v1/sprint/active');
+  const { completeSprint } = useSprintConfigClient();
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
 
   const hasActiveSprints = (sprints: Sprint[]) => sprints.some((sprint) => sprint.status === 'IN_PROGRESS');
@@ -27,10 +33,25 @@ const SprintPage: React.FC = () => {
 
   const handleSprintStartSuccess = () => {
     setIsDialogOpen(false);
-    mutate();
+    reloadSprints();
+    reloadActiveSprints();
   };
 
-  const handleSprintComplete = () => {};
+  const handleSprintComplete = async (rowData: ActiveSprint) => {
+    const { id: sprintId } = rowData.sprint;
+    try {
+      await completeSprint(sprintId);
+      toast.success('Sprint successfully completed');
+      reloadSprints();
+      reloadActiveSprints();
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        toast.error(`Something went wrong: ${e.message}`);
+      } else {
+        console.warn('Error', e);
+      }
+    }
+  };
 
   if (isLoading) return <Loading />;
   if (error)
@@ -49,6 +70,14 @@ const SprintPage: React.FC = () => {
                 <h2>Active sprints</h2>
                 <p className="text-sm font-thin">Active sprints for all your teams, where you part of.</p>
               </div>
+              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button onClick={() => setIsDialogOpen(true)}>Start Sprint</Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <StartFirstSprintDialog onSuccess={handleSprintStartSuccess} />
+                </DialogContent>
+              </Dialog>
               <ActiveSprintTable<ActiveSprint>
                 columns={activeSprintcolumns}
                 data={activeSprints ?? []}

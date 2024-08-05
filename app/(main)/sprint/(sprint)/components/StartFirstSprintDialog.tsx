@@ -59,12 +59,34 @@ const StartFirstSprintDialog: React.FC<StartFirstSprintDialogProps> = ({ onSucce
     }
   };
 
+  const teamsAvailable = !data?.teams || data.teams.length === 0;
+  const sprintsAvailable = !data?.sprints || data.sprints.length === 0;
+
+  React.useEffect(() => {
+    form.clearErrors();
+
+    if (teamsAvailable) {
+      form.setError('teamId', {
+        type: 'manual',
+        message: 'No valid teams available to select',
+      });
+    }
+    if (sprintsAvailable) {
+      form.setError('sprintId', {
+        type: 'manual',
+        message: 'No valid sprints available to select',
+      });
+    }
+  }, [teamsAvailable, sprintsAvailable, form]);
+
   return (
     <>
       <DialogHeader>
         <DialogTitle>Start a sprint</DialogTitle>
         <DialogDescription className="font-thin text-black">
-          Select a team and a sprint to get started.
+          You can only select teams that do not have an active sprint. Please complete any active sprint before starting
+          a new one. Additionally, you can only select sprints that are in the OPEN status with a start date of today or
+          in the future.
         </DialogDescription>
       </DialogHeader>
       <Form {...form}>
@@ -77,7 +99,7 @@ const StartFirstSprintDialog: React.FC<StartFirstSprintDialogProps> = ({ onSucce
                 <FormLabel>Team</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger disabled={teamsAvailable}>
                       <SelectValue placeholder="Select a team" />
                     </SelectTrigger>
                   </FormControl>
@@ -102,7 +124,7 @@ const StartFirstSprintDialog: React.FC<StartFirstSprintDialogProps> = ({ onSucce
                 <FormLabel>Sprint</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger disabled={sprintsAvailable}>
                       <SelectValue placeholder="Select a sprint" />
                     </SelectTrigger>
                   </FormControl>
