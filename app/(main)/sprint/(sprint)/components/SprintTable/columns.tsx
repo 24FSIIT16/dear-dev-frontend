@@ -7,9 +7,11 @@ import DataTableColumnHeader from '@components/ui/Table/DataTableColumnHeader';
 import { format, differenceInDays } from 'date-fns';
 import Link from 'next/link';
 import { Button } from '@components/ui/Buttons/Button';
+import { Badge } from '@components/ui/Badge/Badge';
 import { Pencil } from 'lucide-react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Sprint } from '@/types/SprintType';
+import cn from '@/lib/utils';
 
 export const columns: ColumnDef<Sprint>[] = [
   {
@@ -71,6 +73,22 @@ export const columns: ColumnDef<Sprint>[] = [
     cell: ({ row }) => {
       const date = new Date(row.original.createdAt);
       return <span>{format(date, 'yyyy-MM-dd')}</span>;
+    },
+  },
+  {
+    accessorKey: 'status',
+    header: 'Status',
+    cell: ({ row }) => {
+      const { status } = row.original;
+      const statusText = status === 'IN_PROGRESS' ? 'IN PROGRESS' : status;
+      const badgeClass =
+        status === 'COMPLETED' ? 'bg-primaryRed-light' : status === 'IN_PROGRESS' ? 'bg-primaryGreen-light' : '';
+
+      return (
+        <Badge variant="secondary" className={cn('px-2 font-medium', badgeClass)}>
+          {statusText}
+        </Badge>
+      );
     },
   },
   {
