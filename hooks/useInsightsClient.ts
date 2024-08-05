@@ -13,7 +13,7 @@ const useInsightsClient = () => {
   const getInsightsByTeamAndSprint = async (
     userId: string,
     teamId: number,
-    sprintId: string
+    sprintId: number
   ): Promise<AxiosResponse<InsightsDTO>> => client.get(`/v1/insights/${userId}/team/${teamId}/sprint/${sprintId}`);
 
   return {

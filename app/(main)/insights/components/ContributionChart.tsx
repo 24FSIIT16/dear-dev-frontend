@@ -5,10 +5,10 @@ import { ChartConfig, ChartContainer, ChartLegend, ChartLegendContent, ChartTool
 import { Line, LineChart, XAxis, YAxis } from 'recharts';
 import { HappinessInsightsDTO } from '@/types/InsightsType';
 import CustomYAxisTick from '@/(main)/insights/components/CustomChartComponents/CustomYAxisTick';
-import { filterContributionsByDate } from '@/(main)/insights/utils/filterContributionsByDate';
 import { toast } from 'sonner';
 import { Siren } from 'lucide-react';
 import fetchGitHubContributions from '@/(main)/insights/utils/fetchContributions';
+import filterContributionsByDate from '@/(main)/insights/utils/filterContributionsByDate';
 
 interface ContributionsInsightProps {
   happinessInsights?: HappinessInsightsDTO[];
@@ -63,7 +63,6 @@ const ContributionChart: React.FC<ContributionsInsightProps> = ({
     fetchAndFilterContributions();
   }, [startDate, endDate, githubUserName]);
 
-  // Merge contributions and happiness data
   const mergedData = contributionsPerDay.map((contribution) => {
     const happinessEntry = happinessInsights?.find((h) => h.day === contribution.date);
     return {

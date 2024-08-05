@@ -8,10 +8,10 @@ import { TotalContributionsPerDay } from '@/types/ContributionType';
  * @param endDate - The end date of the range.
  * @returns A filtered array of contributions within the specified date range.
  */
-export const filterContributionsByDate = (
+const filterContributionsByDate = (
   contributions: TotalContributionsPerDay[],
   startDate: string,
   endDate: string
-): TotalContributionsPerDay[] => {
-  return contributions.filter((day) => day.contributionCount > 0 && day.date >= startDate && day.date <= endDate);
-};
+): TotalContributionsPerDay[] =>
+  contributions.filter((day) => day.contributionCount > 0 && day.date >= startDate && day.date <= endDate);
+export default filterContributionsByDate;

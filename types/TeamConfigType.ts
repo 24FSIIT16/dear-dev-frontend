@@ -1,3 +1,5 @@
+import { SprintDTO } from '@/types/SprintType';
+
 export interface TeamConfigType {
   teamName: string;
   workKinds: WorkKind[];
@@ -9,4 +11,10 @@ export interface TeamConfigType {
 interface WorkKind {
   id: number;
   name: string;
+}
+
+export interface TeamWithSprintsDTO {
+  id: number;
+  name: string;
+  sprints: SprintDTO[];
 }
