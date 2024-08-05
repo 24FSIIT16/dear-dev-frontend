@@ -199,7 +199,7 @@ const InsightsPage: React.FC = () => {
             />
           </div>
           <div className="grid gap-10">
-            <ContributionChart />
+            <ContributionChart happinessInsights={happinessInsights} />
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <WorkkindBarChart workKindInsights={workKindInsights} />
