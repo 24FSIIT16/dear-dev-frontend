@@ -9,14 +9,3 @@ export interface DashboardDTO {
   numberOfTeamMembers: number;
   numberOfTeams: number;
 }
-
-export interface MostVotedWorkKind {
-  workKindId: number;
-  workKindName: string;
-  voteCount: number;
-  happinessScore: number;
-}
-
-export interface AverageScoreResponse {
-  averageScore: number;
-}
