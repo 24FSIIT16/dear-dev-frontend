@@ -210,7 +210,7 @@ const InsightsPage: React.FC = () => {
               happinessInsights={happinessInsights}
               githubUserName={currentUser ? currentUser.githubUserName : ''}
               startDate={selectedSprint ? selectedSprint.startDate : '2024-01-01'}
-              endDate={selectedSprint ? selectedSprint.endDate : '2024-12-01'}
+              endDate={selectedSprint ? selectedSprint.endDate : '2024-12-31'}
             />
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">

@@ -12,8 +12,8 @@ import filterContributionsByDate from '@/(main)/insights/utils/filterContributio
 
 interface ContributionsInsightProps {
   happinessInsights?: HappinessInsightsDTO[];
-  startDate: string; // Start date in 'YYYY-MM-DD' format
-  endDate: string; // End date in 'YYYY-MM-DD' format
+  startDate: string;
+  endDate: string;
   githubUserName: string;
 }
 
@@ -63,14 +63,19 @@ const ContributionChart: React.FC<ContributionsInsightProps> = ({
     fetchAndFilterContributions();
   }, [startDate, endDate, githubUserName]);
 
-  const mergedData = contributionsPerDay.map((contribution) => {
-    const happinessEntry = happinessInsights?.find((h) => h.day === contribution.date);
-    return {
-      date: contribution.date,
-      contributionCount: contribution.contributionCount,
-      userAverage: happinessEntry?.userAverage || 0,
-    };
-  });
+  const mergedData = React.useMemo(() => {
+    const merged = contributionsPerDay.map((contribution) => {
+      const happinessEntry = happinessInsights?.find((h) => h.day === contribution.date);
+      return {
+        date: contribution.date,
+        contributionCount: contribution.contributionCount,
+        userAverage: happinessEntry?.userAverage || 0,
+      };
+    });
+
+    merged.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    return merged;
+  }, [contributionsPerDay, happinessInsights]);
 
   if (!userFound) {
     return (
