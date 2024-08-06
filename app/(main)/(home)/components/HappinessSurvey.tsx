@@ -12,11 +12,11 @@ import { toast } from 'sonner';
 import SurveyHoverCard from './SurveyHoverCard';
 
 interface HappinessSurveyProps {
-  fetchDashboardData: () => void;
+  reloadDashboardData: () => void;
   user: User;
 }
 
-const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, user }) => {
+const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ reloadDashboardData, user }) => {
   const { submitHappinessScore } = useDashboardClient();
 
   const handleSubmit = async (score: number) => {
@@ -28,7 +28,7 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ fetchDashboardData, u
       await submitHappinessScore(happinessScore).then(() => {
         toast.success('Happiness score has been submitted');
       });
-      fetchDashboardData();
+      reloadDashboardData();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);
