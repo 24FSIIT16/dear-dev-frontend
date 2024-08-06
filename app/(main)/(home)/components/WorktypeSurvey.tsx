@@ -53,7 +53,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, wo
             className="mb-4 flex w-full flex-col items-start gap-2 sm:flex-row md:items-center"
             key={workKindDto.workKind.id}
           >
-            <div className="flex min-w-40 flex-row items-center gap-2">
+            <div className="flex min-w-40 flex-col gap-2 md:flex-row md:items-center">
               <h1 className="font-light">{workKindDto.workKind.name}</h1>
               <p className="text-xs font-light">{`(${workKindDto.teamName})`}</p>
             </div>

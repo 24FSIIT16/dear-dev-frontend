@@ -35,8 +35,8 @@ const SprintDateWidget: React.FC<SprintDateWidgetProps> = ({ date, description }
         </CardHeader>
         <CardContent className="flex flex-grow flex-col justify-end">
           <div className="space-y-1 text-primaryGreen-main group-hover:text-white">
-            <h1 className="text-2xl md:text-2xl lg:text-4xl">{date}</h1>
-            <p className="md:text-md text-sm font-light">{description}</p>
+            <h1 className="text-2xl md:text-2xl lg:text-4xl">{date !== '' ? date : '-'}</h1>
+            <p className="md:text-md text-sm font-light">{date !== '' ? description : 'No sprint started'}</p>
           </div>
         </CardContent>
       </Card>
