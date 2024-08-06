@@ -1,6 +1,13 @@
 export interface DashboardDTO {
-  averageScore: number;
-  mostVotedWorkKind: MostVotedWorkKind;
+  activeSprintEndDate: string;
+  averageHappinessScore: number;
+  lastSubmissionDateOfHappiness: string;
+  mostTrackedEmotions: string[];
+  mostTrackedWorkKind: string;
+  numberOfDaysWithHappinessSurvey: number;
+  numberOfHappinessSurveysToday: number;
+  numberOfTeamMembers: number;
+  numberOfTeams: number;
 }
 
 export interface MostVotedWorkKind {

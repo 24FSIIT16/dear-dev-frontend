@@ -1,25 +1,25 @@
 import * as React from 'react';
 import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
 import { motion, useAnimation } from 'framer-motion';
+import { CalendarRange } from 'lucide-react';
 
-interface SprintWidgetProps {
-  icon: React.ReactNode;
-  days: React.ReactNode;
+interface SprintDateWidgetProps {
+  date: string | undefined;
   description: string;
 }
 
-const SprintWidget: React.FC<SprintWidgetProps> = ({ icon, days, description }) => {
+const SprintDateWidget: React.FC<SprintDateWidgetProps> = ({ date, description }) => {
   const controls = useAnimation();
 
   const handleHoverStart = () => {
     controls.start({
-      x: [-30, 30],
+      y: [-30, 30],
     });
   };
 
   const handleHoverEnd = () => {
     controls.stop();
-    controls.set({ x: 0 });
+    controls.set({ y: 0 });
   };
 
   return (
@@ -29,13 +29,13 @@ const SprintWidget: React.FC<SprintWidgetProps> = ({ icon, days, description }) 
           <div className="flex-1" />
           <div className="rounded-full bg-primaryGreen-main p-2 text-white group-hover:bg-white group-hover:text-primaryGreen-main">
             <motion.div animate={controls} transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}>
-              {icon}
+              <CalendarRange className="h-5 w-5" />
             </motion.div>
           </div>
         </CardHeader>
         <CardContent className="flex flex-grow flex-col justify-end">
           <div className="space-y-1 text-primaryGreen-main group-hover:text-white">
-            <h1 className="text-4xl md:text-4xl lg:text-6xl">{days}</h1>
+            <h1 className="text-2xl md:text-2xl lg:text-4xl">{date}</h1>
             <p className="md:text-md text-sm font-light">{description}</p>
           </div>
         </CardContent>
@@ -44,4 +44,4 @@ const SprintWidget: React.FC<SprintWidgetProps> = ({ icon, days, description }) 
   );
 };
 
-export default SprintWidget;
+export default SprintDateWidget;

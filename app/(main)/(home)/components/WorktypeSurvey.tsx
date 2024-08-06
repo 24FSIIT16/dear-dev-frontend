@@ -15,10 +15,10 @@ import SurveyHoverCard from './SurveyHoverCard';
 interface WorktypeSurveyProps {
   workKinds: Array<WorkKind>;
   user: User;
-  fetchDashboardData: () => void;
+  reloadDashboardData: () => void;
 }
 
-const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ fetchDashboardData, workKinds, user }) => {
+const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, workKinds, user }) => {
   const { submitWorkKindScore } = useDashboardClient();
 
   const handleSubmit = async (score: number, workKindId: number) => {
@@ -31,7 +31,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ fetchDashboardData, wor
     try {
       await submitWorkKindScore(workKindScore);
       toast.success('Worktype score has been submitted');
-      fetchDashboardData();
+      reloadDashboardData();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);

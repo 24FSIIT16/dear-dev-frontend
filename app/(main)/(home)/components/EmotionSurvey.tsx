@@ -13,17 +13,17 @@ import SurveyHoverCard from './SurveyHoverCard';
 interface EmotionSurveyProps {
   emotions: Array<Emotion>;
   user: User;
-  fetchDashboardData: () => void;
+  reloadDashboardData: () => void;
 }
 
-const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ fetchDashboardData, emotions, user }) => {
+const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ reloadDashboardData, emotions, user }) => {
   const { submitEmotions } = useDashboardClient();
 
   const handleSubmit = async (emotionId: number) => {
     try {
       await submitEmotions({ userId: user.id, emotionId });
       toast.success('Emotion has been submitted');
-      fetchDashboardData();
+      reloadDashboardData();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);
