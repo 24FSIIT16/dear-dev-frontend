@@ -8,7 +8,7 @@ interface TeamWidgetProps {
 }
 
 const TeamWidget: React.FC<TeamWidgetProps> = ({ icon, number, description }) => (
-  <Card className="group flex flex-col rounded-2xl border-none bg-primaryRed-light shadow-none hover:bg-primaryRed-main">
+  <Card className="group flex h-auto flex-col rounded-2xl border-none bg-primaryRed-light shadow-none hover:bg-primaryRed-main">
     <CardHeader className="flex flex-row">
       <div className="flex-1" />
       <div className="rounded-full bg-primaryRed-main p-2 text-white group-hover:bg-white group-hover:text-primaryRed-main">

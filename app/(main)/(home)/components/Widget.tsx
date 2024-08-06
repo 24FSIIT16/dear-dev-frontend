@@ -8,7 +8,7 @@ interface WidgetProps {
 }
 
 const Widget: React.FC<WidgetProps> = ({ icon, content, description }) => (
-  <Card className="group flex flex-col rounded-2xl border-none bg-primaryBlue-light shadow-none hover:bg-primaryBlue-main">
+  <Card className="group flex h-auto flex-col rounded-2xl border-none bg-primaryBlue-light shadow-none hover:bg-primaryBlue-main md:h-full">
     <CardHeader className="flex flex-row">
       <div className="flex-1" />
       <div className="rounded-full bg-primaryBlue-main p-2 text-white group-hover:bg-white group-hover:text-primaryBlue-main">

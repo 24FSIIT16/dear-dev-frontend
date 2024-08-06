@@ -3,7 +3,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
-import { WorkKind } from '@/types/WorkKindType';
+import { WorkKindAndTeamName } from '@/types/WorkKindType';
 import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import useDashboardClient from '@hooks/useDashboardClient';
 import { User } from '@/types/UserType';
@@ -13,7 +13,7 @@ import { toast } from 'sonner';
 import SurveyHoverCard from './SurveyHoverCard';
 
 interface WorktypeSurveyProps {
-  workKinds: Array<WorkKind>;
+  workKinds: WorkKindAndTeamName[];
   user: User;
   reloadDashboardData: () => void;
 }
@@ -42,21 +42,27 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, wo
   };
 
   return (
-    <Card className="flex flex-col rounded-2xl border-black shadow-none">
+    <Card className="flex h-full flex-col rounded-2xl border-black shadow-none">
       <CardHeader className="flex flex-row">
         <div className="flex-1" />
         <SurveyHoverCard title="Track happiness per worktype" description="test" />
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-end">
-        {workKinds.map((workKind) => (
-          <div className="mb-4 flex w-full flex-col items-start gap-2 sm:flex-row md:items-center" key={workKind.id}>
-            <h1 className="min-w-40 font-light">{workKind.name}</h1>
+        {workKinds.map((workKindDto) => (
+          <div
+            className="mb-4 flex w-full flex-col items-start gap-2 sm:flex-row md:items-center"
+            key={workKindDto.workKind.id}
+          >
+            <div className="flex min-w-40 flex-row items-center gap-2">
+              <h1 className="font-light">{workKindDto.workKind.name}</h1>
+              <p className="text-xs font-light">{`(${workKindDto.teamName})`}</p>
+            </div>
             <div className="flex flex-row space-x-2 md:ml-auto md:space-x-0">
               <Button
                 variant="icon"
                 size="survey"
                 className="rounded-full"
-                onClick={() => handleSubmit(2, workKind.id)}
+                onClick={() => handleSubmit(2, workKindDto.workKind.id)}
               >
                 <Frown className="h-6 w-6" />
               </Button>
@@ -64,7 +70,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, wo
                 variant="icon"
                 size="survey"
                 className="rounded-full"
-                onClick={() => handleSubmit(8, workKind.id)}
+                onClick={() => handleSubmit(8, workKindDto.workKind.id)}
               >
                 <Annoyed className="h-6 w-6" />
               </Button>
@@ -72,7 +78,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, wo
                 variant="icon"
                 size="survey"
                 className="rounded-full"
-                onClick={() => handleSubmit(14, workKind.id)}
+                onClick={() => handleSubmit(14, workKindDto.workKind.id)}
               >
                 <Smile className="h-6 w-6" />
               </Button>
@@ -80,7 +86,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, wo
                 variant="icon"
                 size="survey"
                 className="rounded-full"
-                onClick={() => handleSubmit(20, workKind.id)}
+                onClick={() => handleSubmit(20, workKindDto.workKind.id)}
               >
                 <Laugh className="h-6 w-6" />
               </Button>
