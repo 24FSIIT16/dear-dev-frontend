@@ -3,3 +3,8 @@ export interface WorkKind {
   name: string;
   teamId: number | null;
 }
+
+export interface WorkKindAndTeamName {
+  workKind: WorkKind;
+  teamName: string;
+}

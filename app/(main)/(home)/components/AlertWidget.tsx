@@ -7,7 +7,7 @@ interface AlertWidgetProps {
 }
 
 const AlertWidget: React.FC<AlertWidgetProps> = ({ days }) => (
-  <Card className="group flex flex-col rounded-2xl border-none bg-primaryYellow-light shadow-none hover:bg-primaryYellow-main">
+  <Card className="group flex h-full w-full flex-col rounded-2xl border-none bg-primaryYellow-light shadow-none hover:bg-primaryYellow-main">
     <CardHeader className="flex flex-row">
       <div className="flex-1" />
       <div className="rounded-full bg-primaryYellow-main p-2 text-white group-hover:animate-icon-bounce group-hover:bg-white group-hover:text-primaryYellow-main">
