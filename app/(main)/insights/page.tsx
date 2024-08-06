@@ -7,7 +7,6 @@ import useInsightsClient from '@hooks/useInsightsClient';
 import useSWRClient from '@hooks/useSWRClient';
 import Error from '@components/Error/Error';
 
-import { Team } from '@/types/TeamType';
 import {
   Select,
   SelectContent,
@@ -31,16 +30,12 @@ import {
 import InsightsSummary from '@/(main)/insights/components/InsightsSummary';
 import EmotionRadarChart from '@/(main)/insights/components/EmotionRadarChart';
 import WorkkindCountPerDayBarChart from '@/(main)/insights/components/WorkkindCountPerDayBarChart';
+import ContributionChart from '@/(main)/insights/components/ContributionChart';
+import { User } from '@/types/UserType';
+import { TeamWithSprintsDTO } from '@/types/TeamConfigType';
+import { SprintDTO } from '@/types/SprintType';
 import WorkkindBarChart from './components/WorkkindBarChart';
 import HappinessLineChart from './components/HappinessLineChart';
-
-export interface Sprint {
-  id: number;
-  name: string;
-  value: string;
-  startDate: string;
-  endDate: string;
-}
 
 const InsightsPage: React.FC = () => {
   const { user } = useAuth();
@@ -53,24 +48,31 @@ const InsightsPage: React.FC = () => {
     []
   );
 
-  const { data, isLoading, error } = useSWRClient<Team[]>(`/v1/team/user/${user?.id}`);
+  const { data: userData, isLoading: isLoadingUserData, error } = useSWRClient<User>(`/v1/user/${user?.id}`);
+  const {
+    data: teamWithSprints,
+    isLoading: isLoadingTeamWithSprints,
+    error: errorLoadingTeamWithSprints,
+  } = useSWRClient<TeamWithSprintsDTO[]>(`/v1/team/user/${user?.id}/sprints`);
 
-  const [selectedTeam, setSelectedTeam] = React.useState<Team>();
-  const [sprint, setSprint] = React.useState<Sprint>();
+  const [selectedTeam, setSelectedTeam] = React.useState<TeamWithSprintsDTO | null>(null);
+  const [currentUser, setcurrentUser] = React.useState<User | null>(null);
+  const [selectedSprint, setSelectedSprint] = React.useState<SprintDTO | null>(null);
 
-  // todo get actual data
-  const sprints: Sprint[] = [
-    { id: 1, name: 'All-Time', value: 'none', startDate: '2020-01-01', endDate: '2020-01-01' },
-    { id: 2, name: 'Current Sprint', value: 'current', startDate: '2020-01-01', endDate: '2020-01-01' },
-    { id: 3, name: 'Last Sprint', value: 'last', startDate: '2020-01-01', endDate: '2020-01-01' },
-  ];
+  const defaultSprint: SprintDTO = {
+    id: 0,
+    sprintName: 'All-Time',
+    sprintGoal: 'All data',
+    startDate: '1970-01-01',
+    endDate: '2099-12-31',
+    status: 'ALL',
+  };
 
   const fetchInsights = async () => {
-    if (!user) return;
-    if (selectedTeam === undefined) return;
-    if (sprint === undefined) return;
+    if (!user || !selectedTeam) return;
+    const sprintId = selectedSprint ? selectedSprint.id : 0;
     try {
-      const response = await getInsightsByTeamAndSprint(user.id, selectedTeam.id, sprint.value);
+      const response = await getInsightsByTeamAndSprint(user.id, selectedTeam.id, sprintId);
       if (response) {
         setInsightData(response.data);
       }
@@ -80,15 +82,21 @@ const InsightsPage: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (!selectedTeam) return;
-    fetchInsights().then((r) => r);
-  }, [selectedTeam, sprint]);
+    fetchInsights();
+  }, [selectedTeam, selectedSprint, userData]);
 
   React.useEffect(() => {
-    if (!data) return;
-    setSelectedTeam(data[0]);
-    setSprint(sprints[0]);
-  }, [data]);
+    if (userData) {
+      setcurrentUser(userData);
+    }
+  }, [userData]);
+
+  React.useEffect(() => {
+    if (teamWithSprints && teamWithSprints.length > 0) {
+      setSelectedTeam(teamWithSprints[0]);
+      setSelectedSprint(defaultSprint);
+    }
+  }, [teamWithSprints]);
 
   React.useEffect(() => {
     if (!insightData) return;
@@ -99,28 +107,20 @@ const InsightsPage: React.FC = () => {
   }, [insightData]);
 
   const handleTeamChange = (value: string) => {
-    if (!data) return;
-    const selected = data.find((team) => team.name === value);
+    const selected = teamWithSprints?.find((team) => team.name === value);
     if (selected) {
-      setSelectedTeam({
-        active: false,
-        code: '',
-        configId: 0,
-        createdAt: '',
-        createdBy: 0,
-        currentSprintId: 0,
-        role: '',
-        id: selected.id,
-        name: selected.name,
-      });
+      setSelectedTeam(selected);
+      setSelectedSprint(defaultSprint);
     }
   };
 
   const handleSprintChange = (value: string) => {
-    if (!sprints) return;
-    const selectedSprint = sprints.find((selected) => selected.name === value);
-    if (selectedSprint) {
-      setSprint(selectedSprint);
+    if (!selectedTeam) return;
+    const sprint = selectedTeam.sprints.find((s) => s.sprintName === value);
+    if (sprint) {
+      setSelectedSprint(sprint);
+    } else if (value === defaultSprint.sprintName) {
+      setSelectedSprint(defaultSprint);
     }
   };
 
@@ -142,8 +142,9 @@ const InsightsPage: React.FC = () => {
     window.print();
   };
 
-  if (isLoading || !user || !selectedTeam || !data || !sprints) return <Loading />;
-  if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
+  if (isLoadingTeamWithSprints || isLoadingUserData || !user || !teamWithSprints) return <Loading />;
+  if (error || errorLoadingTeamWithSprints)
+    return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
 
   return (
     <div className="print-content">
@@ -157,7 +158,7 @@ const InsightsPage: React.FC = () => {
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>My Teams</SelectLabel>
-                  {data.map((team) => (
+                  {teamWithSprints.map((team) => (
                     <SelectItem key={team.id} value={team.name}>
                       {team.name}
                     </SelectItem>
@@ -166,15 +167,18 @@ const InsightsPage: React.FC = () => {
               </SelectContent>
             </Select>
 
-            <Select onValueChange={handleSprintChange} defaultValue={sprint?.name}>
+            <Select onValueChange={handleSprintChange} defaultValue={defaultSprint.sprintName}>
               <SelectTrigger>
                 <SelectValue placeholder="Select a Sprint" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  {sprints.map((s) => (
-                    <SelectItem key={s.id} value={s.name}>
-                      {s.name}
+                  <SelectItem key={defaultSprint.id} value={defaultSprint.sprintName}>
+                    {defaultSprint.sprintName}
+                  </SelectItem>
+                  {selectedTeam.sprints.map((sprint) => (
+                    <SelectItem key={sprint.id} value={sprint.sprintName}>
+                      {sprint.sprintName}
                     </SelectItem>
                   ))}
                 </SelectGroup>
@@ -197,9 +201,17 @@ const InsightsPage: React.FC = () => {
               userAverageHappiness={insightData ? insightData.userAverageHappiness : 0.0}
             />
           </div>
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            <WorkkindBarChart workKindInsights={workKindInsights} />
-            <InsightsSummary />
+          <div className="grid gap-10">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+              <WorkkindBarChart workKindInsights={workKindInsights} />
+              <InsightsSummary />
+            </div>
+            <ContributionChart
+              happinessInsights={happinessInsights}
+              githubUserName={currentUser ? currentUser.githubUserName : ''}
+              startDate={selectedSprint ? selectedSprint.startDate : '2024-01-01'}
+              endDate={selectedSprint ? selectedSprint.endDate : '2024-12-31'}
+            />
           </div>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <EmotionRadarChart emotionInsights={emotionInsights} />

@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { useAuth } from '@providers/AuthProvider';
 import { API_BASE_URL } from '@/lib/api/apiClient';
 import { CreateTeamDTO, JoinTeamDTO, Team } from '@/types/TeamType';
-import { TeamConfigType } from '@/types/TeamConfigType';
+import { TeamConfigType, TeamWithSprintsDTO } from '@/types/TeamConfigType';
 
 const client = axios.create({ withCredentials: true, baseURL: API_BASE_URL });
 
@@ -21,11 +21,15 @@ const useTeamClient = () => {
   const updateTeamConfig = async (teamId: string, body: TeamConfigType): Promise<AxiosResponse<TeamConfigType>> =>
     client.put(`v1/team/${teamId}/config`, body);
 
+  const getTeamsAndSprintsForUser = async (userId: string): Promise<AxiosResponse<TeamWithSprintsDTO>> =>
+    client.get(`/v1/team/user/${userId}/sprints`);
+
   return {
     createTeam,
     joinTeam,
     getTeamConfig,
     updateTeamConfig,
+    getTeamsAndSprintsForUser,
   };
 };
 

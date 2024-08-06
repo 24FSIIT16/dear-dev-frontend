@@ -28,3 +28,12 @@ export interface SprintsAndTeams {
   teams: Team[];
   sprints: Sprint[];
 }
+
+export interface SprintDTO {
+  id: number;
+  sprintName: string;
+  sprintGoal: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+}

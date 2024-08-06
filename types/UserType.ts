@@ -4,11 +4,13 @@ export interface User {
   email: string;
   username: string;
   hasTeam: boolean;
+  githubUserName: string;
 }
 
 export interface UpdatedUser {
   id: string | undefined;
   username: string;
+  githubUserName: string;
 }
 
 export interface UserWithProvider {
@@ -17,4 +19,5 @@ export interface UserWithProvider {
   email: string;
   username: string;
   provider: string;
+  githubUserName: string;
 }
