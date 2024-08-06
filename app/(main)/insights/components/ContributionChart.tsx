@@ -46,6 +46,7 @@ const ContributionChart: React.FC<ContributionsInsightProps> = ({
 
   React.useEffect(() => {
     const fetchAndFilterContributions = async () => {
+      if (githubUserName === null || githubUserName === '') return;
       try {
         const allContributions = await fetchGitHubContributions(githubUserName);
         if (allContributions === null) {
@@ -77,7 +78,7 @@ const ContributionChart: React.FC<ContributionsInsightProps> = ({
     return merged;
   }, [contributionsPerDay, happinessInsights]);
 
-  if (!userFound) {
+  if (!userFound || !githubUserName) {
     return (
       <Card className="group flex flex-col rounded-2xl border-none bg-primaryYellow-light shadow-none hover:bg-primaryYellow-main">
         <CardHeader className="flex flex-row">
