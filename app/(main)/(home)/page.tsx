@@ -88,8 +88,8 @@ const Home: React.FC = () => {
             />
             <Widget
               icon={<Component className="h-5 w-5" />}
-              content={mostTrackedWorkKind}
-              description="Most tracked worktype"
+              content={mostTrackedWorkKind || '-'}
+              description={mostTrackedWorkKind ? 'Most tracked worktype' : 'No worktype tracked'}
             />
           </div>
           <div className="space-y-4 md:col-span-2 md:row-span-4 md:space-y-0">
@@ -107,8 +107,8 @@ const Home: React.FC = () => {
           <div className="md:col-span-1">
             <Widget
               icon={<Activity className="h-5 w-5" />}
-              content={joinEmotions(mostTrackedEmotions ?? [])}
-              description="Most tracked emotions"
+              content={joinEmotions(mostTrackedEmotions ?? []) || '-'}
+              description={mostTrackedEmotions?.length !== 0 ? 'Most tracked emotions' : 'No emotions tracked'}
             />
           </div>
           <div className="md:col-span-1">

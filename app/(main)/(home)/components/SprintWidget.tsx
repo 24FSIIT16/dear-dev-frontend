@@ -35,8 +35,8 @@ const SprintWidget: React.FC<SprintWidgetProps> = ({ icon, days, description }) 
         </CardHeader>
         <CardContent className="flex flex-grow flex-col justify-end">
           <div className="space-y-1 text-primaryGreen-main group-hover:text-white">
-            <h1 className="text-4xl md:text-4xl lg:text-6xl">{days}</h1>
-            <p className="md:text-md text-sm font-light">{description}</p>
+            <h1 className="text-4xl md:text-4xl lg:text-6xl">{days !== 0 ? days : '-'}</h1>
+            <p className="md:text-md text-sm font-light">{days !== 0 ? description : 'No sprint started'}</p>
           </div>
         </CardContent>
       </Card>
