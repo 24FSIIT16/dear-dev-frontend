@@ -28,7 +28,7 @@ const SettingsLayout: React.FC<SettingsLayoutProps> = ({ children }) => (
       <aside className="w-1/4">
         <SidebarNav items={settingsSidebarNavItems} />
       </aside>
-      <div className="mt-2 flex-1">{children}</div>
+      <div className="mb-16 mt-2 flex-1">{children}</div>
     </div>
   </div>
 );
