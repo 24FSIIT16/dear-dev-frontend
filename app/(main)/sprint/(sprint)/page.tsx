@@ -28,8 +28,7 @@ const SprintPage: React.FC = () => {
   const { completeSprint } = useSprintConfigClient();
   const [isDialogOpen, setIsDialogOpen] = React.useState<boolean>(false);
 
-  const hasActiveSprints = (sprints: Sprint[]) => sprints.some((sprint) => sprint.status === 'IN_PROGRESS');
-  const activeSprintExists = data ? hasActiveSprints(data) : false;
+  const activeSprintExists = activeSprints ? activeSprints?.length > 0 : false;
 
   const handleSprintStartSuccess = () => {
     setIsDialogOpen(false);
