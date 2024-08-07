@@ -11,6 +11,7 @@ import { Clipboard, Check } from 'lucide-react';
 import Input from '@components/ui/Input/Input';
 import { Button } from '@components/ui/Buttons/Button';
 import { useAuth } from '@providers/AuthProvider';
+import { toast } from 'sonner';
 import { columns } from '../../../components/TeamMembersTable/columns';
 import TeamMemberTable from '../../../components/TeamMembersTable/TeamMemberTable';
 
@@ -37,6 +38,7 @@ const TeamMembersPage: React.FC<TeamMembersPageProps> = ({ params }) => {
         setTimeout(() => setCopied(false), 2000);
       });
     }
+    toast.success('Code copied to clipboard');
   };
 
   if (isLoading) return <Loading />;
