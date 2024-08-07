@@ -3,11 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/Card/Card';
 import * as React from 'react';
 import { CalendarSearch, CloudLightning, Laugh, RefreshCw, TrendingUp } from 'lucide-react';
-import { Avatar } from '@components/ui/Avatar/Avatar';
 
 export default function InsightsSummary() {
   return (
-    <Card className="rounded-2xl border-none bg-primaryBlue-light shadow-none hover:bg-primaryBlue-main hover:text-white">
+    <Card className="group rounded-2xl border-none bg-primaryBlue-light text-primaryBlue-main shadow-none hover:bg-primaryBlue-main hover:text-white">
       <CardHeader>
         <CardTitle className="space-y-1">
           <div className="flex items-baseline gap-2">
@@ -22,18 +21,18 @@ export default function InsightsSummary() {
       </CardHeader>
       <CardContent className="grid gap-8">
         <div className="flex items-center gap-4">
-          <Avatar className="hidden h-7 w-7 sm:flex">
-            <TrendingUp />
-          </Avatar>
+          <div className="hidden rounded-full bg-primaryBlue-main p-2 text-white group-hover:bg-white group-hover:text-primaryBlue-main sm:flex">
+            <TrendingUp className="h-5 w-5" />
+          </div>
           <div className="grid gap-1 group-hover:text-white">
             <p className="text-md font-semibold leading-none">Happiness Increased by 10% Last Week</p>
             <p className="text-muted-foreground text-sm">You managed a busy schedule while staying happy. Great job!</p>
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Avatar className="hidden h-7 w-7 sm:flex">
-            <Laugh />
-          </Avatar>
+          <div className="hidden rounded-full bg-primaryBlue-main p-2 text-white group-hover:bg-white group-hover:text-primaryBlue-main sm:block">
+            <Laugh className="h-5 w-5" />
+          </div>
           <div className="grid gap-1">
             <p className="text-md font-semibold leading-none">Coding Brings You Joy</p>
             <p className="text-muted-foreground text-sm">
@@ -43,9 +42,9 @@ export default function InsightsSummary() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Avatar className="hidden h-7 w-7 sm:flex">
-            <RefreshCw />
-          </Avatar>
+          <div className="hidden rounded-full bg-primaryBlue-main p-2 text-white group-hover:bg-white group-hover:text-primaryBlue-main sm:flex">
+            <RefreshCw className="h-5 w-5" />
+          </div>
           <div className="grid gap-1">
             <p className="text-md font-semibold leading-none">Aligned with Your Team</p>
             <p className="text-muted-foreground text-sm">
@@ -55,9 +54,9 @@ export default function InsightsSummary() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Avatar className="hidden h-7 w-7 sm:flex">
-            <CalendarSearch />
-          </Avatar>
+          <div className="hidden rounded-full bg-primaryBlue-main p-2 text-white group-hover:bg-white group-hover:text-primaryBlue-main sm:flex">
+            <CalendarSearch className="h-5 w-5" />
+          </div>
           <div className="grid gap-1">
             <p className="text-md font-semibold leading-none">Beware of Overloaded Meeting Days</p>
             <p className="text-muted-foreground text-sm">
@@ -66,9 +65,9 @@ export default function InsightsSummary() {
           </div>
         </div>
         <div className="flex items-center gap-4">
-          <Avatar className="hidden h-7 w-7 sm:flex">
-            <CloudLightning />
-          </Avatar>
+          <div className="hidden rounded-full bg-primaryBlue-main p-2 text-white group-hover:bg-white group-hover:text-primaryBlue-main sm:flex">
+            <CloudLightning className="h-5 w-5" />
+          </div>
           <div className="grid gap-1">
             <p className="text-md font-semibold leading-none">Focus on Fewer Work Types</p>
             <p className="text-muted-foreground text-sm">
