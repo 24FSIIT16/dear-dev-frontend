@@ -42,7 +42,7 @@ const WorktypeSurvey: React.FC<WorktypeSurveyProps> = ({ reloadDashboardData, wo
   };
 
   return (
-    <Card className="flex h-full flex-col rounded-2xl border-black shadow-none">
+    <Card className="flex h-full flex-col rounded-2xl border-black shadow-none dark:border-white">
       <CardHeader className="flex flex-row">
         <div className="flex-1" />
         <SurveyHoverCard title="Track happiness per worktype" description="test" />

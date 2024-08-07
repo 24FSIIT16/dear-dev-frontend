@@ -34,7 +34,7 @@ const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ reloadDashboardData, emot
   };
 
   return (
-    <Card className="flex h-full flex-col rounded-2xl border-black shadow-none">
+    <Card className="flex h-full flex-col rounded-2xl border-black shadow-none dark:border-white">
       <CardHeader className="flex flex-row">
         <div className="flex-1" />
         <SurveyHoverCard title="Track emotions" description="Text for emotions" />
