@@ -6,10 +6,9 @@ import { User } from '@/types/UserType';
 import { Card, CardContent, CardHeader } from '@components/ui/Card/Card';
 import useDashboardClient from '@hooks/useDashboardClient';
 import { SubmitHappinessScoreDTO } from '@/types/SurveyType';
-import { Annoyed, Frown, Laugh, Smile } from 'lucide-react';
+import { Annoyed, Frown, Laugh, Smile, FilePlus } from 'lucide-react';
 import { Button } from '@components/ui/Buttons/Button';
 import { toast } from 'sonner';
-import SurveyHoverCard from './SurveyHoverCard';
 
 interface HappinessSurveyProps {
   reloadDashboardData: () => void;
@@ -42,10 +41,9 @@ const HappinessSurvey: React.FC<HappinessSurveyProps> = ({ reloadDashboardData, 
     <Card className="flex h-full flex-col rounded-2xl border-black shadow-none dark:border-white">
       <CardHeader className="flex flex-row">
         <div className="flex-1" />
-        <SurveyHoverCard
-          title="Track happiness"
-          description="We want to know how satisfied you are with your workday today. Your feedback is important to us and helps us understand your daily work experience."
-        />
+        <div className="rounded-full bg-slate-900 p-2 text-white dark:bg-white dark:text-black">
+          <FilePlus className="h-5 w-5" />
+        </div>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-end">
         <div className="flex flex-col space-y-2">

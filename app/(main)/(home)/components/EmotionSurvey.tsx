@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import useDashboardClient from '@hooks/useDashboardClient';
 import { Button } from '@components/ui/Buttons/Button';
 import axios from 'axios';
-import SurveyHoverCard from './SurveyHoverCard';
+import { FilePlus } from 'lucide-react';
 
 interface EmotionSurveyProps {
   emotions: Array<Emotion>;
@@ -37,7 +37,9 @@ const EmotionSurvey: React.FC<EmotionSurveyProps> = ({ reloadDashboardData, emot
     <Card className="flex h-full flex-col rounded-2xl border-black shadow-none dark:border-white">
       <CardHeader className="flex flex-row">
         <div className="flex-1" />
-        <SurveyHoverCard title="Track emotions" description="Text for emotions" />
+        <div className="rounded-full bg-slate-900 p-2 text-white dark:bg-white dark:text-black">
+          <FilePlus className="h-5 w-5" />
+        </div>
       </CardHeader>
       <CardContent className="flex flex-grow flex-col justify-end">
         <div className="space-y-4">
