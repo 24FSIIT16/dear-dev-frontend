@@ -3,6 +3,7 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -46,6 +47,7 @@ const FormSchema = z
 type FormValues = z.infer<typeof FormSchema>;
 
 const CreateSprintForm: React.FC = () => {
+  const router = useRouter();
   const { createSprint } = useSprintConfigClient();
 
   const today = startOfToday();
@@ -73,6 +75,7 @@ const CreateSprintForm: React.FC = () => {
     try {
       await createSprint(formattedData);
       toast.success('Sprint successfully created');
+      router.push('/sprint');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);

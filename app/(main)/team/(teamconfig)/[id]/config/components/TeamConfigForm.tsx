@@ -3,6 +3,7 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
@@ -46,6 +47,7 @@ const FormSchema = z.object({
 type FormValues = z.infer<typeof FormSchema>;
 
 const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ teamId }) => {
+  const router = useRouter();
   const { data: config, isLoading } = useSWRClient<TeamConfigType>(`/v1/team/${teamId}/config`);
   const { updateTeamConfig } = useTeamClient();
 
@@ -95,6 +97,7 @@ const TeamConfigForm: React.FC<TeamConfigFormProps> = ({ teamId }) => {
     try {
       await updateTeamConfig(teamId, updatedConfig);
       toast.success('Team configuration has been updated');
+      router.push('/team');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);

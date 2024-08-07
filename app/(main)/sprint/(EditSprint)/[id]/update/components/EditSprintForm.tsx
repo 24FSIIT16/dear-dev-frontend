@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -51,6 +52,7 @@ const FormSchema = z
 type FormValues = z.infer<typeof FormSchema>;
 
 const EditSprintForm: React.FC<EditSprintFormProps> = ({ sprintId }) => {
+  const router = useRouter();
   const { data: sprint, isLoading } = useSWRClient<Sprint>(`/v1/sprint/${sprintId}`);
   const { updateSprint } = useSprintConfigClient();
 
@@ -104,6 +106,7 @@ const EditSprintForm: React.FC<EditSprintFormProps> = ({ sprintId }) => {
     try {
       await updateSprint(sprintId, formattedData);
       toast.success('Sprint successfully updated');
+      router.push('/sprint');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         toast.error(`Something went wrong: ${error.message}`);
