@@ -55,10 +55,10 @@ const Home: React.FC = () => {
   };
 
   React.useEffect(() => {
-    if (user && !user.hasTeam) {
+    if (!isLoading && user && !user.hasTeam) {
       router.push('/onboarding');
     }
-  }, [user, router]);
+  }, [isLoading, user, router]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;
