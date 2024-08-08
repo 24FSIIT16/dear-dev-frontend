@@ -31,12 +31,8 @@ const FAQAccordion: React.FC = () => (
     </AccordionItem>
 
     <AccordionItem value="item-4">
-      <AccordionTrigger>How can I delete my account? TODO</AccordionTrigger>
+      <AccordionTrigger>How can I delete my account?</AccordionTrigger>
       <AccordionContent>
-        To delete your account, please contact the server admins or host via our Discord channel. Once deleted, all your
-        data will be permanently removed from our servers. If you need assistance, please contact our support team.{' '}
-        <br />
-        or : <br />
         To delete your account, go to your account settings and follow the instructions for account deletion. Once
         deleted, all your data will be permanently removed from our servers. If you need assistance, please contact our
         support team.
