@@ -107,7 +107,7 @@ const Account: React.FC = () => {
               <h3>Are you sure?</h3>
             </AlertDialogTitle>
             <AlertDialogDescription>
-              <p className="text-xs font-thin">Log out of your yappi account.</p>
+              <p className="text-sm font-thin">Log out of your yappi account.</p>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -13,11 +13,15 @@ const useUserClient = () => {
   const update = async (values: UpdatedUser): Promise<AxiosResponse<UpdatedUser>> =>
     client.put(`/v1/user/update`, values);
 
+  const deleteUser = async (userId?: string): Promise<AxiosResponse<void>> =>
+    client.delete(`/v1/user/delete/${userId}`);
+
   const getUserById = async (userId: string): Promise<AxiosResponse<User>> => client.get(`/v1/user/${userId}`);
 
   return {
     update,
     getUserById,
+    deleteUser,
   };
 };
 

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@providers/AuthProvider';
 import { Activity, Bike, Component, CircleSlash2, Target, Users, Annoyed, Frown, Laugh, Smile } from 'lucide-react';
 import {
@@ -22,6 +23,7 @@ import { HappinessSurvey, WorktypeSurvey, EmotionSurvey, Widget, AlertWidget, Sp
 
 const Home: React.FC = () => {
   const { user, isLoading, error } = useAuth();
+  const router = useRouter();
   const { data: emotions } = useSWRClient<Emotion[]>('/v1/emotions');
   const { data: workKinds } = useSWRClient<WorkKindAndTeamName[]>('/v1/workkinds/team');
   const { data, mutate } = useSWRClient<DashboardDTO>('/v1/dashboard/data');
@@ -51,6 +53,12 @@ const Home: React.FC = () => {
     }
     return <Laugh className="h-16 w-16 group-hover:animate-spin" />;
   };
+
+  React.useEffect(() => {
+    if (user && !user.hasTeam) {
+      router.push('/onboarding');
+    }
+  }, [user, router]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error errorMessage="It seems there was a problem loading your account." action="/" showContact />;

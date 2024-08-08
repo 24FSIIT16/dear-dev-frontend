@@ -10,7 +10,7 @@ export interface User {
 export interface UpdatedUser {
   id: string | undefined;
   username: string;
-  githubUserName: string;
+  githubUserName: string | undefined;
 }
 
 export interface UserWithProvider {

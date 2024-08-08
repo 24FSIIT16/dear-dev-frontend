@@ -10,6 +10,7 @@ export interface TeamMemberWithUser {
   id: number;
   user: User;
   teamId: number;
+  joinedAt: string;
   role: string;
   active: boolean;
 }

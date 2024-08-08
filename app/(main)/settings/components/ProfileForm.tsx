@@ -28,7 +28,7 @@ const FormSchema = z.object({
   provider: z.string().nonempty('Provider is required'),
   name: z.string().nonempty('Name is required'),
   email: z.string().nonempty('Email is required').email('Please enter a valid email'),
-  githubUserName: z.string(),
+  githubUserName: z.string().optional(),
 });
 
 type FormValue = z.infer<typeof FormSchema>;
@@ -67,7 +67,11 @@ const ProfileForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormValue> = async (data) => {
     try {
-      await update({ id: userId, username: data.username, githubUserName: data.githubUserName });
+      await update({
+        id: userId,
+        username: data.username,
+        githubUserName: data.githubUserName ? data.githubUserName : undefined,
+      });
       toast.success('Profile has been updated');
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -82,7 +86,7 @@ const ProfileForm: React.FC = () => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-4">
         <FormField
           control={form.control}
           name="username"
@@ -91,6 +95,19 @@ const ProfileForm: React.FC = () => {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input className="resize-none text-sm font-light" placeholder="Username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="githubUserName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>GitHub Username</FormLabel>
+              <FormControl>
+                <Input className="resize-none text-sm font-light" placeholder="Github Username" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,19 +157,6 @@ const ProfileForm: React.FC = () => {
               <FormDescription className="text-xs">
                 This field cannot be changed as it is provided by the login provider.
               </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="githubUserName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Github Username</FormLabel>
-              <FormControl>
-                <Input className="resize-none text-sm font-light" placeholder="Github Username" {...field} />
-              </FormControl>
               <FormMessage />
             </FormItem>
           )}
