@@ -4,7 +4,7 @@ import Explanation from '../components/Explanation';
 const UsageTipsPage: React.FC = () => (
   <Explanation
     number="8"
-    title="Settings and Customizations"
+    title="Usage Tips"
     content={
       <section className="space-y-4">
         <p>Here are some tips to help you make the most of yappi:</p>
