@@ -24,6 +24,7 @@ const Explanation: React.FC<ExplanationProps> = ({
 }) => (
   <div className="space-y-4">
     <div className="flex flex-row items-center justify-between">
+      <div className="flex-1" />
       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primaryBlue-light p-1 text-2xl font-bold text-primaryBlue-main">
         {number}
       </div>
