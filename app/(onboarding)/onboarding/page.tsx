@@ -16,10 +16,10 @@ const OnboardingPage: React.FC = () => {
 
   const renderDialogContent = () => {
     if (selected === 'personal') {
-      return <CreateTeamDialog />;
+      return <CreateTeamDialog afterOnBoarding />;
     }
     if (selected === 'team') {
-      return <JoinTeamDialog />;
+      return <JoinTeamDialog afterOnBoarding />;
     }
     return null;
   };

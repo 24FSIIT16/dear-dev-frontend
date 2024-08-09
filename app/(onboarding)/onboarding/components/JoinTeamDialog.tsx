@@ -15,6 +15,10 @@ import useTeamClient from '@hooks/useTeamClient';
 import { BadgeCheck, Loader2 } from 'lucide-react';
 import { Team } from '@/types/TeamType';
 
+interface JoinTeamDialogProps {
+  afterOnBoarding?: boolean;
+}
+
 const FormSchema = z.object({
   code: z.string().min(4, {
     message: 'Code must be 4 digits',
@@ -23,7 +27,7 @@ const FormSchema = z.object({
 
 type FormValues = z.infer<typeof FormSchema>;
 
-const JoinTeamDialog: React.FC = () => {
+const JoinTeamDialog: React.FC<JoinTeamDialogProps> = ({ afterOnBoarding = false }) => {
   const { userId } = useAuth();
   const { joinTeam } = useTeamClient();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -116,7 +120,7 @@ const JoinTeamDialog: React.FC = () => {
         <DialogFooter>
           <div>
             <DialogClose asChild>
-              <Link href={`/team/${joinedTeam.id}/members`}>
+              <Link href={!afterOnBoarding ? `/team/${joinedTeam.id}/members` : '/getting-started'}>
                 <Button className="mt-8 px-8">Continue</Button>
               </Link>
             </DialogClose>

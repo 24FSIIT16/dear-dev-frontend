@@ -14,13 +14,17 @@ import { BadgeCheck, Loader2, Clipboard, Check } from 'lucide-react';
 import { Team } from '@/types/TeamType';
 import Link from 'next/link';
 
+interface CreateTeamDialogProps {
+  afterOnBoarding?: boolean;
+}
+
 const FormSchema = z.object({
   name: z.string().nonempty('Team name is required'),
 });
 
 type FormValues = z.infer<typeof FormSchema>;
 
-const CreateTeamDialog: React.FC = () => {
+const CreateTeamDialog: React.FC<CreateTeamDialogProps> = ({ afterOnBoarding = false }) => {
   const { userId } = useAuth();
   const { createTeam } = useTeamClient();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -125,7 +129,7 @@ const CreateTeamDialog: React.FC = () => {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Link href={`/team/${createdTeam.id}/config`}>
+              <Link href={!afterOnBoarding ? `/team/${createdTeam.id}/config` : '/getting-started'}>
                 <Button className="mt-8 px-8">Continue</Button>
               </Link>
             </DialogClose>
