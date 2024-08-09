@@ -14,9 +14,9 @@ const resourcesItems = [
   {
     title: 'Getting Started',
     href: '/getting-started',
-    description: 'Learn the basics to get started with our platform.',
+    description: 'Learn the basics to get started with our yappi platform.',
   },
-  { title: 'Support', href: '/about/contact', description: 'Get help and find support for any issues.' },
+  { title: 'Support', href: '/about/contact', description: 'Get help and find support for any issue.' },
   {
     title: 'Literature Collection',
     href: 'https://www.zotero.org/groups/5617553/yappi/collections/VSEFDQFA',
@@ -36,9 +36,9 @@ const HeaderNavigationMenu: React.FC = () => (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem className="dark:bg-primaryBG-dark">
-          <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="h-8 font-light">Resources</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[550px] lg:grid-cols-2">
               {resourcesItems.map((item) => (
                 <ListItem key={item.title} title={item.title} href={item.href} external={item.external}>
                   {item.description}

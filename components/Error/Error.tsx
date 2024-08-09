@@ -19,7 +19,7 @@ const Error: React.FC<ErrorProps> = ({ className, errorMessage, action, showCont
   };
 
   return (
-    <div className={cn('flex items-center justify-center pt-80 text-black dark:text-white', className)}>
+    <div className={cn('flex items-center justify-center pt-40 text-black dark:text-white', className)}>
       <div className="flex flex-col">
         <h1>Oops, something went wrong!</h1>
         <p className="text-md font-thin">{errorMessage}</p>
