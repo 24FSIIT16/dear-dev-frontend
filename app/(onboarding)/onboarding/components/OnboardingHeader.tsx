@@ -14,6 +14,7 @@ import {
   AlertDialogCancel,
 } from '@components/ui/AltertDialog/AlertDialog';
 import Link from 'next/link';
+import { LogOut } from 'lucide-react';
 
 const OnboardingHeader: React.FC = () => {
   const handleLogout = async () => {
@@ -26,7 +27,10 @@ const OnboardingHeader: React.FC = () => {
         <Logo className="flex h-8 w-8 flex-1" />
       </Link>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Log out</Button>
+        <Button variant="outline">
+          <LogOut className="mr-2 h-4 w-4" />
+          Log out
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-[400px]">
         <AlertDialogHeader>
