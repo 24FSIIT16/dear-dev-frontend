@@ -7,6 +7,7 @@ import {
   getCoreRowModel,
   getSortedRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
   SortingState,
   useReactTable,
   VisibilityState,
@@ -33,6 +34,7 @@ const TeamMemberTable = <TData,>({ columns, data }: TeamMemberTableProps<TData>)
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     state: {
       sorting,
       columnVisibility,
