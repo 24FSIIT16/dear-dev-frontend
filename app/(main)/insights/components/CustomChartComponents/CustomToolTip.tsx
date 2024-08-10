@@ -28,7 +28,7 @@ const CustomToolTip: React.FC<CustomToolTipProps> = ({ active, payload, label })
     };
 
     return (
-      <div className="custom-tooltip rounded border bg-white p-2 shadow-lg">
+      <div className="custom-tooltip rounded border bg-white p-2 shadow-lg dark:bg-primaryBG-dark">
         <p className="label font-bold">{`${label}`}</p>
         <div className="tooltip-item mt-2 flex items-center">
           <span className="icon mr-2">{getIcon(userAverage)}</span>
