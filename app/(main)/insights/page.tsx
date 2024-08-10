@@ -47,6 +47,9 @@ const InsightsPage: React.FC = () => {
   const [workKindCountPerDayInsights, setWorkKindCountPerDayInsights] = React.useState<WorkKindCountPerDayInsightDTO[]>(
     []
   );
+  const [selectedTeam, setSelectedTeam] = React.useState<TeamWithSprintsDTO | null>(null);
+  const [currentUser, setcurrentUser] = React.useState<User | null>(null);
+  const [selectedSprint, setSelectedSprint] = React.useState<SprintDTO | null>(null);
 
   const { data: userData, isLoading: isLoadingUserData, error } = useSWRClient<User>(`/v1/user/${user?.id}`);
   const {
@@ -54,10 +57,6 @@ const InsightsPage: React.FC = () => {
     isLoading: isLoadingTeamWithSprints,
     error: errorLoadingTeamWithSprints,
   } = useSWRClient<TeamWithSprintsDTO[]>(`/v1/team/user/${user?.id}/sprints`);
-
-  const [selectedTeam, setSelectedTeam] = React.useState<TeamWithSprintsDTO | null>(null);
-  const [currentUser, setcurrentUser] = React.useState<User | null>(null);
-  const [selectedSprint, setSelectedSprint] = React.useState<SprintDTO | null>(null);
 
   const defaultSprint: SprintDTO = {
     id: 0,
@@ -82,14 +81,11 @@ const InsightsPage: React.FC = () => {
   };
 
   React.useEffect(() => {
-    fetchInsights();
-  }, [selectedTeam, selectedSprint, userData]);
-
-  React.useEffect(() => {
     if (userData) {
       setcurrentUser(userData);
     }
-  }, [userData]);
+    fetchInsights();
+  }, [selectedTeam, selectedSprint, userData]);
 
   React.useEffect(() => {
     if (teamWithSprints && teamWithSprints.length > 0) {

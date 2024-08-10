@@ -6,10 +6,10 @@ interface CustomToolTipProps extends TooltipProps<number, string> {
   payload?: { value: number }[];
 }
 
-const CustomToolTip: React.FC<CustomToolTipProps> = ({ active, payload, label }) => {
+const ContributionToolTip: React.FC<CustomToolTipProps> = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     const userAverage = payload[0] ? payload[0].value : 0;
-    const teamAverage = payload[1] ? payload[1].value : 0;
+    const contributions = payload[1] ? payload[1].value : 0;
 
     const getIcon = (value: number) => {
       if (value >= 17) {
@@ -36,16 +36,13 @@ const CustomToolTip: React.FC<CustomToolTipProps> = ({ active, payload, label })
             <span className="value">{`Personal (${userAverage})`}</span>
           </div>
         )}
-        {teamAverage > 0 && (
-          <div className="tooltip-item mt-2 flex items-center">
-            <span className="icon mr-2">{getIcon(teamAverage)}</span>
-            <span className="value">{`Team (${teamAverage})`}</span>
-          </div>
-        )}
+        <div className="tooltip-item mt-2 flex items-center">
+          <span className="value">{`Contributions: ${contributions}`}</span>
+        </div>
       </div>
     );
   }
   return null;
 };
 
-export default CustomToolTip;
+export default ContributionToolTip;

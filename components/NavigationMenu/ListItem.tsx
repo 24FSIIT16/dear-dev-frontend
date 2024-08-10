@@ -8,7 +8,7 @@ const ListItem = React.forwardRef<React.ElementRef<'a'>, React.ComponentPropsWit
       <NavigationMenuLink asChild>
         <a
           ref={ref}
-          className={`focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-slate-50 ${className}`}
+          className={`focus:bg-accent focus:text-accent-foreground block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-secondaryBG-light dark:hover:bg-secondaryBG-dark dark:hover:text-primaryBG-light ${className}`}
           target={external ? '_blank' : '_self'}
           rel={external ? 'noopener noreferrer' : undefined}
           {...props}

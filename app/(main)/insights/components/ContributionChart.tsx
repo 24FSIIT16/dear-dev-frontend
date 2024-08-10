@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { Siren } from 'lucide-react';
 import fetchGitHubContributions from '@/(main)/insights/utils/fetchContributions';
 import filterContributionsByDate from '@/(main)/insights/utils/filterContributionsByDate';
+import ContributionToolTip from '@/(main)/insights/components/CustomChartComponents/ContributionToolTip';
 
 interface ContributionsInsightProps {
   happinessInsights?: HappinessInsightsDTO[];
@@ -144,7 +145,7 @@ const ContributionChart: React.FC<ContributionsInsightProps> = ({
                 ticks={[2, 20]}
                 tick={CustomYAxisTick as never}
               />
-              <ChartTooltip cursor />
+              <ChartTooltip cursor content={<ContributionToolTip />} />
               <ChartLegend content={<ChartLegendContent />} verticalAlign="bottom" />
               <Line
                 dataKey="userAverage"
