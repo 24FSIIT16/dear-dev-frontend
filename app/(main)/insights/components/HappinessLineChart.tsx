@@ -42,7 +42,7 @@ const HappinessLineChart: React.FC<HappinessInsightProps> = ({
     ? happinessInsights
         .map((point, index) => {
           const nextPoint = happinessInsights[index + 1];
-          if (nextPoint && point.teamAverage !== 0 && Math.abs(point.userAverage - point.teamAverage) > 8) {
+          if (nextPoint && point.teamAverage !== 0 && Math.abs(point.userAverage - point.teamAverage) > 6) {
             return {
               x: point.day,
               y1: point.userAverage,
